@@ -1,0 +1,116 @@
+{
+  "log_type": "Maintenance Log",
+  "aircraft_reg": "VT-DEM",
+  "entries": [
+    {
+      "id": "ML-001",
+      "date": "2026-03-10",
+      "component": "Hydraulic Filter (Green)",
+      "ata": "29",
+      "maintenance_type": "Scheduled Replacement",
+      "interval": "750 FH",
+      "work_description": "Filter element replaced per MPD 29-001. Old filter contamination consistent with normal wear.",
+      "engineer": "Aman Rai (AME-L: 12045)",
+      "status": "Completed"
+    },
+    {
+      "id": "ML-002",
+      "date": "2026-03-08",
+      "component": "Engine 1 Oil System",
+      "ata": "71",
+      "maintenance_type": "Scheduled Inspection",
+      "interval": "100 FH",
+      "work_description": "Oil level 8.2 qt (min 6.0). Chip detector clean. Oil sample sent for analysis.",
+      "engineer": "Priya Sharma (AME-L: 11890)",
+      "status": "Completed"
+    },
+    {
+      "id": "ML-003",
+      "date": "2026-03-07",
+      "component": "Landing Gear Tires",
+      "ata": "32",
+      "maintenance_type": "Scheduled Inspection",
+      "interval": "48 Hours",
+      "work_description": "All tire pressures checked. Position 3 tire replaced due to uneven wear. Brake pins above minimum.",
+      "engineer": "Rajesh Kumar (AME-L: 13210)",
+      "status": "Completed"
+    },
+    {
+      "id": "ML-004",
+      "date": "2026-03-05",
+      "component": "APU (APS3200)",
+      "ata": "49",
+      "maintenance_type": "Scheduled Inspection",
+      "interval": "200 FH",
+      "work_description": "Oil level satisfactory. Inlet door lubricated. Exhaust area no distress. APU hours: 9800.",
+      "engineer": "Aman Rai (AME-L: 12045)",
+      "status": "Completed"
+    },
+    {
+      "id": "ML-005",
+      "date": "2026-03-01",
+      "component": "Emergency Equipment",
+      "ata": "25",
+      "maintenance_type": "A-Check",
+      "interval": "750 FH",
+      "work_description": "Fire extinguisher pressures verified. Emergency exits checked. Life vests confirmed at all seats.",
+      "engineer": "Vikram Singh (AME-L: 14050)",
+      "status": "Completed"
+    },
+    {
+      "id": "ML-006",
+      "date": "2026-02-25",
+      "component": "Engine 2 Oil System",
+      "ata": "71",
+      "maintenance_type": "Scheduled Inspection",
+      "interval": "100 FH",
+      "work_description": "Oil level 7.8 qt. Chip detector clean. Consumption rate 0.12 qt/hr within limits.",
+      "engineer": "Priya Sharma (AME-L: 11890)",
+      "status": "Completed"
+    },
+    {
+      "id": "ML-007",
+      "date": "2026-02-20",
+      "component": "Flight Controls",
+      "ata": "27",
+      "maintenance_type": "A-Check",
+      "interval": "750 FH",
+      "work_description": "Visual inspection of all control surfaces. Hinge bearings checked. Spoiler actuators inspected. No leaks.",
+      "engineer": "Rajesh Kumar (AME-L: 13210)",
+      "status": "Completed"
+    },
+    {
+      "id": "ML-008",
+      "date": "2026-02-15",
+      "component": "Air Conditioning Packs",
+      "ata": "21",
+      "maintenance_type": "Scheduled Inspection",
+      "interval": "3000 FH",
+      "work_description": "Pack flow valves tested. Recirc fan filters replaced. Zone controllers calibrated. Outflow valve verified.",
+      "engineer": "Aman Rai (AME-L: 12045)",
+      "status": "Completed"
+    },
+    {
+      "id": "ML-009",
+      "date": "2026-02-10",
+      "component": "Hydraulic System (Yellow)",
+      "ata": "29",
+      "maintenance_type": "Scheduled Inspection",
+      "interval": "750 FH",
+      "work_description": "Reservoir level normal. Filter replaced. Pump output 3000 PSI verified. PTU operation confirmed.",
+      "engineer": "Vikram Singh (AME-L: 14050)",
+      "status": "Completed"
+    },
+    {
+      "id": "ML-010",
+      "date": "2026-02-05",
+      "component": "Electrical Generators",
+      "ata": "24",
+      "maintenance_type": "Scheduled Inspection",
+      "interval": "2000 FH",
+      "work_description": "IDG 1 & 2 oil levels OK. Gen output: 115.2V/400Hz and 115.0V/400Hz. GCU parameters within tolerance.",
+      "engineer": "Priya Sharma (AME-L: 11890)",
+      "status": "Completed"
+    }
+  ]
+}

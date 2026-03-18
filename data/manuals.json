@@ -1,0 +1,581 @@
+{
+  "disclaimer": "This document contains SIMULATED maintenance data for educational purposes only. It does not represent official Airbus documentation.",
+  "manuals": {
+    "AMM": {
+      "title": "Aircraft Maintenance Manual (AMM)",
+      "description": "The AMM provides detailed maintenance procedures, servicing instructions, and troubleshooting guides for all aircraft systems. It is the primary reference for line and base maintenance activities.",
+      "sections": {
+        "ATA21": {
+          "chapter": "ATA 21",
+          "system": "Air Conditioning",
+          "description": "The air conditioning system uses engine bleed air processed through air cycle machines (packs) to provide pressurized, temperature-controlled air to the cabin and cockpit. The system includes dual packs, a mixer unit, and zone temperature controllers.",
+          "inspection_procedure": [
+            "1. Verify pack valve operation using ECAM system page",
+            "2. Check bleed air duct integrity for leaks using soap solution",
+            "3. Inspect pack flow control valve actuator",
+            "4. Verify zone temperature controller calibration",
+            "5. Check cabin pressure controller operation",
+            "6. Inspect recirculation fan filters and replace if contaminated",
+            "7. Record findings in technical log"
+          ],
+          "maintenance_interval": "3000 Flight Hours or 18 months",
+          "component_list": [
+            "Air Cycle Machine (Pack 1 & 2)",
+            "Pack Flow Control Valve",
+            "Zone Temperature Controller",
+            "Cabin Pressure Controller",
+            "Outflow Valve",
+            "Recirculation Fan",
+            "Mixer Unit"
+          ]
+        },
+        "ATA24": {
+          "chapter": "ATA 24",
+          "system": "Electrical Power",
+          "description": "The electrical power system generates, distributes, and manages 115V AC and 28V DC power throughout the aircraft. It includes engine-driven generators, APU generator, transformer rectifier units, and emergency battery systems.",
+          "inspection_procedure": [
+            "1. Check generator output voltage and frequency under load",
+            "2. Inspect generator control unit (GCU) parameters",
+            "3. Test bus tie contactors operation",
+            "4. Verify transformer rectifier unit output",
+            "5. Check battery charge status and electrolyte level",
+            "6. Test emergency power transfer sequence",
+            "7. Inspect wiring harness for chafing and damage"
+          ],
+          "maintenance_interval": "2000 Flight Hours",
+          "component_list": [
+            "Integrated Drive Generator (IDG) x2",
+            "APU Generator",
+            "Transformer Rectifier Unit (TRU) x3",
+            "Main Battery",
+            "Emergency Battery",
+            "Static Inverter",
+            "Bus Tie Contactor",
+            "Generator Control Unit (GCU)"
+          ]
+        },
+        "ATA27": {
+          "chapter": "ATA 27",
+          "system": "Flight Controls",
+          "description": "The A320 fly-by-wire flight control system uses electronic computers to translate pilot inputs into control surface movements. The system includes ailerons, elevators, rudder, spoilers, slats, and flaps managed by flight control computers (ELAC, SEC, FAC).",
+          "inspection_procedure": [
+            "1. Perform flight control computer self-test via MCDU",
+            "2. Check all control surface travel limits and free play",
+            "3. Inspect actuator attachment fittings and bearings",
+            "4. Verify sidestick transducer calibration",
+            "5. Test autopilot servo engagement and disengagement",
+            "6. Inspect flap and slat track assemblies for wear",
+            "7. Check spoiler symmetry during ground test"
+          ],
+          "maintenance_interval": "5000 Flight Hours",
+          "component_list": [
+            "Elevator Aileron Computer (ELAC) x2",
+            "Spoiler Elevator Computer (SEC) x3",
+            "Flight Augmentation Computer (FAC) x2",
+            "Aileron Actuators",
+            "Elevator Actuators",
+            "Rudder Actuators",
+            "Spoiler Actuators x10",
+            "Slat/Flap Control Computer (SFCC) x2"
+          ]
+        },
+        "ATA29": {
+          "chapter": "ATA 29",
+          "system": "Hydraulic Power",
+          "description": "The triple hydraulic system (Green, Blue, Yellow) provides 3000 PSI pressure for flight controls, landing gear, brakes, thrust reversers, and cargo doors. The Green system is engine-driven, Blue is electrically driven, and Yellow has both engine-driven and electric backup pumps.",
+          "inspection_procedure": [
+            "1. Check hydraulic reservoir fluid levels for all three systems",
+            "2. Inspect hydraulic lines and fittings for leaks",
+            "3. Verify system pressure readings (nominal 3000 PSI)",
+            "4. Test hydraulic pump output flow rate",
+            "5. Check accumulator pre-charge pressure",
+            "6. Inspect hydraulic filters and replace if differential pressure exceeded",
+            "7. Test emergency hand pump operation (Yellow system)",
+            "8. Verify Power Transfer Unit (PTU) operation"
+          ],
+          "maintenance_interval": "750 Flight Hours",
+          "component_list": [
+            "Engine Driven Pump (Green & Yellow)",
+            "Electric Motor Pump (Blue & Yellow backup)",
+            "Power Transfer Unit (PTU)",
+            "Hydraulic Reservoir x3",
+            "System Filter Assembly x3",
+            "Accumulator (Brake & Nose Wheel Steering)",
+            "Hydraulic Fuse Units",
+            "Priority Valve"
+          ]
+        },
+        "ATA32": {
+          "chapter": "ATA 32",
+          "system": "Landing Gear",
+          "description": "The retractable tricycle landing gear includes dual-wheel nose gear and four-wheel main gear bogies. The system features oleo-pneumatic shock absorbers, carbon disc brakes with anti-skid protection, and auto-brake systems.",
+          "inspection_procedure": [
+            "1. Check tire pressures and tread depth",
+            "2. Inspect brake wear indicators on all wheel assemblies",
+            "3. Check oleo strut pressure and extension",
+            "4. Inspect landing gear door actuators and hinges",
+            "5. Verify wheel speed transducer operation",
+            "6. Test anti-skid system function",
+            "7. Inspect gear retraction mechanism and uplocks",
+            "8. Check nose wheel steering actuator"
+          ],
+          "maintenance_interval": "1000 Cycles",
+          "component_list": [
+            "Main Gear Assembly (L/R)",
+            "Nose Gear Assembly",
+            "Carbon Brake Pack x4",
+            "Oleo Strut x3",
+            "Anti-Skid Control Unit",
+            "Wheel Speed Transducer x8",
+            "Auto-brake Control Unit",
+            "Steering Control Unit"
+          ]
+        },
+        "ATA36": {
+          "chapter": "ATA 36",
+          "system": "Pneumatic",
+          "description": "The pneumatic system distributes engine bleed air for air conditioning, pressurization, wing and engine anti-ice, hydraulic reservoir pressurization, and cross-engine starting.",
+          "inspection_procedure": [
+            "1. Check bleed valve operation and response time",
+            "2. Inspect precooler and fan air valve",
+            "3. Verify bleed air temperature and pressure",
+            "4. Leak test pneumatic ducting using pressure decay method",
+            "5. Check crossbleed valve operation",
+            "6. Inspect high-pressure ground connection fitting",
+            "7. Verify overpressure relief valve function"
+          ],
+          "maintenance_interval": "2000 Flight Hours",
+          "component_list": [
+            "High Pressure Bleed Valve x2",
+            "Precooler x2",
+            "Fan Air Valve x2",
+            "Crossbleed Valve",
+            "Bleed Monitoring Computer (BMC) x2",
+            "Check Valve Assembly",
+            "Over-pressure Relief Valve"
+          ]
+        },
+        "ATA49": {
+          "chapter": "ATA 49",
+          "system": "Airborne Auxiliary Power (APU)",
+          "description": "The Honeywell APS3200 APU provides electrical power and bleed air on the ground and in flight up to 20,000 ft. It enables engine starting without external ground power and provides backup electrical generation.",
+          "inspection_procedure": [
+            "1. Check APU oil level and condition",
+            "2. Inspect APU inlet and exhaust for FOD damage",
+            "3. Verify APU start sequence timing parameters",
+            "4. Check EGT values during start and steady-state operation",
+            "5. Test APU generator load sharing capability",
+            "6. Inspect APU fire detection and extinguishing systems",
+            "7. Check APU bleed valve operation"
+          ],
+          "maintenance_interval": "1500 Flight Hours",
+          "component_list": [
+            "APU Engine Assembly (APS3200)",
+            "APU Generator",
+            "APU Electronic Control Box (ECB)",
+            "APU Bleed Valve",
+            "APU Inlet Door",
+            "APU Fire Detector Loop",
+            "APU Fire Extinguisher Bottle"
+          ]
+        },
+        "ATA52": {
+          "chapter": "ATA 52",
+          "system": "Doors",
+          "description": "Aircraft door systems include passenger doors, service doors, cargo doors, and emergency exits. Each door features integrated escape slides, pressure seals, and mechanical lock indicators.",
+          "inspection_procedure": [
+            "1. Inspect door seal condition and compression",
+            "2. Check door hinge and pivot bearings",
+            "3. Verify door assist mechanism (power assist / manual)",
+            "4. Test door warning system (ECAM indications)",
+            "5. Inspect escape slide container and pressure gauge",
+            "6. Check gust lock mechanism operation",
+            "7. Verify cargo door latch and lock indicators"
+          ],
+          "maintenance_interval": "2000 Cycles",
+          "component_list": [
+            "Forward Passenger Door (L1/R1)",
+            "Aft Passenger Door (L4/R4)",
+            "Over-wing Emergency Exit x4",
+            "Forward Cargo Door",
+            "Aft Cargo Door",
+            "Bulk Cargo Door",
+            "Door Pressure Seal Assembly",
+            "Escape Slide/Raft Assembly"
+          ]
+        },
+        "ATA71": {
+          "chapter": "ATA 71",
+          "system": "Powerplant",
+          "description": "The A320 is powered by two CFM56-5B series turbofan engines. Each engine produces approximately 27,000 lbs of thrust and drives hydraulic pumps, electrical generators, and bleed air systems.",
+          "inspection_procedure": [
+            "1. Perform borescope inspection of hot section (combustion chamber, HPT)",
+            "2. Check engine oil quantity and magnetic chip detector",
+            "3. Inspect fan blades for FOD damage and erosion",
+            "4. Verify engine vibration levels (N1, N2)",
+            "5. Check EGT margins and trend monitoring data",
+            "6. Inspect engine cowlings, latches, and hinges",
+            "7. Test thrust reverser deployment and stow",
+            "8. Check fuel nozzle spray pattern"
+          ],
+          "maintenance_interval": "500 Flight Hours",
+          "component_list": [
+            "Fan Assembly",
+            "High Pressure Compressor (HPC)",
+            "Combustion Chamber",
+            "High Pressure Turbine (HPT)",
+            "Low Pressure Turbine (LPT)",
+            "Full Authority Digital Engine Control (FADEC)",
+            "Thrust Reverser Assembly",
+            "Fuel Control Unit",
+            "Engine Oil System",
+            "Ignition System"
+          ]
+        }
+      }
+    },
+    "FIM": {
+      "title": "Fault Isolation Manual (FIM)",
+      "description": "The FIM provides systematic troubleshooting procedures to isolate faults indicated by ECAM warnings, maintenance messages, and reported defects.",
+      "sections": {
+        "ATA24": {
+          "chapter": "ATA 24",
+          "system": "Electrical Power",
+          "fault_codes": [
+            {
+              "code": "24-10-01",
+              "description": "Generator 1 Fault",
+              "probable_cause": ["Generator Control Unit failure", "IDG coupling shear", "Wiring harness damage"],
+              "isolation_steps": [
+                "1. Check GCU BITE codes via MCDU",
+                "2. Measure generator output voltage",
+                "3. Check IDG oil temperature and pressure",
+                "4. Inspect wiring harness between generator and GCU",
+                "5. If GCU codes present, replace GCU per AMM 24-21-11",
+                "6. If IDG oil pressure low, disconnect IDG per AMM 24-11-02"
+              ]
+            },
+            {
+              "code": "24-30-01",
+              "description": "Battery Fault",
+              "probable_cause": ["Battery cell failure", "Charger rectifier fault", "Temperature sensor error"],
+              "isolation_steps": [
+                "1. Check battery voltage (nominal 24-28.5V DC)",
+                "2. Measure individual cell voltages",
+                "3. Check battery temperature",
+                "4. Test battery charger output",
+                "5. If cell voltage below 1.8V, replace battery per AMM 24-31-01"
+              ]
+            }
+          ]
+        },
+        "ATA29": {
+          "chapter": "ATA 29",
+          "system": "Hydraulic Power",
+          "fault_codes": [
+            {
+              "code": "29-10-01",
+              "description": "Green System Low Pressure",
+              "probable_cause": ["Engine driven pump failure", "Hydraulic leak", "Relief valve stuck open"],
+              "isolation_steps": [
+                "1. Check reservoir quantity on ECAM HYD page",
+                "2. Inspect pump case drain flow",
+                "3. Visual inspection of hydraulic lines for leaks",
+                "4. Check system pressure with engine running",
+                "5. If leak found, identify location and repair per SRM",
+                "6. If pump output low, replace pump per AMM 29-11-01"
+              ]
+            }
+          ]
+        },
+        "ATA71": {
+          "chapter": "ATA 71",
+          "system": "Powerplant",
+          "fault_codes": [
+            {
+              "code": "71-00-01",
+              "description": "Engine 1 EGT Overtemperature",
+              "probable_cause": ["Fuel nozzle blockage", "HPT blade damage", "FADEC sensor fault"],
+              "isolation_steps": [
+                "1. Review FADEC fault codes via MCDU",
+                "2. Check EGT trend data for gradual or sudden increase",
+                "3. Perform fuel nozzle flow check",
+                "4. Borescope HPT blades for damage",
+                "5. If FADEC codes present, replace EGT probe per AMM 71-31-01",
+                "6. If blade damage found, contact engine OEM for repair limits"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "IPC": {
+      "title": "Illustrated Parts Catalogue (IPC)",
+      "description": "The IPC provides part numbers, quantities, and assembly breakdown for all aircraft components. Used for ordering replacement parts and verifying correct installation.",
+      "sections": {
+        "ATA29": {
+          "chapter": "ATA 29",
+          "system": "Hydraulic Power",
+          "parts": [
+            {"part_number": "SMP-29-001", "description": "Engine Driven Pump (Green)", "quantity": 1, "unit": "EA", "serial_tracked": true},
+            {"part_number": "SMP-29-002", "description": "Electric Motor Pump (Blue)", "quantity": 1, "unit": "EA", "serial_tracked": true},
+            {"part_number": "SMP-29-010", "description": "Hydraulic Filter Element (Green)", "quantity": 2, "unit": "EA", "serial_tracked": false},
+            {"part_number": "SMP-29-020", "description": "Hydraulic Reservoir (Green)", "quantity": 1, "unit": "EA", "serial_tracked": true},
+            {"part_number": "SMP-29-030", "description": "PTU Assembly", "quantity": 1, "unit": "EA", "serial_tracked": true},
+            {"part_number": "SMP-29-040", "description": "Accumulator (Brake)", "quantity": 1, "unit": "EA", "serial_tracked": true}
+          ]
+        },
+        "ATA32": {
+          "chapter": "ATA 32",
+          "system": "Landing Gear",
+          "parts": [
+            {"part_number": "SMP-32-001", "description": "Main Gear Shock Strut (LH)", "quantity": 1, "unit": "EA", "serial_tracked": true},
+            {"part_number": "SMP-32-002", "description": "Main Gear Shock Strut (RH)", "quantity": 1, "unit": "EA", "serial_tracked": true},
+            {"part_number": "SMP-32-010", "description": "Nose Gear Assembly", "quantity": 1, "unit": "EA", "serial_tracked": true},
+            {"part_number": "SMP-32-020", "description": "Main Wheel Assembly", "quantity": 4, "unit": "EA", "serial_tracked": true},
+            {"part_number": "SMP-32-030", "description": "Carbon Brake Pack", "quantity": 4, "unit": "EA", "serial_tracked": true},
+            {"part_number": "SMP-32-040", "description": "Tire (Main Wheel)", "quantity": 4, "unit": "EA", "serial_tracked": false}
+          ]
+        },
+        "ATA71": {
+          "chapter": "ATA 71",
+          "system": "Powerplant",
+          "parts": [
+            {"part_number": "SMP-71-001", "description": "Fan Blade", "quantity": 36, "unit": "EA", "serial_tracked": true},
+            {"part_number": "SMP-71-010", "description": "HPT Blade Set", "quantity": 1, "unit": "SET", "serial_tracked": true},
+            {"part_number": "SMP-71-020", "description": "Fuel Nozzle", "quantity": 20, "unit": "EA", "serial_tracked": true},
+            {"part_number": "SMP-71-030", "description": "FADEC Channel A", "quantity": 1, "unit": "EA", "serial_tracked": true},
+            {"part_number": "SMP-71-040", "description": "Oil Filter Assembly", "quantity": 1, "unit": "EA", "serial_tracked": false},
+            {"part_number": "SMP-71-050", "description": "Igniter Plug", "quantity": 2, "unit": "EA", "serial_tracked": false}
+          ]
+        }
+      }
+    },
+    "SRM": {
+      "title": "Structural Repair Manual (SRM)",
+      "description": "The SRM provides allowable damage limits and repair procedures for aircraft structural components including fuselage skin, wings, empennage, and doors.",
+      "sections": {
+        "ATA52": {
+          "chapter": "ATA 52",
+          "system": "Doors",
+          "damage_limits": [
+            {
+              "area": "Door Skin Panel",
+              "max_dent_depth": "1.5mm",
+              "max_scratch_length": "150mm",
+              "max_scratch_depth": "0.1mm",
+              "repair_procedure": "Blend out scratches within limits. If exceeded, apply doubler patch per SRM 51-70-11."
+            }
+          ]
+        },
+        "ATA53": {
+          "chapter": "ATA 53",
+          "system": "Fuselage",
+          "damage_limits": [
+            {
+              "area": "Fuselage Skin (Pressurized Area)",
+              "max_dent_depth": "2.0mm within 100mm radius",
+              "max_crack_length": "Not permitted",
+              "repair_procedure": "Any crack in pressurized fuselage skin requires immediate repair per SRM 53-00-06. Dents within limits may be left unrepaired with monitoring."
+            }
+          ]
+        }
+      }
+    },
+    "WDM": {
+      "title": "Wiring Diagram Manual (WDM)",
+      "description": "The WDM provides schematic wiring diagrams for all aircraft electrical circuits. Used for fault isolation, modification embodiment, and wire routing verification.",
+      "sections": {
+        "ATA24": {
+          "chapter": "ATA 24",
+          "system": "Electrical Power",
+          "diagrams": [
+            {
+              "diagram_id": "WDM-24-11-01",
+              "title": "AC Generator 1 Circuit",
+              "description": "Shows wiring from Engine 1 IDG through GCU to AC Bus 1. Includes current transformers, voltage regulators, and bus tie relay circuits.",
+              "wire_list": [
+                {"wire_id": "W24A001", "from": "IDG Gen Terminal", "to": "GCU Pin A1", "gauge": "AWG 2", "type": "Power"},
+                {"wire_id": "W24A002", "from": "GCU Pin B3", "to": "Gen Contactor Coil", "gauge": "AWG 20", "type": "Control"},
+                {"wire_id": "W24A003", "from": "Gen Contactor Output", "to": "AC Bus 1", "gauge": "AWG 0", "type": "Power"}
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "CMM": {
+      "title": "Component Maintenance Manual (CMM)",
+      "description": "The CMM provides detailed overhaul, repair, and test procedures for individual components removed from the aircraft. Used by component repair shops.",
+      "sections": {
+        "ATA29": {
+          "chapter": "ATA 29",
+          "component": "Hydraulic Engine Driven Pump",
+          "part_number": "SMP-29-001",
+          "overhaul_interval": "6000 Flight Hours or on-condition",
+          "procedures": {
+            "disassembly": [
+              "1. Remove pump from shipping container",
+              "2. Drain residual fluid through case drain port",
+              "3. Remove drive coupling",
+              "4. Disassemble pump housing (torque values per Table 1)",
+              "5. Remove piston assembly and swash plate",
+              "6. Remove seals and O-rings (discard all elastomers)"
+            ],
+            "inspection": [
+              "1. Visual inspection of all metallic parts for wear/scoring",
+              "2. Dimensional check of piston bores (tolerance ±0.01mm)",
+              "3. Magnetic particle inspection of drive shaft",
+              "4. Check swash plate bearing for roughness",
+              "5. Flow bench test at 3000 PSI"
+            ],
+            "reassembly": [
+              "1. Install new seals and O-rings per kit SMP-29-001-KIT",
+              "2. Reassemble piston group with lubrication",
+              "3. Install swash plate and control piston",
+              "4. Torque housing bolts per Table 1",
+              "5. Install drive coupling"
+            ],
+            "testing": [
+              "1. Proof pressure test at 4500 PSI for 5 minutes",
+              "2. Flow test at 3000 PSI (minimum 22 GPM)",
+              "3. Case drain leakage (maximum 0.5 GPM)",
+              "4. Pressure ripple test",
+              "5. Endurance run 30 minutes at rated conditions"
+            ]
+          }
+        }
+      }
+    },
+    "ALS": {
+      "title": "Airworthiness Limitations Section (ALS)",
+      "description": "The ALS defines mandatory maintenance tasks and structural inspection intervals that cannot be exceeded. These are regulatory requirements established by the aircraft type certificate.",
+      "sections": {
+        "structural_inspections": [
+          {
+            "task_id": "ALS-SI-001",
+            "description": "Wing lower skin fatigue inspection",
+            "threshold": "30000 Flight Cycles",
+            "repeat_interval": "6000 Flight Cycles",
+            "inspection_type": "Detailed Visual Inspection (DVI)",
+            "affected_area": "Wing Station 200 to 400, lower skin panels"
+          },
+          {
+            "task_id": "ALS-SI-002",
+            "description": "Pressure bulkhead radial seam inspection",
+            "threshold": "20000 Flight Cycles",
+            "repeat_interval": "4000 Flight Cycles",
+            "inspection_type": "HFEC (High Frequency Eddy Current)",
+            "affected_area": "Aft pressure bulkhead, all radial seams"
+          },
+          {
+            "task_id": "ALS-SI-003",
+            "description": "Fuselage longitudinal skin splice inspection",
+            "threshold": "22000 Flight Cycles",
+            "repeat_interval": "5000 Flight Cycles",
+            "inspection_type": "DVI + LFEC",
+            "affected_area": "Fuselage frames 22 through 74"
+          }
+        ],
+        "life_limited_parts": [
+          {
+            "part": "Engine Fan Disc",
+            "life_limit": "20000 Flight Cycles",
+            "action": "Remove from service and scrap"
+          },
+          {
+            "part": "Landing Gear Shock Strut",
+            "life_limit": "50000 Flight Cycles or 25 years",
+            "action": "Overhaul or replace"
+          },
+          {
+            "part": "APU Turbine Disc",
+            "life_limit": "15000 APU Hours",
+            "action": "Remove from service and scrap"
+          }
+        ]
+      }
+    },
+    "MPD": {
+      "title": "Maintenance Planning Document (MPD)",
+      "description": "The MPD defines the scheduled maintenance program including task intervals, check packages (A/B/C/D checks), and zonal inspection requirements.",
+      "sections": {
+        "check_packages": {
+          "A_Check": {
+            "interval": "750 Flight Hours",
+            "duration": "8-10 hours",
+            "tasks": [
+              "General visual inspection of aircraft exterior",
+              "Engine oil level check and replenishment",
+              "Hydraulic fluid level check",
+              "Tire pressure check",
+              "Brake wear indicator check",
+              "Emergency equipment check",
+              "Fluid leak checks",
+              "Deferred defect review"
+            ]
+          },
+          "C_Check": {
+            "interval": "7500 Flight Hours or 24 months",
+            "duration": "2-3 weeks",
+            "tasks": [
+              "Detailed structural inspection of fuselage, wings, empennage",
+              "Engine borescope inspection",
+              "Landing gear detailed inspection",
+              "Flight control system rigging check",
+              "All hydraulic system filter replacement",
+              "Electrical system insulation resistance testing",
+              "Cabin interior detailed inspection",
+              "Corrosion prevention compound application"
+            ]
+          },
+          "D_Check": {
+            "interval": "25000 Flight Hours or 10 years",
+            "duration": "4-6 weeks",
+            "tasks": [
+              "Complete aircraft strip and inspection",
+              "Structural modification embodiment",
+              "Landing gear overhaul",
+              "Flight control actuator overhaul",
+              "Complete rewiring inspection",
+              "Fuel tank entry inspection",
+              "All life-limited part review",
+              "Complete repaint",
+              "Full functional test of all systems"
+            ]
+          }
+        },
+        "scheduled_tasks": [
+          {
+            "task_number": "MPD-29-001",
+            "description": "Hydraulic system filter replacement (all systems)",
+            "interval": "750 FH",
+            "zone": "Wing root and center fuselage",
+            "access": "Panels 165AL, 165AR, 152C"
+          },
+          {
+            "task_number": "MPD-32-001",
+            "description": "Landing gear tire pressure check and brake wear measurement",
+            "interval": "48 Hours",
+            "zone": "Main and nose gear wells",
+            "access": "External access"
+          },
+          {
+            "task_number": "MPD-71-001",
+            "description": "Engine oil quantity check and magnetic chip detector inspection",
+            "interval": "100 FH",
+            "zone": "Engine pylons",
+            "access": "Engine cowling panels"
+          },
+          {
+            "task_number": "MPD-49-001",
+            "description": "APU oil level check and inlet inspection",
+            "interval": "200 FH",
+            "zone": "Tail cone",
+            "access": "APU access panels"
+          }
+        ]
+      }
+    }
+  }
+}

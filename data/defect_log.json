@@ -1,0 +1,116 @@
+{
+  "log_type": "Defect Log",
+  "aircraft_reg": "VT-DEM",
+  "entries": [
+    {
+      "id": "DL-001",
+      "date": "2026-03-10",
+      "component": "Hydraulic Pump (Green)",
+      "ata": "29",
+      "fault": "Intermittent pressure drop to 2850 PSI during high-demand operations",
+      "severity": "Medium",
+      "action": "Filter replaced. Pump output monitoring in progress.",
+      "engineer": "Aman Rai (AME-L: 12045)",
+      "status": "Under Observation"
+    },
+    {
+      "id": "DL-002",
+      "date": "2026-03-08",
+      "component": "Engine 2 (CFM56-5B)",
+      "ata": "71",
+      "fault": "EGT margin trending high — 15°C above Engine 1 baseline",
+      "severity": "Low",
+      "action": "FADEC data reviewed. Fuel nozzles checked. Trend monitoring continues.",
+      "engineer": "Priya Sharma (AME-L: 11890)",
+      "status": "Open"
+    },
+    {
+      "id": "DL-003",
+      "date": "2026-03-05",
+      "component": "APU (APS3200)",
+      "ata": "49",
+      "fault": "Start time exceeding normal parameters (62s vs 45s normal)",
+      "severity": "Medium",
+      "action": "Inlet door lubricated. Starter brushes inspected — slight wear noted.",
+      "engineer": "Aman Rai (AME-L: 12045)",
+      "status": "Closed"
+    },
+    {
+      "id": "DL-004",
+      "date": "2026-03-03",
+      "component": "Bleed Valve 1",
+      "ata": "36",
+      "fault": "Intermittent BLEED 1 FAULT — valve response delay",
+      "severity": "High",
+      "action": "Bleed valve replaced per AMM 36-11-01. System tested satisfactory.",
+      "engineer": "Vikram Singh (AME-L: 14050)",
+      "status": "Closed"
+    },
+    {
+      "id": "DL-005",
+      "date": "2026-02-27",
+      "component": "Door L1 Assist Mechanism",
+      "ata": "52",
+      "fault": "Increased operating force required — crew reports stiffness",
+      "severity": "Low",
+      "action": "Hinge bearings lubricated. Door operation verified satisfactory.",
+      "engineer": "Rajesh Kumar (AME-L: 13210)",
+      "status": "Closed"
+    },
+    {
+      "id": "DL-006",
+      "date": "2026-02-25",
+      "component": "Slat Position Sensor",
+      "ata": "27",
+      "fault": "Slat channel 1 position disagreement during pre-flight check",
+      "severity": "Medium",
+      "action": "Sensors re-rigged per AMM 27-81-01. Full cycle test satisfactory.",
+      "engineer": "Vikram Singh (AME-L: 14050)",
+      "status": "Closed"
+    },
+    {
+      "id": "DL-007",
+      "date": "2026-02-22",
+      "component": "Zone 2 Trim Air Valve",
+      "ata": "21",
+      "fault": "Cabin zone 2 temperature not controllable below 26°C",
+      "severity": "Medium",
+      "action": "Trim air valve actuator replaced per AMM 21-61-01. Post-repair temp range normal.",
+      "engineer": "Aman Rai (AME-L: 12045)",
+      "status": "Closed"
+    },
+    {
+      "id": "DL-008",
+      "date": "2026-02-20",
+      "component": "Precooler Duct",
+      "ata": "36",
+      "fault": "Bleed air leak detected at precooler duct — abnormal heat in zone",
+      "severity": "High",
+      "action": "Duct clamp tightened. Leak check clear. Monitoring after engine runs.",
+      "engineer": "Priya Sharma (AME-L: 11890)",
+      "status": "Under Observation"
+    },
+    {
+      "id": "DL-009",
+      "date": "2026-02-18",
+      "component": "Hydraulic Qty Transmitter (Yellow)",
+      "ata": "29",
+      "fault": "Fluctuating reservoir quantity indication on ECAM",
+      "severity": "Low",
+      "action": "Connector cleaned and secured. Indication stable after ground test.",
+      "engineer": "Rajesh Kumar (AME-L: 13210)",
+      "status": "Closed"
+    },
+    {
+      "id": "DL-010",
+      "date": "2026-02-15",
+      "component": "Engine 1 Accessory Gearbox",
+      "ata": "71",
+      "fault": "Oil leak at accessory gearbox cover area",
+      "severity": "Medium",
+      "action": "Gasket replaced per AMM 71-11-05. Oil replenished. No leak after run.",
+      "engineer": "Vikram Singh (AME-L: 14050)",
+      "status": "Closed"
+    }
+  ]
+}

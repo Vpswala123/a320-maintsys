@@ -1,0 +1,96 @@
+[
+  {
+    "session_id": "SESS-20260310-01",
+    "aircraft_id": "VT-DEM",
+    "check_type": "Daily Inspection",
+    "maintenance_type": "Scheduled Maintenance",
+    "engineer": "ame@demo.com",
+    "start_time": "2026-03-10T04:30:00Z",
+    "end_time": "2026-03-10T05:45:00Z",
+    "status": "Closed",
+    "inspector_approval": "inspector@demo.com",
+    "entries": [
+      {
+        "entry_id": "E-001",
+        "ata": "ATA 12",
+        "component": "Engine Oil System",
+        "action": "Checked engine oil level. Serviced Engine #1 with 2 quarts Mobil Jet Oil II.",
+        "result": "Oil levels normal. Servicing complete.",
+        "severity": "Routine",
+        "timestamp": "2026-03-10T04:45:00Z"
+      },
+      {
+        "entry_id": "E-002",
+        "ata": "ATA 32",
+        "component": "Main Landing Gear Tires",
+        "action": "Visual inspection of tire wear and pressure check.",
+        "result": "Pressures nominal (205 PSI). Wear limits within tolerance.",
+        "severity": "Routine",
+        "timestamp": "2026-03-10T05:10:00Z"
+      }
+    ]
+  },
+  {
+    "session_id": "SESS-20260311-01",
+    "aircraft_id": "VT-DEM",
+    "check_type": "N/A",
+    "maintenance_type": "Unscheduled Maintenance",
+    "reason": "Pilot Defect Report: Hydraulic pressure fluctuation entering approach.",
+    "engineer": "ame@demo.com",
+    "start_time": "2026-03-11T09:15:00Z",
+    "end_time": null,
+    "status": "Open",
+    "inspector_approval": null,
+    "entries": [
+      {
+        "entry_id": "E-003",
+        "ata": "ATA 29",
+        "component": "Green System EDP",
+        "action": "Inspected Green Hydraulic Engine Driven Pump for leaks. Found minor weepage at high-pressure fitting.",
+        "result": "Re-torqued fitting. Operational check requires engine run.",
+        "severity": "Warning",
+        "timestamp": "2026-03-11T09:40:00Z"
+      }
+    ]
+  },
+  {
+    "session_id": "SESS-20260228-02",
+    "aircraft_id": "VT-DEN",
+    "check_type": "A-Check",
+    "maintenance_type": "Scheduled Maintenance",
+    "engineer": "ame@demo.com",
+    "start_time": "2026-02-28T10:00:00Z",
+    "end_time": "2026-03-01T14:30:00Z",
+    "status": "Closed",
+    "inspector_approval": "inspector@demo.com",
+    "entries": [
+      {
+        "entry_id": "E-004",
+        "ata": "ATA 21",
+        "component": "Cabin Recirculation Filters",
+        "action": "Removed and replaced cabin recirculation filters per AMM 21-23-00.",
+        "result": "Filters replaced. Flow check normal.",
+        "severity": "Routine",
+        "timestamp": "2026-02-28T11:20:00Z"
+      },
+      {
+        "entry_id": "E-005",
+        "ata": "ATA 29",
+        "component": "Hydraulic System Return Filters",
+        "action": "Replaced return filters on Green, Blue, and Yellow systems.",
+        "result": "Filters replaced. Leak check normal.",
+        "severity": "Routine",
+        "timestamp": "2026-02-28T14:45:00Z"
+      },
+      {
+        "entry_id": "E-006",
+        "ata": "ATA 71",
+        "component": "Engine Cowling Latches",
+        "action": "Lubricated all engine fan cowl and thrust reverser latches.",
+        "result": "Lubrication complete. Latches operate smoothly.",
+        "severity": "Routine",
+        "timestamp": "2026-03-01T09:15:00Z"
+      }
+    ]
+  }
+]

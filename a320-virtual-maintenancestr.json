@@ -1,0 +1,25 @@
+a320-virtual-maintenance/
+│
+├── README.md
+├── PROJECT_PLAN.md
+├── DATA_STRUCTURE.md
+├── SAMPLE_DATA.json
+│
+├── web/
+│   ├── index.html
+│   ├── app.js
+│   └── style.css
+│
+├── manuals/
+│   ├── AMM_sample.md
+│   ├── FIM_sample.md
+│   ├── IPC_sample.md
+│   └── SRM_sample.md
+│
+├── logbooks/
+│   ├── technical_log_sample.json
+│   ├── maintenance_log_sample.json
+│   └── defect_log_sample.json
+│
+└── assets/
+    └── aircraft.glb

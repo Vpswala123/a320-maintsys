@@ -1,0 +1,11 @@
+Error: Invalid supabaseUrl: Must be a valid HTTP or HTTPS URL.
+    at validateSupabaseUrl (C:\Users\amans\Downloads\a320-virtual-maintenance\backend\node_modules\@supabase\supabase-js\dist\index.cjs:147:48)
+    at new SupabaseClient (C:\Users\amans\Downloads\a320-virtual-maintenance\backend\node_modules\@supabase\supabase-js\dist\index.cjs:195:19)
+    at createClient (C:\Users\amans\Downloads\a320-virtual-maintenance\backend\node_modules\@supabase\supabase-js\dist\index.cjs:388:9)
+    at Object.<anonymous> (C:\Users\amans\Downloads\a320-virtual-maintenance\backend\database\client.js:7:18)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Module.require (node:internal/modules/cjs/loader:1298:19)
+    at require (node:internal/modules/helpers:182:18)

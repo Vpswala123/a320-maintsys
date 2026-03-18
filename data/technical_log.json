@@ -1,0 +1,126 @@
+{
+  "log_type": "Technical Log",
+  "aircraft_reg": "VT-DEM",
+  "entries": [
+    {
+      "id": "TL-001",
+      "date": "2026-03-10",
+      "aircraft_reg": "VT-DEM",
+      "ata": "29",
+      "defect": "Hydraulic pressure fluctuation observed on Green system during approach — gauge reading dropped to 2850 PSI momentarily",
+      "action": "Hydraulic filter element replaced on Green system. System pressure verified normal at 3000 PSI after ground run. Filter found contaminated.",
+      "engineer": "Aman Rai (AME-L: 12045)",
+      "status": "Closed"
+    },
+    {
+      "id": "TL-002",
+      "date": "2026-03-08",
+      "aircraft_reg": "VT-DEM",
+      "ata": "71",
+      "defect": "Engine 2 EGT margin trending 15°C higher than Engine 1 over last 5 flights",
+      "action": "FADEC data download performed. Fuel nozzle flow check satisfactory. EGT probe resistance checked — within limits. Monitoring continues per MEL.",
+      "engineer": "Priya Sharma (AME-L: 11890)",
+      "status": "Open — Monitoring"
+    },
+    {
+      "id": "TL-003",
+      "date": "2026-03-07",
+      "aircraft_reg": "VT-DEM",
+      "ata": "32",
+      "defect": "Main gear RH inboard tire showing uneven wear pattern on tread shoulder",
+      "action": "Tire replaced at position 3. Wheel alignment checked within limits. Brake assembly inspected — no abnormalities found.",
+      "engineer": "Rajesh Kumar (AME-L: 13210)",
+      "status": "Closed"
+    },
+    {
+      "id": "TL-004",
+      "date": "2026-03-05",
+      "aircraft_reg": "VT-DEM",
+      "ata": "49",
+      "defect": "APU start time exceeding normal parameters — 62 seconds vs. normal 45 seconds. EGT peak at 1050°C",
+      "action": "APU inlet door mechanism lubricated. Starter motor brushes inspected — slight wear noted but within limits. APU compartment cleaned of debris.",
+      "engineer": "Aman Rai (AME-L: 12045)",
+      "status": "Closed"
+    },
+    {
+      "id": "TL-005",
+      "date": "2026-03-03",
+      "aircraft_reg": "VT-DEM",
+      "ata": "36",
+      "defect": "ECAM caution: BLEED 1 FAULT during climb through FL250. Pack 1 auto-selected off.",
+      "action": "Bleed valve 1 tested on ground — intermittent response noted. Bleed valve replaced per AMM 36-11-01. Leak check satisfactory post replacement.",
+      "engineer": "Vikram Singh (AME-L: 14050)",
+      "status": "Closed"
+    },
+    {
+      "id": "TL-006",
+      "date": "2026-03-01",
+      "aircraft_reg": "VT-DEM",
+      "ata": "24",
+      "defect": "Galley power outlet 3L inoperative — no output voltage measured",
+      "action": "Circuit breaker found tripped on P320 panel. Reset and output verified 115V AC. Wiring inspection found no anomalies. Monitoring for recurrence.",
+      "engineer": "Priya Sharma (AME-L: 11890)",
+      "status": "Closed"
+    },
+    {
+      "id": "TL-007",
+      "date": "2026-02-27",
+      "aircraft_reg": "VT-DEM",
+      "ata": "52",
+      "defect": "Forward passenger door L1 — crew reports increased force required to open",
+      "action": "Door assist mechanism inspected. Hinge bearings found dry. Bearings lubricated and door operation verified satisfactory. Seal compression checked — within limits.",
+      "engineer": "Rajesh Kumar (AME-L: 13210)",
+      "status": "Closed"
+    },
+    {
+      "id": "TL-008",
+      "date": "2026-02-25",
+      "aircraft_reg": "VT-DEM",
+      "ata": "27",
+      "defect": "ECAM memo: SLATS FAULT — Slat channel 1 disagreement during pre-flight",
+      "action": "SFCC BITE check performed. No fault codes stored. Slat position sensors checked and re-rigged per AMM 27-81-01. Full retraction/extension cycle satisfactory.",
+      "engineer": "Vikram Singh (AME-L: 14050)",
+      "status": "Closed"
+    },
+    {
+      "id": "TL-009",
+      "date": "2026-02-22",
+      "aircraft_reg": "VT-DEM",
+      "ata": "21",
+      "defect": "Cabin zone 2 temperature cannot be reduced below 26°C — passenger complaint",
+      "action": "Zone controller recalibrated. Trim air valve actuator found sluggish — replaced per AMM 21-61-01. Post-replacement, zone temperature controllable to 18°C.",
+      "engineer": "Aman Rai (AME-L: 12045)",
+      "status": "Closed"
+    },
+    {
+      "id": "TL-010",
+      "date": "2026-02-20",
+      "aircraft_reg": "VT-DEM",
+      "ata": "36",
+      "defect": "Bleed air leak suspected at precooler duct area — maintenance crew detected abnormal heat in zone",
+      "action": "Precooler duct clamp found loose. Clamp tightened and leak check performed using soap solution — no further leaks detected. Area re-inspected after engine run.",
+      "engineer": "Priya Sharma (AME-L: 11890)",
+      "status": "Open — Monitoring"
+    },
+    {
+      "id": "TL-011",
+      "date": "2026-02-18",
+      "aircraft_reg": "VT-DEM",
+      "ata": "29",
+      "defect": "Yellow system hydraulic quantity indication fluctuating on ECAM",
+      "action": "Reservoir quantity transmitter connector cleaned and secured. Ground test showed stable indication. Sensor resistance within tolerance. No leak found.",
+      "engineer": "Rajesh Kumar (AME-L: 13210)",
+      "status": "Closed"
+    },
+    {
+      "id": "TL-012",
+      "date": "2026-02-15",
+      "aircraft_reg": "VT-DEM",
+      "ata": "71",
+      "defect": "Engine 1 — slight oil leak observed at accessory gearbox area during daily inspection",
+      "action": "Oil leak traced to gearbox cover gasket. Gasket replaced per AMM 71-11-05. Oil replenished to full. No further leak after engine run.",
+      "engineer": "Vikram Singh (AME-L: 14050)",
+      "status": "Closed"
+    }
+  ]
+}

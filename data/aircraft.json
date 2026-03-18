@@ -1,0 +1,46 @@
+[
+  {
+    "aircraft_id": "A320-001",
+    "tail_number": "VT-DEM",
+    "aircraft_type": "A320-214",
+    "airline": "Student Demo Airline",
+    "engine_type": "CFM56-5B",
+    "total_flight_hours": 12840,
+    "total_cycles": 6420,
+    "manufacture_date": "2016-04-15",
+    "status": "Active"
+  },
+  {
+    "aircraft_id": "A320-002",
+    "tail_number": "VT-DEN",
+    "aircraft_type": "A320-214",
+    "airline": "Student Demo Airline",
+    "engine_type": "CFM56-5B",
+    "total_flight_hours": 8450,
+    "total_cycles": 4210,
+    "manufacture_date": "2018-09-22",
+    "status": "Active"
+  },
+  {
+    "aircraft_id": "A320-003",
+    "tail_number": "VT-DEO",
+    "aircraft_type": "A320-251N",
+    "airline": "Student Demo Airline",
+    "engine_type": "LEAP-1A",
+    "total_flight_hours": 3200,
+    "total_cycles": 1150,
+    "manufacture_date": "2021-11-05",
+    "status": "Active"
+  },
+  {
+    "aircraft_id": "A320-004",
+    "tail_number": "VT-DEP",
+    "aircraft_type": "A320-251N",
+    "airline": "Student Demo Airline",
+    "engine_type": "LEAP-1A",
+    "total_flight_hours": 1500,
+    "total_cycles": 680,
+    "manufacture_date": "2023-02-18",
+    "status": "Maintenance"
+  }
+]

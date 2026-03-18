@@ -1,0 +1,116 @@
+{
+  "checks": [
+    {
+      "check_type": "A1-Check",
+      "interval_hours": 500,
+      "interval_months": null,
+      "estimated_duration_hours": 50,
+      "description": "Routine inspection of critical systems, fluid levels, and basic operational checks.",
+      "tasks": [
+        "Visual inspection of fuselage and wings",
+        "Check engine oil levels",
+        "Inspect landing gear",
+        "Check tire pressure and wear",
+        "Test emergency lights",
+        "Inspect flight control surfaces",
+        "Check hydraulic fluid levels",
+        "Review fault logs"
+      ]
+    },
+    {
+      "check_type": "A2-Check",
+      "interval_hours": 1000,
+      "interval_months": null,
+      "estimated_duration_hours": 80,
+      "description": "Extended line maintenance check including lubrication and filter replacements.",
+      "tasks": [
+        "All A1-Check tasks",
+        "Replace hydraulic filters",
+        "Lubricate flight control hinges",
+        "Inspect bleed air ducts",
+        "Test fire detection system",
+        "Check oxygen system pressure",
+        "Inspect APU",
+        "Replace cabin air filters"
+      ]
+    },
+    {
+      "check_type": "B-Check",
+      "interval_hours": null,
+      "interval_months": 6,
+      "estimated_duration_hours": 160,
+      "description": "Intermediate maintenance check performed at regular calendar intervals.",
+      "tasks": [
+        "All A-Check tasks",
+        "Detailed structural inspection",
+        "Engine borescope inspection",
+        "Landing gear detailed check",
+        "Hydraulic system test",
+        "Avionics functional check",
+        "Fuel system inspection",
+        "Corrosion prevention treatment"
+      ]
+    },
+    {
+      "check_type": "C-Check",
+      "interval_hours": 6000,
+      "interval_months": 24,
+      "estimated_duration_hours": 2000,
+      "description": "Heavy maintenance check requiring aircraft out of service for 1-2 weeks.",
+      "tasks": [
+        "Complete structural inspection",
+        "Engine removal and overhaul assessment",
+        "Landing gear overhaul",
+        "Complete avionics check",
+        "Cabin refurbishment",
+        "Fuel tank inspection",
+        "Flight control system overhaul",
+        "Wiring inspection and replacement",
+        "Paint inspection",
+        "Weight and balance check"
+      ]
+    },
+    {
+      "check_type": "D-Check",
+      "interval_hours": 24000,
+      "interval_months": 120,
+      "estimated_duration_hours": 50000,
+      "description": "Major overhaul — heaviest check, aircraft completely stripped and rebuilt. Also called a heavy maintenance visit.",
+      "tasks": [
+        "Complete airframe disassembly",
+        "Full structural inspection and repair",
+        "All systems overhaul",
+        "Complete rewiring",
+        "Engine overhaul",
+        "Landing gear complete overhaul",
+        "Fuel system overhaul",
+        "Cabin complete strip and refit",
+        "New paint",
+        "Certification flight test"
+      ]
+    }
+  ],
+  "aircraft_schedule": [
+    {
+      "aircraft_reg": "VT-DEM",
+      "check_type": "A1-Check",
+      "last_check": "2026-01-15",
+      "next_due": "2026-04-15",
+      "status": "scheduled"
+    },
+    {
+      "aircraft_reg": "VT-DEM",
+      "check_type": "C-Check",
+      "last_check": "2024-06-01",
+      "next_due": "2026-06-01",
+      "status": "upcoming"
+    },
+    {
+      "aircraft_reg": "VT-DEM",
+      "check_type": "D-Check",
+      "last_check": "2020-01-01",
+      "next_due": "2030-01-01",
+      "status": "planned"
+    }
+  ]
+}

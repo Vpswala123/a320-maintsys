@@ -1,0 +1,123 @@
+{
+  "subsystems": [
+    {
+      "id": "engine",
+      "name": "Engine (CFM56-5B)",
+      "zone": "ENGINE_ZONE",
+      "ata_chapter": "71",
+      "ata_title": "Powerplant",
+      "description": "Twin CFM56-5B high-bypass turbofan engines producing 27,000 lbf thrust each. Powers aircraft and drives hydraulic, electrical, and pneumatic systems.",
+      "icon": "🔥",
+      "componentIds": [
+        "eng_fan", "eng_hpc", "eng_combustion", "eng_hpt", "eng_lpt",
+        "eng_fadec", "eng_reverser", "eng_fcu", "eng_oil", "eng_ignition",
+        "eng_gearbox", "eng_starter", "eng_nacelle"
+      ],
+      "layout": {
+        "spread": 3.5,
+        "centerY": 0,
+        "arrangement": "linear"
+      }
+    },
+    {
+      "id": "wing",
+      "name": "Wing Assembly",
+      "zone": "WING_ZONE",
+      "ata_chapter": "27/57",
+      "ata_title": "Flight Controls / Wings",
+      "description": "Low-mounted swept wings with slats, flaps, ailerons, spoilers, and integral fuel tanks. Houses hydraulic lines and anti-ice systems.",
+      "icon": "🛫",
+      "componentIds": [
+        "wing_flap_act", "wing_slat_act", "wing_spoiler", "wing_aileron",
+        "wing_fuel_tank", "wing_anti_ice", "wing_hyd_green", "wing_hyd_yellow",
+        "wing_hyd_blue", "wing_ptu", "wing_fuel_pump", "wing_vent_valve",
+        "wing_sfcc"
+      ],
+      "layout": {
+        "spread": 4.0,
+        "centerY": 0,
+        "arrangement": "grid"
+      }
+    },
+    {
+      "id": "landing_gear",
+      "name": "Landing Gear System",
+      "zone": "LANDING_GEAR_ZONE",
+      "ata_chapter": "32",
+      "ata_title": "Landing Gear",
+      "description": "Retractable tricycle landing gear with dual-wheel nose gear and four-wheel main gear bogies. Features oleo-pneumatic shock absorbers and carbon brakes.",
+      "icon": "🛞",
+      "componentIds": [
+        "lg_main_strut_l", "lg_main_strut_r", "lg_nose_strut",
+        "lg_brake_l1", "lg_brake_l2", "lg_brake_r1", "lg_brake_r2",
+        "lg_wheel_main", "lg_wheel_nose", "lg_antiskid", "lg_steering",
+        "lg_retract_act", "lg_autobrake", "lg_door_act"
+      ],
+      "layout": {
+        "spread": 3.0,
+        "centerY": -0.5,
+        "arrangement": "symmetric"
+      }
+    },
+    {
+      "id": "fuselage",
+      "name": "Fuselage Systems",
+      "zone": "FUSELAGE_ZONE",
+      "ata_chapter": "21/36/52/53",
+      "ata_title": "Air Cond / Pneumatic / Doors / Fuselage",
+      "description": "Pressurized fuselage housing cabin systems including air conditioning, pressurization, doors, oxygen, lighting, and cargo compartments.",
+      "icon": "🏗️",
+      "componentIds": [
+        "fus_pack1", "fus_pack2", "fus_outflow", "fus_pressctrl",
+        "fus_pneu_bleed_l", "fus_pneu_bleed_r", "fus_crossbleed",
+        "fus_door_l1", "fus_door_r1", "fus_door_l4", "fus_cargo_fwd",
+        "fus_oxy_sys", "fus_emer_light", "fus_recirc_fan", "fus_water_waste"
+      ],
+      "layout": {
+        "spread": 4.5,
+        "centerY": 0,
+        "arrangement": "grid"
+      }
+    },
+    {
+      "id": "cockpit",
+      "name": "Cockpit / Avionics",
+      "zone": "COCKPIT_ZONE",
+      "ata_chapter": "22/23/24/31/34",
+      "ata_title": "Auto Flight / Comms / Elec / Instruments / Navigation",
+      "description": "Glass cockpit with EFIS displays, fly-by-wire sidesticks, dual FMS, ECAM monitoring, and full radio/navigation suite.",
+      "icon": "🎛️",
+      "componentIds": [
+        "ckpt_efis_capt", "ckpt_efis_fo", "ckpt_ecam_upper", "ckpt_ecam_lower",
+        "ckpt_fms1", "ckpt_fms2", "ckpt_adiru1", "ckpt_adiru2", "ckpt_adiru3",
+        "ckpt_sidestick_l", "ckpt_sidestick_r",
+        "ckpt_vhf1", "ckpt_vhf2", "ckpt_transponder",
+        "ckpt_elec_gen1", "ckpt_elec_gen2", "ckpt_battery"
+      ],
+      "layout": {
+        "spread": 4.0,
+        "centerY": 0.2,
+        "arrangement": "panel"
+      }
+    },
+    {
+      "id": "apu",
+      "name": "APU (APS3200)",
+      "zone": "APU_ZONE",
+      "ata_chapter": "49",
+      "ata_title": "Airborne Auxiliary Power",
+      "description": "Honeywell APS3200 auxiliary power unit in the tail cone. Provides electrical power and bleed air for ground ops and engine starting.",
+      "icon": "⚡",
+      "componentIds": [
+        "apu_engine", "apu_generator", "apu_ecb", "apu_bleed_valve",
+        "apu_inlet_door", "apu_fire_det", "apu_fire_ext",
+        "apu_oil_sys", "apu_exhaust", "apu_starter"
+      ],
+      "layout": {
+        "spread": 3.0,
+        "centerY": 0,
+        "arrangement": "circular"
+      }
+    }
+  ]
+}

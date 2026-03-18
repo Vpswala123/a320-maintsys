@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A320 Virtual Maintenance Manual & Digital Logbook System — Interactive aircraft maintenance platform for educational purposes">
+  <title>A320 Virtual Maintenance System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========== TOP HEADER ========== -->
+  <header class="top-header">
+    <div class="header-left">
+      <div class="logo">
+        <div class="logo-icon">✈</div>
+        A320 MaintSys
+      </div>
+      <div class="header-meta">
+        <span><span class="status-dot"></span> System Online</span>
+        <select id="aircraftSelector" class="aircraft-selector">
+          <option value="VT-DEM">VT-DEM (A320-214)</option>
+        </select>
+        <span id="airlineBadge" class="airline-badge"></span>
+      </div>
+    </div>
+
+    <!-- Navigation moved to sidebar -->
+
+    <div class="header-right">
+      <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="ataSearch" placeholder="Search ATA chapter..." autocomplete="off">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+      <div class="user-badge" id="userBadge">
+        <div class="user-avatar" id="userAvatar">?</div>
+        <div class="user-info">
+          <div class="user-name" id="userName">Guest</div>
+          <div class="user-role" id="userRole">—</div>
+        </div>
+        <button class="logout-btn" id="logoutBtn" title="Logout">⏻</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== APP CONTAINER ========== -->
+  <div class="app-container">
+    
+    <!-- Vertical Sidebar Navigation -->
+    <aside class="sidebar-nav" id="mainNav">
+      <div class="nav-group">
+        <button class="nav-tab active" data-page="dashboard" title="Dashboard"><span class="nav-icon">📊</span><span class="nav-text">Dash</span></button>
+        <button class="nav-tab" data-page="planner" title="Maintenance Planner"><span class="nav-icon">⏱</span><span class="nav-text">Plan</span></button>
+        <button class="nav-tab" data-page="logbooks" title="Logbooks"><span class="nav-icon">📖</span><span class="nav-text">Logs</span></button>
+        <button class="nav-tab" data-page="components" title="Component Database"><span class="nav-icon">⚙️</span><span class="nav-text">Parts</span></button>
+      </div>
+      <div class="nav-group-bottom">
+        <button class="nav-tab" data-page="admin" title="Admin Panel"><span class="nav-icon">🛡️</span><span class="nav-text">Admin</span></button>
+        <button class="nav-tab" data-page="settings" title="System Settings"><span class="nav-icon">🔧</span><span class="nav-text">Config</span></button>
+      </div>
+    </aside>
+
+    <div class="main-content">
+
+      <!-- ===== LEFT PANEL: Component Info ===== -->
+      <aside class="left-panel" id="leftPanel">
+
+        <!-- Component Info Card (shown on click) -->
+        <div class="card component-info" id="componentInfo">
+          <div class="card-header">
+            <span class="card-title"><span class="icon">📋</span> Component Details</span>
+            <span class="badge badge-cyan" id="compZone"></span>
+          </div>
+          <div class="component-name" id="compName">—</div>
+          <div class="component-ata" id="compAta">—</div>
+          <p id="compDesc" style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:14px;line-height:1.5;"></p>
+          <div class="info-grid">
+            <div class="info-item">
+              <div class="info-label">Health</div>
+              <div class="info-value" id="compHealth">—</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Temperature</div>
+              <div class="info-value" id="compTemp">—</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Cycle Hours</div>
+              <div class="info-value" id="compCycles">—</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Maint. Due</div>
+              <div class="info-value" id="compMaintDue">—</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Last Inspection</div>
+              <div class="info-value" id="compLastInsp">—</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Next Inspection</div>
+              <div class="info-value" id="compNextInsp">—</div>
+            </div>
+          </div>
+          <div class="health-bar-container" style="margin-top:14px;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+              <span style="font-size:0.68rem;color:var(--text-muted);">SYSTEM HEALTH</span>
+              <span style="font-size:0.72rem;font-weight:700;font-family:'Roboto Mono',monospace;" id="compHealthPct">—</span>
+            </div>
+            <div class="health-bar-bg">
+              <div class="health-bar-fill green" id="compHealthBar" style="width:0%"></div>
+            </div>
+          </div>
+          <!-- Digital Signature -->
+          <div id="compSignature" style="margin-top:12px;"></div>
+          <!-- Errors -->
+          <div id="compErrors" style="margin-top:12px;"></div>
+        </div>
+
+        <!-- Default state when nothing selected -->
+        <div class="card" id="defaultInfo">
+          <div class="empty-state">
+            <div class="empty-icon">✈️</div>
+            <p><strong>Click on the aircraft</strong> to inspect a subsystem</p>
+            <p style="font-size:0.72rem;margin-top:6px;color:var(--text-muted);">Rotate: Left-click + drag<br>Zoom: Scroll wheel<br>Pan: Right-click + drag</p>
+          </div>
+        </div>
+        
+        <!-- Subsystem Overview Panel (Level 2) -->
+        <div class="card" id="subsystemInfo" style="display:none; flex-direction:column; gap:12px;">
+          <div class="card-header">
+            <span class="card-title"><span class="icon">📦</span> Subsystem Overview</span>
+            <span class="badge badge-cyan" id="subsysAta"></span>
+          </div>
+          <div class="component-name" id="subsysName">—</div>
+          <p id="subsysDesc" style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:8px;line-height:1.5;"></p>
+          <div class="health-overview" id="subsysComponentList" style="max-height: 400px; overflow-y: auto; padding-right: 4px;">
+          </div>
+        </div>
+
+        <!-- Alerts Card -->
+        <div class="card" id="alertsCard">
+          <div class="card-header">
+            <span class="card-title"><span class="icon">⚠️</span> Active Alerts</span>
+            <span class="badge badge-red" id="alertCount">0</span>
+          </div>
+          <div id="alertsList"></div>
+        </div>
+
+      </aside>
+
+      <!-- ===== CENTER PANEL ===== -->
+      <main class="center-panel">
+
+        <!-- === DASHBOARD PAGE === -->
+        <div class="page-section active-page" id="page-dashboard">
+          <div class="dashboard-top">
+            <div id="viewer-container" style="flex:1;position:relative;">
+              <div class="loading-overlay" id="loadingOverlay">
+                <div class="loader-ring"></div>
+                <div class="loading-text">Loading Aircraft Model...</div>
+              </div>
+              
+              <!-- Breadcrumb Navigation -->
+              <div class="breadcrumb-container" id="visualBreadcrumb">
+                <div class="breadcrumb-item active" data-level="1">✈️ Aircraft</div>
+                <span class="breadcrumb-sep">›</span>
+                <div class="breadcrumb-item" id="bcSubsystem" data-level="2" style="display:none">Subsystem</div>
+                <span class="breadcrumb-sep" id="bcSep2" style="display:none">›</span>
+                <div class="breadcrumb-item" id="bcComponent" data-level="3" style="display:none">Component</div>
+              </div>
+              
+              <div class="viewer-hint" id="viewerHint">Click on the aircraft to inspect subsystems</div>
+              <div class="viewer-overlay">
+                <button class="viewer-btn" id="btnBackLevel" style="display:none; margin-right: 12px; background: rgba(56, 189, 248, 0.15); border-color: var(--accent-cyan); color: var(--accent-cyan);">← Back</button>
+                <button class="viewer-btn" id="btnResetView">↻ Reset View</button>
+                <button class="viewer-btn" id="btnToggleWire">◐ Wireframe</button>
+              </div>
+            </div>
+          </div>
+          <div class="dashboard-bottom">
+            <div class="bottom-panel">
+              <div class="bottom-panel-title"><span style="color:var(--accent-green)">♥</span> Component Health</div>
+              <div class="health-overview" id="healthOverviewCards"></div>
+            </div>
+            <div class="bottom-panel">
+              <div class="bottom-panel-title"><span style="color:var(--accent-cyan)">⏱</span> Upcoming Maintenance</div>
+              <div id="upcomingMaint"></div>
+            </div>
+            <div class="bottom-panel">
+              <div class="bottom-panel-title"><span style="color:var(--accent-purple)">📝</span> Recent Log Entries</div>
+              <div id="recentLogs"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- === MANUALS PAGE === -->
+        <div class="page-section" id="page-manuals">
+          <div class="manual-sidebar">
+            <div class="manual-sidebar-title">📖 Documentation</div>
+            <div id="manualList"></div>
+          </div>
+          <div class="manual-content" id="manualContent">
+            <div class="empty-state" style="height:100%;">
+              <div class="empty-icon">📖</div>
+              <p>Select a manual from the sidebar</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- === LOGBOOKS PAGE === -->
+        <div class="page-section" id="page-logbooks">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <div class="logbook-tabs" id="logbookTabs">
+              <button class="logbook-tab active" data-log="sessions">Maintenance Sessions</button>
+              <button class="logbook-tab" data-log="entries">All Entries</button>
+            </div>
+            <button class="viewer-btn new-entry-btn" id="btnNewSession" style="background:#1A2234;border-color:var(--accent-green);color:var(--accent-green);">+ Start Check / Session</button>
+          </div>
+          <div class="log-table-container">
+            <table class="log-table" id="logTable">
+              <thead id="logTableHead"></thead>
+              <tbody id="logTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- === MAINTENANCE PAGE === -->
+        <div class="page-section" id="page-maintenance">
+          <div class="maint-page-container">
+            <!-- Maintenance Schedule -->
+            <div class="maint-section">
+              <div class="card-header">
+                <span class="card-title"><span class="icon">🔧</span> Maintenance Schedule</span>
+              </div>
+              <div id="maintSchedule" class="maint-schedule-grid"></div>
+            </div>
+            <!-- Active Tasks -->
+            <div class="maint-section">
+              <div class="card-header" style="margin-bottom:12px;">
+                <span class="card-title"><span class="icon">📋</span> Maintenance Tasks</span>
+                <button class="viewer-btn" id="btnNewTask" style="background:rgba(34,197,94,0.15);border-color:var(--accent-green);color:var(--accent-green);font-size:0.72rem;">+ New Task</button>
+              </div>
+              <div id="maintTaskList" class="maint-task-list"></div>
+            </div>
+            <!-- Workflow -->
+            <div class="maint-section">
+              <div class="card-header">
+                <span class="card-title"><span class="icon">🔄</span> Maintenance Workflow</span>
+              </div>
+              <div class="workflow-diagram">
+                <div class="workflow-step" data-status="active">
+                  <div class="workflow-icon">🛫</div>
+                  <div class="workflow-label">Pilot Reports Defect</div>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                  <div class="workflow-icon">📝</div>
+                  <div class="workflow-label">Defect Entry Created</div>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                  <div class="workflow-icon">🔧</div>
+                  <div class="workflow-label">AME Assigned</div>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                  <div class="workflow-icon">✅</div>
+                  <div class="workflow-label">Work Completed</div>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                  <div class="workflow-icon">🔍</div>
+                  <div class="workflow-label">Inspector Approves</div>
+                </div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">
+                  <div class="workflow-icon">🔒</div>
+                  <div class="workflow-label">Task Closed</div>
+                </div>
+              </div>
+            </div>
+            <!-- Audit Trail -->
+            <div class="maint-section">
+              <div class="card-header">
+                <span class="card-title"><span class="icon">📊</span> Recent Audit Trail</span>
+              </div>
+              <div id="auditTrailList" class="audit-list"></div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ========== MODAL: New Maintenance Session ========== -->
+  <div class="modal-overlay" id="modalOverlay" style="display:none;">
+    <div class="modal-card" style="max-width:800px; width:90%;">
+      <div class="modal-header">
+        <span id="modalTitle">Start Maintenance Session</span>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <form id="modalForm">
+        
+        <div class="form-row" style="display:flex; gap:16px; margin-bottom:16px;">
+          <!-- Maintenance Type -->
+          <div class="form-group" style="flex:1;">
+            <label>Maintenance Type</label>
+            <select id="modalMaintType">
+              <option value="Scheduled Maintenance">Scheduled Maintenance</option>
+              <option value="Unscheduled Maintenance">Unscheduled Maintenance</option>
+            </select>
+          </div>
+          <!-- Check Type (for Scheduled) -->
+          <div class="form-group" id="groupCheckType" style="flex:1;">
+            <label>Check Type</label>
+            <select id="modalCheckType">
+              <option value="A-Check">A Check (500 FH)</option>
+              <option value="B-Check">B Check (6 Months)</option>
+              <option value="C-Check">C Check (6000 FH)</option>
+              <option value="D-Check">D Check (120 Months)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Reason (for Unscheduled) -->
+        <div class="form-group" id="groupReason" style="display:none; margin-bottom:16px;">
+          <label>Reason for Task</label>
+          <input type="text" id="modalReason" placeholder="e.g. ECAM Warning: HYD GREEN SYS LO PR">
+        </div>
+
+        <hr style="border-color:var(--border-color); margin: 20px 0;">
+        <h4 style="color:var(--text-secondary); margin-bottom:12px; font-family:'Inter',sans-serif;">Log Entries</h4>
+        
+        <!-- Dynamic Entries Container -->
+        <div id="dynamicEntriesContainer" style="display:flex; flex-direction:column; gap:12px; margin-bottom:16px; max-height:40vh; overflow-y:auto; padding-right:8px;">
+          <!-- Entry template injected via JS -->
+        </div>
+
+        <button type="button" id="btnAddEntry" class="viewer-btn" style="width:100%; margin-bottom:20px; border-style:dashed;">+ Add Another Entry</button>
+
+        <hr style="border-color:var(--border-color); margin: 20px 0;">
+
+        <!-- Digital Signature -->
+        <div class="form-group">
+          <label>Engineer Digital Signature (Password Confirm)</label>
+          <input type="password" id="modalSignature" placeholder="Enter password to sign session..." required>
+        </div>
+
+        <button type="submit" class="btn-modal-submit" style="width:100%; padding:12px;">Sign & Submit Session</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========== DISCLAIMER ========== -->
+  <div class="disclaimer-bar">
+    ⚠️ DISCLAIMER: This project uses simulated data for educational purposes and is not official Airbus documentation. All manuals and maintenance data are sample/demo content.
+  </div>
+
+  <!-- ========== SCRIPTS ========== -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script type="module" src="app.js"></script>
+
+</body>
+</html>

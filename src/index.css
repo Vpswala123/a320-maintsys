@@ -1,0 +1,225 @@
+@import "tailwindcss";
+
+/* ============================================
+   A320 MaintSys v4.0
+   Dark/Light Engineering Theme
+   ============================================ */
+
+@theme {
+  /* Dark Mode Defaults */
+  --color-bg-primary: #0b1320;
+  --color-bg-panel: #111a2e;
+  --color-bg-card: #162036;
+  --color-bg-elevated: #1a2540;
+  --color-border: #1f2a3a;
+  --color-border-hover: #2f81ed;
+
+  --color-accent: #2f80ed;
+  --color-accent-cyan: #00d4ff;
+  --color-accent-green: #27ae60;
+  --color-accent-yellow: #f2c94c;
+  --color-accent-red: #eb5757;
+  --color-accent-purple: #a855f7;
+
+  --color-text-primary: #dce6f2;
+  --color-text-secondary: #9ba4b4;
+  --color-text-muted: #5f6b7a;
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Roboto Mono', 'Fira Code', monospace;
+}
+
+/* ---- Base ---- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 14px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--color-bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-accent); }
+
+/* ---- Light Mode ---- */
+.light {
+  --color-bg-primary: #f4f7fb;
+  --color-bg-panel: #ffffff;
+  --color-bg-card: #f8fafc;
+  --color-bg-elevated: #ffffff;
+  --color-border: #e4eaf1;
+  --color-border-hover: #1b66d1;
+
+  --color-accent: #1b66d1;
+  --color-accent-cyan: #0ea5e9;
+  --color-accent-green: #27ae60;
+  --color-accent-yellow: #f39c12;
+  --color-accent-red: #e74c3c;
+
+  --color-text-primary: #1f2937;
+  --color-text-secondary: #6b7280;
+  --color-text-muted: #9ca3af;
+}
+
+/* ---- Animations ---- */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s infinite;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* ---- Canvas ---- */
+canvas {
+  display: block;
+}
+
+/* ---- Login background ---- */
+.login-bg {
+  background: linear-gradient(135deg, #0b1320 0%, #162036 40%, #1a2540 60%, #0b1320 100%);
+  position: relative;
+}
+
+.login-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(47, 128, 237, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(0, 212, 255, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* ---- Glass panel ---- */
+.glass-panel {
+  background: rgba(17, 26, 46, 0.85);
+  border: 1px solid rgba(47, 128, 237, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.light .glass-panel {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(27, 102, 209, 0.15);
+}
+
+/* ---- Workflow Diagram ---- */
+.workflow-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  min-width: 110px;
+  transition: all 0.2s;
+}
+
+.workflow-step.active {
+  border-color: var(--color-accent);
+  background: rgba(47, 128, 237, 0.1);
+}
+
+.workflow-step.completed {
+  border-color: var(--color-accent-green);
+  background: rgba(39, 174, 96, 0.1);
+}
+
+.workflow-arrow {
+  color: var(--color-text-muted);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+/* ---- Table Styles ---- */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.data-table thead th {
+  text-align: left;
+  padding: 10px 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  background: var(--color-bg-panel);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.data-table tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--color-text-secondary);
+}
+
+.light .data-table tbody td {
+  border-bottom-color: var(--color-border);
+}
+
+.data-table tbody tr:hover td {
+  background: rgba(47, 128, 237, 0.04);
+}
+
+/* ---- Model Viewer (AR) ---- */
+model-viewer {
+  width: 100%;
+  height: 100%;
+  --poster-color: transparent;
+}

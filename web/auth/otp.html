@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTP Verification - A320 Maintenance System</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f3460 0%, #1a5f7a 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .otp-container {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .logo {
+      margin-bottom: 30px;
+    }
+
+    .logo h1 {
+      color: #0f3460;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .logo p {
+      color: #666;
+      font-size: 12px;
+    }
+
+    .instruction {
+      color: #333;
+      margin-bottom: 30px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .instruction strong {
+      color: #0f3460;
+    }
+
+    .otp-input-group {
+      display: flex;
+      gap: 10px;
+      justifyContent: center;
+      margin-bottom: 30px;
+      justify-content: center;
+    }
+
+    .otp-input-group input {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      text-align: center;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      transition: border-color 0.3s;
+    }
+
+    .otp-input-group input:focus {
+      outline: none;
+      border-color: #0f3460;
+    }
+
+    .otp-input-group input.filled {
+      border-color: #27ae60;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 500;
+      text-align: left;
+    }
+
+    input[type="email"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    input[type="email"]:focus {
+      outline: none;
+      border-color: #0f3460;
+    }
+
+    .error-message {
+      background: #fee;
+      border: 1px solid #fcc;
+      color: #c33;
+      padding: 12px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .success-message {
+      background: #efe;
+      border: 1px solid #cfc;
+      color: #3c3;
+      padding: 12px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .btn-verify {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #0f3460 0%, #1a5f7a 100%);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-bottom: 15px;
+    }
+
+    .btn-verify:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(15, 52, 96, 0.3);
+    }
+
+    .btn-verify:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-resend {
+      color: #0f3460;
+      background: transparent;
+      border: 2px solid #0f3460;
+      cursor: pointer;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    .btn-resend:hover:not(:disabled) {
+      background: #0f3460;
+      color: white;
+    }
+
+    .btn-resend:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .timer {
+      color: #666;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    .back-link {
+      margin-top: 20px;
+    }
+
+    .back-link a {
+      color: #0f3460;
+      text-decoration: none;
+      font-size: 12px;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+
+    .loader {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #0f3460;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="otp-container">
+    <div class="logo">
+      <h1>🔐 Verification</h1>
+      <p>Two-Factor Authentication</p>
+    </div>
+
+    <div class="error-message" id="errorMsg"></div>
+    <div class="success-message" id="successMsg"></div>
+
+    <div class="instruction" id="instruction" style="display: none;">
+      Enter the 6-digit code we sent to <strong id="emailDisplay"></strong>
+    </div>
+
+    <form id="otpForm" style="display: none;" onsubmit="handleOTPSubmit(event)">
+      <div class="otp-input-group" id="otpInputGroup"></div>
+
+      <button type="submit" class="btn-verify" id="verifyBtn">
+        <span class="loader" id="loader"></span>
+        Verify Code
+      </button>
+
+      <button type="button" class="btn-resend" id="resendBtn" onclick="handleResendOTP()" disabled>
+        Resend Code
+      </button>
+      <div class="timer" id="timer"></div>
+    </form>
+
+    <form id="emailForm" onsubmit="handleSendOTP(event)">
+      <div class="form-group">
+        <label for="email">Enter your email to receive OTP</label>
+        <input 
+          type="email" 
+          id="email" 
+          placeholder="your.email@airline.com" 
+          required
+          autocomplete="email"
+        />
+      </div>
+
+      <button type="submit" class="btn-verify" id="sendOtpBtn">
+        Send OTP Code
+      </button>
+    </form>
+
+    <div class="back-link">
+      <a href="login.html">← Back to Login</a>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = localStorage.getItem('supabase_url') || 'YOUR_SUPABASE_URL';
+    const SUPABASE_KEY = localStorage.getItem('supabase_key') || 'YOUR_PUBLIC_ANON_KEY';
+
+    let supabase;
+    let resendTimeout = 0;
+    const OTP_LENGTH = 6;
+
+    try {
+      supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    } catch (error) {
+      console.error('Supabase initialization error:', error);
+      showError('Failed to initialize authentication');
+    }
+
+    window.addEventListener('load', () => {
+      createOTPInputs();
+      // Check if we're resuming an OTP verification
+      const email = sessionStorage.getItem('otp_email');
+      if (email) {
+        document.getElementById('emailForm').style.display = 'none';
+        document.getElementById('otpForm').style.display = 'block';
+        document.getElementById('instruction').style.display = 'block';
+        document.getElementById('emailDisplay').textContent = email;
+        startResendTimer();
+      }
+    });
+
+    function createOTPInputs() {
+      const group = document.getElementById('otpInputGroup');
+      group.innerHTML = '';
+      for (let i = 0; i < OTP_LENGTH; i++) {
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.min = '0';
+        input.max = '9';
+        input.className = 'otp-input';
+        input.dataset.index = i;
+        input.addEventListener('input', handleOTPInput);
+        input.addEventListener('keydown', handleOTPKeydown);
+        input.addEventListener('paste', handleOTPPaste);
+        group.appendChild(input);
+      }
+    }
+
+    function handleOTPInput(e) {
+      const input = e.target;
+      if (input.value.length > 1) {
+        input.value = input.value[0];
+      }
+      input.classList.toggle('filled', input.value !== '');
+      
+      if (input.value && input.dataset.index < OTP_LENGTH - 1) {
+        const nextInput = document.querySelector(`[data-index="${parseInt(input.dataset.index) + 1}"]`);
+        nextInput?.focus();
+      }
+    }
+
+    function handleOTPKeydown(e) {
+      const input = e.target;
+      if (e.key === 'Backspace' && !input.value && input.dataset.index > 0) {
+        const prevInput = document.querySelector(`[data-index="${parseInt(input.dataset.index) - 1}"]`);
+        prevInput?.focus();
+      }
+    }
+
+    function handleOTPPaste(e) {
+      e.preventDefault();
+      const value = (e.clipboardData || window.clipboardData).getData('text');
+      const digits = value.match(/\d/g);
+      
+      if (digits) {
+        const inputs = document.querySelectorAll('.otp-input');
+        digits.slice(0, OTP_LENGTH).forEach((digit, index) => {
+          inputs[index].value = digit;
+          inputs[index].classList.add('filled');
+        });
+        inputs[Math.min(digits.length, OTP_LENGTH - 1)].focus();
+      }
+    }
+
+    function getOTPCode() {
+      const inputs = document.querySelectorAll('.otp-input');
+      return Array.from(inputs).map(input => input.value).join('');
+    }
+
+    async function handleSendOTP(e) {
+      e.preventDefault();
+      clearMessages();
+
+      const email = document.getElementById('email').value.trim();
+      const sendBtn = document.getElementById('sendOtpBtn');
+
+      if (!email.includes('@')) {
+        showError('Please enter a valid email');
+        return;
+      }
+
+      try {
+        sendBtn.disabled = true;
+
+        // In production, integrate with Supabase email OTP
+        // For now, simulate sending
+        sessionStorage.setItem('otp_email', email);
+        
+        showSuccess('OTP sent to ' + email);
+        
+        setTimeout(() => {
+          document.getElementById('emailForm').style.display = 'none';
+          document.getElementById('otpForm').style.display = 'block';
+          document.getElementById('instruction').style.display = 'block';
+          document.getElementById('emailDisplay').textContent = email;
+          startResendTimer();
+          document.querySelector('[data-index="0"]').focus();
+        }, 500);
+      } catch (error) {
+        showError('Failed to send OTP: ' + error.message);
+      } finally {
+        sendBtn.disabled = false;
+      }
+    }
+
+    async function handleOTPSubmit(e) {
+      e.preventDefault();
+      clearMessages();
+
+      const code = getOTPCode();
+      if (code.length !== OTP_LENGTH) {
+        showError('Please enter all 6 digits');
+        return;
+      }
+
+      const verifyBtn = document.getElementById('verifyBtn');
+      const loader = document.getElementById('loader');
+
+      try {
+        verifyBtn.disabled = true;
+        loader.style.display = 'inline-block';
+
+        // In production, verify OTP with Supabase
+        // For demo purposes, accept any 6-digit code
+        if (/^\d{6}$/.test(code)) {
+          showSuccess('OTP verified successfully!');
+          sessionStorage.removeItem('otp_email');
+          setTimeout(() => {
+            window.location.href = '../dashboard.html';
+          }, 1000);
+        } else {
+          showError('Invalid OTP code');
+        }
+      } finally {
+        verifyBtn.disabled = false;
+        loader.style.display = 'none';
+      }
+    }
+
+    function handleResendOTP() {
+      clearMessages();
+      const email = sessionStorage.getItem('otp_email');
+      if (email) {
+        showSuccess('OTP resent to ' + email);
+        startResendTimer();
+      }
+    }
+
+    function startResendTimer() {
+      resendTimeout = 60;
+      const resendBtn = document.getElementById('resendBtn');
+      const timerDiv = document.getElementById('timer');
+      resendBtn.disabled = true;
+
+      const interval = setInterval(() => {
+        resendTimeout--;
+        timerDiv.textContent = `Resend code in ${resendTimeout}s`;
+        
+        if (resendTimeout <= 0) {
+          clearInterval(interval);
+          resendBtn.disabled = false;
+          timerDiv.textContent = '';
+        }
+      }, 1000);
+    }
+
+    function showError(message) {
+      const errorMsg = document.getElementById('errorMsg');
+      errorMsg.textContent = '❌ ' + message;
+      errorMsg.style.display = 'block';
+    }
+
+    function showSuccess(message) {
+      const successMsg = document.getElementById('successMsg');
+      successMsg.textContent = '✅ ' + message;
+      successMsg.style.display = 'block';
+    }
+
+    function clearMessages() {
+      document.getElementById('errorMsg').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
+

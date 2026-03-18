@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up — A320 Maintenance System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    :root {
+      --bg-primary: #0a0e1a; --bg-card: rgba(17,24,39,0.85);
+      --border-color: rgba(56,189,248,0.15); --border-glow: rgba(56,189,248,0.3);
+      --text-primary: #e2e8f0; --text-secondary: #94a3b8; --text-muted: #64748b;
+      --accent-cyan: #38bdf8; --accent-blue: #3b82f6; --accent-green: #22c55e; --accent-red: #ef4444;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif; background: var(--bg-primary); color: var(--text-primary);
+      min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(56,189,248,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(59,130,246,0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .grid-bg {
+      position: fixed; inset: 0; z-index: 0;
+      background-image: linear-gradient(rgba(56,189,248,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,0.03) 1px, transparent 1px);
+      background-size: 60px 60px; animation: gridMove 20s linear infinite;
+    }
+    @keyframes gridMove { to { background-position: 60px 60px; } }
+    .container {
+      position: relative; z-index: 1; background: var(--bg-card); backdrop-filter: blur(24px);
+      border: 1px solid var(--border-color); border-radius: 16px; padding: 40px;
+      width: 100%; max-width: 480px; box-shadow: 0 0 60px rgba(56,189,248,0.08), 0 25px 50px rgba(0,0,0,0.5);
+    }
+    .logo { text-align: center; margin-bottom: 28px; }
+    .logo-icon {
+      width: 48px; height: 48px; margin: 0 auto 12px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; box-shadow: 0 0 25px rgba(56,189,248,0.3);
+    }
+    .logo h1 { font-family: 'Roboto Mono', monospace; font-size: 1.2rem; font-weight: 700; color: var(--accent-cyan); }
+    .logo p { color: var(--text-muted); font-size: 0.72rem; margin-top: 4px; }
+    .form-group { margin-bottom: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    label { display: block; margin-bottom: 5px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary); }
+    input, select {
+      width: 100%; padding: 11px 14px; background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border-color); border-radius: 8px;
+      color: var(--text-primary); font-size: 0.85rem; font-family: inherit;
+      transition: all 0.3s; outline: none;
+    }
+    select { cursor: pointer; }
+    select option { background: #111827; color: var(--text-primary); }
+    input:focus, select:focus { border-color: var(--accent-cyan); box-shadow: 0 0 0 3px rgba(56,189,248,0.1); }
+    input::placeholder { color: var(--text-muted); }
+    .btn {
+      width: 100%; padding: 13px; border: none; border-radius: 10px;
+      font-size: 0.88rem; font-weight: 600; font-family: inherit; cursor: pointer;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      color: #fff; transition: all 0.3s; margin-top: 8px;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(56,189,248,0.3); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .msg { padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 0.78rem; display: none; }
+    .msg-error { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: var(--accent-red); }
+    .msg-success { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); color: var(--accent-green); }
+    .links { text-align: center; margin-top: 20px; font-size: 0.78rem; color: var(--text-muted); }
+    .links a { color: var(--accent-cyan); text-decoration: none; font-weight: 500; }
+    .links a:hover { text-decoration: underline; }
+    .loader { display:none; width:16px; height:16px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin .8s linear infinite; vertical-align:middle; margin-right:8px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .disclaimer { position:fixed; bottom:0; left:0; right:0; padding:8px; background:rgba(234,179,8,0.08); border-top:1px solid rgba(234,179,8,0.15); font-size:0.65rem; color:#eab308; text-align:center; }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="container">
+    <div class="logo">
+      <div class="logo-icon">✈</div>
+      <h1>A320 MaintSys</h1>
+      <p>Create Your Account</p>
+    </div>
+    <div class="msg msg-error" id="errorMsg"></div>
+    <div class="msg msg-success" id="successMsg"></div>
+    <form id="signupForm" onsubmit="handleSignup(event)">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="John Doe" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="your.email@airline.com" required>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Min 6 characters" required minlength="6">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Role</label>
+          <select id="role">
+            <option value="pilot">Pilot</option>
+            <option value="ame">AME</option>
+            <option value="inspector">Inspector</option>
+            <option value="viewer">Viewer</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Airline</label>
+          <select id="airline">
+            <option value="Student Demo Airline">Student Demo Airline</option>
+            <option value="Sky Express (Simulated)">Sky Express</option>
+            <option value="Global Wings (Simulated)">Global Wings</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn" id="signupBtn">
+        <span class="loader" id="loader"></span>Create Account
+      </button>
+    </form>
+    <div class="links">Already have an account? <a href="login.html">Login</a></div>
+  </div>
+  <div class="disclaimer">⚠️ This platform uses simulated data for educational purposes.</div>
+  <script>
+    const SUPABASE_URL = localStorage.getItem('supabase_url') || '';
+    const SUPABASE_KEY = localStorage.getItem('supabase_key') || '';
+    const isDemoMode = !SUPABASE_URL || SUPABASE_URL.includes('YOUR_');
+    let sb = null;
+    if (!isDemoMode) { try { sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch(e){} }
+
+    async function handleSignup(e) {
+      e.preventDefault(); clearMessages();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const role = document.getElementById('role').value;
+      const airline = document.getElementById('airline').value;
+      const btn = document.getElementById('signupBtn');
+      const loader = document.getElementById('loader');
+      if (!name || !email || !password) { showError('Please fill all fields'); return; }
+      if (password.length < 6) { showError('Password must be at least 6 characters'); return; }
+      btn.disabled = true; loader.style.display = 'inline-block';
+      try {
+        if (isDemoMode) {
+          localStorage.setItem('user_id', 'demo-' + Date.now());
+          localStorage.setItem('user_email', email);
+          localStorage.setItem('user_role', role);
+          localStorage.setItem('user_name', name);
+          localStorage.setItem('user_airline', airline);
+          showSuccess('Account created! Redirecting...');
+          setTimeout(() => { window.location.href = '../index.html'; }, 800);
+          return;
+        }
+        const { data, error } = await sb.auth.signUp({ email, password });
+        if (error) { showError(error.message); return; }
+        if (data?.user) {
+          await sb.from('profiles').insert({ id: data.user.id, name, role, company: airline });
+          showSuccess('Account created! Please confirm your email, then login.');
+        }
+      } catch(err) { showError('An error occurred.'); console.error(err); }
+      finally { btn.disabled = false; loader.style.display = 'none'; }
+    }
+    function showError(m) { const el=document.getElementById('errorMsg'); el.textContent='✕ '+m; el.style.display='block'; }
+    function showSuccess(m) { const el=document.getElementById('successMsg'); el.textContent='✓ '+m; el.style.display='block'; }
+    function clearMessages() { document.getElementById('errorMsg').style.display='none'; document.getElementById('successMsg').style.display='none'; }
+  </script>
+</body>
+</html>

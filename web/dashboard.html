@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - A320 Virtual Maintenance</title>
+    <!-- Assuming styling would be attached here -->
+    <style>
+        .dashboard-widget {
+            border: 1px solid #444;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            background: #1e1e1e;
+            color: #4ade80;
+            max-width: 400px;
+        }
+        body { background: #111; color: white; font-family: sans-serif; }
+    </style>
+</head>
+<body>
+    <h1>A320 Digital Twin Dashboard</h1>
+    
+    <div id="dashboard-container" class="dashboard-widget">
+        Loading aircraft telemetry...
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/sessionManager.js"></script>
+    <script src="js/apiClient.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

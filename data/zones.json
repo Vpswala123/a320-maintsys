@@ -1,0 +1,2357 @@
+{
+  "zones": [
+    {
+      "zone_id": "Z001",
+      "name": "Engine 1",
+      "ata": "71",
+      "type": "engine",
+      "position": {
+        "x": -7.5126839964515675,
+        "y": -2.6937126392682633,
+        "z": 3.295956191337079
+      },
+      "radius": 3,
+      "description": "Aircraft zone: Engine 1 (ATA 71)"
+    },
+    {
+      "zone_id": "Z002",
+      "name": "Engine 2",
+      "ata": "71",
+      "type": "engine",
+      "position": {
+        "x": 8.354504689304596,
+        "y": -2.552874876437534,
+        "z": 3.2436485397225785
+      },
+      "radius": 3,
+      "description": "Aircraft zone: Engine 2 (ATA 71)"
+    },
+    {
+      "zone_id": "Z003",
+      "name": "Engine 1 Fan",
+      "ata": "71",
+      "type": "engine",
+      "position": {
+        "x": -7.788820448260708,
+        "y": -2.8119790887244878,
+        "z": 5.443953808184293
+      },
+      "radius": 3,
+      "description": "Aircraft zone: Engine 1 Fan (ATA 71)"
+    },
+    {
+      "zone_id": "Z004",
+      "name": "Engine 2 Fan",
+      "ata": "71",
+      "type": "engine",
+      "position": {
+        "x": 8.427071234590564,
+        "y": -2.511886492358023,
+        "z": 5.416452107596524
+      },
+      "radius": 3,
+      "description": "Aircraft zone: Engine 2 Fan (ATA 71)"
+    },
+    {
+      "zone_id": "Z005",
+      "name": "Engine 1 Nacelle",
+      "ata": "71",
+      "type": "engine",
+      "position": {
+        "x": -7.578087928508482,
+        "y": -1.9447436292034848,
+        "z": 4.469280314642374
+      },
+      "radius": 3,
+      "description": "Aircraft zone: Engine 1 Nacelle (ATA 71)"
+    },
+    {
+      "zone_id": "Z006",
+      "name": "Engine 2 Nacelle",
+      "ata": "71",
+      "type": "engine",
+      "position": {
+        "x": 8.186436516112732,
+        "y": -1.9361254834753665,
+        "z": 4.157682072250487
+      },
+      "radius": 3,
+      "description": "Aircraft zone: Engine 2 Nacelle (ATA 71)"
+    },
+    {
+      "zone_id": "Z007",
+      "name": "Engine 1 Exhaust",
+      "ata": "78",
+      "type": "engine",
+      "position": {
+        "x": -7.523377626195283,
+        "y": -2.932582867144595,
+        "z": 1.184319075061585
+      },
+      "radius": 3,
+      "description": "Aircraft zone: Engine 1 Exhaust (ATA 78)"
+    },
+    {
+      "zone_id": "Z008",
+      "name": "Engine 2 Exhaust",
+      "ata": "78",
+      "type": "engine",
+      "position": {
+        "x": 8.14290268485079,
+        "y": -2.7306710112453163,
+        "z": 1.155649516614048
+      },
+      "radius": 3,
+      "description": "Aircraft zone: Engine 2 Exhaust (ATA 78)"
+    },
+    {
+      "zone_id": "Z009",
+      "name": "Engine 1 Pylon",
+      "ata": "71",
+      "type": "engine",
+      "position": {
+        "x": -5.9073749833688725,
+        "y": -0.5660397561896608,
+        "z": 3.110914754118467
+      },
+      "radius": 3,
+      "description": "Aircraft zone: Engine 1 Pylon (ATA 71)"
+    },
+    {
+      "zone_id": "Z010",
+      "name": "Engine 2 Pylon",
+      "ata": "71",
+      "type": "engine",
+      "position": {
+        "x": 6.272469665266326,
+        "y": -0.9898157290895582,
+        "z": 3.46737005607848
+      },
+      "radius": 3,
+      "description": "Aircraft zone: Engine 2 Pylon (ATA 71)"
+    },
+    {
+      "zone_id": "Z011",
+      "name": "Engine 1 Thrust Reverser",
+      "ata": "78",
+      "type": "engine",
+      "position": {
+        "x": -7.891661294498018,
+        "y": -2.5134600323720977,
+        "z": 2.04163216687746
+      },
+      "radius": 3,
+      "description": "Aircraft zone: Engine 1 Thrust Reverser (ATA 78)"
+    },
+    {
+      "zone_id": "Z012",
+      "name": "Engine 2 Thrust Reverser",
+      "ata": "78",
+      "type": "engine",
+      "position": {
+        "x": 8.159866019518207,
+        "y": -2.94152025285431,
+        "z": 2.1617323232115164
+      },
+      "radius": 3,
+      "description": "Aircraft zone: Engine 2 Thrust Reverser (ATA 78)"
+    },
+    {
+      "zone_id": "Z013",
+      "name": "Left Wing Root",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -3.560837227874528,
+        "y": 0.19628201946778734,
+        "z": 2.0544075741181
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Root (ATA 57)"
+    },
+    {
+      "zone_id": "Z014",
+      "name": "Right Wing Root",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 4.405852180075925,
+        "y": 0.10383068798701922,
+        "z": 2.3660716567095057
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Root (ATA 57)"
+    },
+    {
+      "zone_id": "Z015",
+      "name": "Left Wing Mid Section",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -9.749327179484217,
+        "y": 0.28346101429303316,
+        "z": 2.078229083086916
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Mid Section (ATA 57)"
+    },
+    {
+      "zone_id": "Z016",
+      "name": "Right Wing Mid Section",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 10.284352312034194,
+        "y": 0.35910970304974943,
+        "z": 2.005096682543357
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Mid Section (ATA 57)"
+    },
+    {
+      "zone_id": "Z017",
+      "name": "Left Wing Tip",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -17.999916332472253,
+        "y": 1.002522588675086,
+        "z": 2.47879367796498
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Tip (ATA 57)"
+    },
+    {
+      "zone_id": "Z018",
+      "name": "Right Wing Tip",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 18.282517456631975,
+        "y": 1.2649859120559483,
+        "z": 2.149348578297101
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Tip (ATA 57)"
+    },
+    {
+      "zone_id": "Z019",
+      "name": "Left Winglet",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -18.661166405624797,
+        "y": 2.4947877592279073,
+        "z": 2.453376395642016
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Winglet (ATA 57)"
+    },
+    {
+      "zone_id": "Z020",
+      "name": "Right Winglet",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 19.22247716146801,
+        "y": 2.085235756454708,
+        "z": 2.4790887644118764
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Winglet (ATA 57)"
+    },
+    {
+      "zone_id": "Z021",
+      "name": "Left Wing Leading Edge Inner",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -5.793756263454547,
+        "y": 0.13080685543040704,
+        "z": 4.447759914707628
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Leading Edge Inner (ATA 57)"
+    },
+    {
+      "zone_id": "Z022",
+      "name": "Left Wing Leading Edge Outer",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -13.55277721507819,
+        "y": 0.4169996874937294,
+        "z": 4.015688015485252
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Leading Edge Outer (ATA 57)"
+    },
+    {
+      "zone_id": "Z023",
+      "name": "Right Wing Leading Edge Inner",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 6.083464024402122,
+        "y": 0.2906822390867405,
+        "z": 4.012285156209959
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Leading Edge Inner (ATA 57)"
+    },
+    {
+      "zone_id": "Z024",
+      "name": "Right Wing Leading Edge Outer",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 14.024151660214224,
+        "y": 0.49579262542751457,
+        "z": 4.003372009898718
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Leading Edge Outer (ATA 57)"
+    },
+    {
+      "zone_id": "Z025",
+      "name": "Left Wing Trailing Edge Inner",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -5.909482668567501,
+        "y": 0.33132043626705854,
+        "z": 0.005837471464468669
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Trailing Edge Inner (ATA 57)"
+    },
+    {
+      "zone_id": "Z026",
+      "name": "Left Wing Trailing Edge Outer",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -13.904734515678674,
+        "y": 0.23929383064309107,
+        "z": 0.06321283665539668
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Trailing Edge Outer (ATA 57)"
+    },
+    {
+      "zone_id": "Z027",
+      "name": "Right Wing Trailing Edge Inner",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 6.457421701615055,
+        "y": 0.14065489229488193,
+        "z": 0.34979755085827435
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Trailing Edge Inner (ATA 57)"
+    },
+    {
+      "zone_id": "Z028",
+      "name": "Right Wing Trailing Edge Outer",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 14.297820829641537,
+        "y": 0.49423306212643625,
+        "z": 0.47027126425844956
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Trailing Edge Outer (ATA 57)"
+    },
+    {
+      "zone_id": "Z029",
+      "name": "Left Wing Rib 1",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -6.258229089570044,
+        "y": 0.3982224019542131,
+        "z": 2.2721669216293963
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Rib 1 (ATA 57)"
+    },
+    {
+      "zone_id": "Z030",
+      "name": "Left Wing Spar 1",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -6.486075563447677,
+        "y": 0.19889258818610167,
+        "z": 1.4577973802956845
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Spar 1 (ATA 57)"
+    },
+    {
+      "zone_id": "Z031",
+      "name": "Left Wing Rib 2",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -8.626104462689742,
+        "y": 0.0442999758861381,
+        "z": 2.0401989662403874
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Rib 2 (ATA 57)"
+    },
+    {
+      "zone_id": "Z032",
+      "name": "Left Wing Spar 2",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -8.739942101968353,
+        "y": 0.4886607778055788,
+        "z": 1.4820168339330433
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Spar 2 (ATA 57)"
+    },
+    {
+      "zone_id": "Z033",
+      "name": "Left Wing Rib 3",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -11.32541445884991,
+        "y": 0.29272837803866747,
+        "z": 2.266433195424441
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Rib 3 (ATA 57)"
+    },
+    {
+      "zone_id": "Z034",
+      "name": "Left Wing Spar 3",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -11.209592250821697,
+        "y": 0.037286285265977104,
+        "z": 1.4344768137276502
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Spar 3 (ATA 57)"
+    },
+    {
+      "zone_id": "Z035",
+      "name": "Left Wing Rib 4",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -13.57173132381024,
+        "y": 0.4153673540847207,
+        "z": 2.0075409440772782
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Rib 4 (ATA 57)"
+    },
+    {
+      "zone_id": "Z036",
+      "name": "Left Wing Spar 4",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -13.65328518139393,
+        "y": 0.028846367404499973,
+        "z": 1.1825879742938163
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Spar 4 (ATA 57)"
+    },
+    {
+      "zone_id": "Z037",
+      "name": "Left Wing Rib 5",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -16.42204532299241,
+        "y": 0.17723716054336391,
+        "z": 2.164079020110351
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Rib 5 (ATA 57)"
+    },
+    {
+      "zone_id": "Z038",
+      "name": "Left Wing Spar 5",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -16.49378466290153,
+        "y": 0.17537659753577284,
+        "z": 1.309018955758606
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Spar 5 (ATA 57)"
+    },
+    {
+      "zone_id": "Z039",
+      "name": "Left Wing Rib 6",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -18.80651958916592,
+        "y": 0.21408489734000602,
+        "z": 2.2447657258624
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Rib 6 (ATA 57)"
+    },
+    {
+      "zone_id": "Z040",
+      "name": "Left Wing Spar 6",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": -18.701564280314418,
+        "y": 0.07034765221177464,
+        "z": 1.314587123191603
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Left Wing Spar 6 (ATA 57)"
+    },
+    {
+      "zone_id": "Z041",
+      "name": "Right Wing Rib 1",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 6.709502692878824,
+        "y": 0.38306761124423894,
+        "z": 2.275815792925137
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Rib 1 (ATA 57)"
+    },
+    {
+      "zone_id": "Z042",
+      "name": "Right Wing Spar 1",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 6.995908660102328,
+        "y": 0.28143095243243266,
+        "z": 1.1016029328943118
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Spar 1 (ATA 57)"
+    },
+    {
+      "zone_id": "Z043",
+      "name": "Right Wing Rib 2",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 9.086257131824185,
+        "y": 0.05907660864244124,
+        "z": 2.1884114934089736
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Rib 2 (ATA 57)"
+    },
+    {
+      "zone_id": "Z044",
+      "name": "Right Wing Spar 2",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 9.067900858015417,
+        "y": 0.32237022549910854,
+        "z": 1.1643136041084046
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Spar 2 (ATA 57)"
+    },
+    {
+      "zone_id": "Z045",
+      "name": "Right Wing Rib 3",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 11.858659283853813,
+        "y": 0.4910140691541576,
+        "z": 2.165070181770889
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Rib 3 (ATA 57)"
+    },
+    {
+      "zone_id": "Z046",
+      "name": "Right Wing Spar 3",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 11.82766056250086,
+        "y": 0.4518252061852177,
+        "z": 1.0641096458460613
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Spar 3 (ATA 57)"
+    },
+    {
+      "zone_id": "Z047",
+      "name": "Right Wing Rib 4",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 14.060370317063532,
+        "y": 0.3183023698536307,
+        "z": 2.012848897491622
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Rib 4 (ATA 57)"
+    },
+    {
+      "zone_id": "Z048",
+      "name": "Right Wing Spar 4",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 14.318544031925514,
+        "y": 0.17733597738652096,
+        "z": 1.462556486257864
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Spar 4 (ATA 57)"
+    },
+    {
+      "zone_id": "Z049",
+      "name": "Right Wing Rib 5",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 16.59354726084964,
+        "y": 0.24604634912333956,
+        "z": 2.28845284918189
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Rib 5 (ATA 57)"
+    },
+    {
+      "zone_id": "Z050",
+      "name": "Right Wing Spar 5",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 16.638406770101426,
+        "y": 0.30325778367126854,
+        "z": 1.4267331976202042
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Spar 5 (ATA 57)"
+    },
+    {
+      "zone_id": "Z051",
+      "name": "Right Wing Rib 6",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 19.311765424594157,
+        "y": 0.33767717541862896,
+        "z": 2.0769465016475257
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Rib 6 (ATA 57)"
+    },
+    {
+      "zone_id": "Z052",
+      "name": "Right Wing Spar 6",
+      "ata": "57",
+      "type": "wing",
+      "position": {
+        "x": 19.380598085317647,
+        "y": 0.3639391884044262,
+        "z": 1.2312781845410838
+      },
+      "radius": 2.5,
+      "description": "Aircraft zone: Right Wing Spar 6 (ATA 57)"
+    },
+    {
+      "zone_id": "Z053",
+      "name": "Left Flap Inner",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": -9.779913202725346,
+        "y": -0.018065396691732016,
+        "z": -0.9250884875167713
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Flap Inner (ATA 27)"
+    },
+    {
+      "zone_id": "Z054",
+      "name": "Left Flap Track Inner",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": -9.771511516440151,
+        "y": -0.04855114098004493,
+        "z": -0.5720411428806049
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Flap Track Inner (ATA 27)"
+    },
+    {
+      "zone_id": "Z055",
+      "name": "Left Flap Outer",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": -5.884645499129786,
+        "y": -0.2629343510033889,
+        "z": -0.7956865329861581
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Flap Outer (ATA 27)"
+    },
+    {
+      "zone_id": "Z056",
+      "name": "Left Flap Track Outer",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": -5.895860484646037,
+        "y": -0.05003641047707713,
+        "z": -0.9898178392065736
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Flap Track Outer (ATA 27)"
+    },
+    {
+      "zone_id": "Z057",
+      "name": "Right Flap Inner",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": 10.004457203792901,
+        "y": -0.021818402300957773,
+        "z": -0.6617291356254327
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Flap Inner (ATA 27)"
+    },
+    {
+      "zone_id": "Z058",
+      "name": "Right Flap Track Inner",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": 10.344834441650102,
+        "y": -0.10203172730044735,
+        "z": -0.8731352339616657
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Flap Track Inner (ATA 27)"
+    },
+    {
+      "zone_id": "Z059",
+      "name": "Right Flap Outer",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": 6.07678371737013,
+        "y": -0.3597738667305539,
+        "z": -0.9385963976565646
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Flap Outer (ATA 27)"
+    },
+    {
+      "zone_id": "Z060",
+      "name": "Right Flap Track Outer",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": 6.022621531780552,
+        "y": 0.01566254549742202,
+        "z": -0.9210992151798085
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Flap Track Outer (ATA 27)"
+    },
+    {
+      "zone_id": "Z061",
+      "name": "Left Slat 1",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": -8.830577619543046,
+        "y": 0.3967012590214646,
+        "z": 5.1351258662885595
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Slat 1 (ATA 27)"
+    },
+    {
+      "zone_id": "Z062",
+      "name": "Left Slat 2",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": -12.622685235200622,
+        "y": 0.4600987694157217,
+        "z": 5.177259948218036
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Slat 2 (ATA 27)"
+    },
+    {
+      "zone_id": "Z063",
+      "name": "Left Slat 3",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": -16.543238082770436,
+        "y": 0.09607163122333473,
+        "z": 5.2174393366373355
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Slat 3 (ATA 27)"
+    },
+    {
+      "zone_id": "Z064",
+      "name": "Right Slat 1",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": 9.413908514557557,
+        "y": 0.10816118397575647,
+        "z": 5.258715234927047
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Slat 1 (ATA 27)"
+    },
+    {
+      "zone_id": "Z065",
+      "name": "Right Slat 2",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": 13.441545088081394,
+        "y": 0.4975359199682584,
+        "z": 5.312749370131842
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Slat 2 (ATA 27)"
+    },
+    {
+      "zone_id": "Z066",
+      "name": "Right Slat 3",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": 17.31205444069212,
+        "y": 0.49773870436429013,
+        "z": 5.150457392471207
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Slat 3 (ATA 27)"
+    },
+    {
+      "zone_id": "Z067",
+      "name": "Left Spoiler 1",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": -6.33190858973915,
+        "y": 0.6594230018862075,
+        "z": 0.2871135580733041
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Spoiler 1 (ATA 27)"
+    },
+    {
+      "zone_id": "Z068",
+      "name": "Left Spoiler 2",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": -8.810900622767408,
+        "y": 0.2231730919440466,
+        "z": 0.22099745882799637
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Spoiler 2 (ATA 27)"
+    },
+    {
+      "zone_id": "Z069",
+      "name": "Left Spoiler 3",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": -11.074098072723984,
+        "y": 0.6542056479592286,
+        "z": 0.1422952698417258
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Spoiler 3 (ATA 27)"
+    },
+    {
+      "zone_id": "Z070",
+      "name": "Left Spoiler 4",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": -13.971449751689551,
+        "y": 0.4633758039718154,
+        "z": 0.07543663281191293
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Spoiler 4 (ATA 27)"
+    },
+    {
+      "zone_id": "Z071",
+      "name": "Left Spoiler 5",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": -16.370316393175802,
+        "y": 0.4505032455355496,
+        "z": 0.04790499200731879
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Spoiler 5 (ATA 27)"
+    },
+    {
+      "zone_id": "Z072",
+      "name": "Right Spoiler 1",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": 6.776907448890066,
+        "y": 0.5682280280135905,
+        "z": 0.011177313739276662
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Spoiler 1 (ATA 27)"
+    },
+    {
+      "zone_id": "Z073",
+      "name": "Right Spoiler 2",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": 9.147835907177136,
+        "y": 0.6742944680317147,
+        "z": 0.016707998214952502
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Spoiler 2 (ATA 27)"
+    },
+    {
+      "zone_id": "Z074",
+      "name": "Right Spoiler 3",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": 11.823131702646334,
+        "y": 0.3389089773612783,
+        "z": 0.48262662194992023
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Spoiler 3 (ATA 27)"
+    },
+    {
+      "zone_id": "Z075",
+      "name": "Right Spoiler 4",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": 14.207154920810042,
+        "y": 0.41306001770119166,
+        "z": 0.06076831186784648
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Spoiler 4 (ATA 27)"
+    },
+    {
+      "zone_id": "Z076",
+      "name": "Right Spoiler 5",
+      "ata": "27",
+      "type": "flight_control",
+      "position": {
+        "x": 16.87360208045337,
+        "y": 0.4523492056411453,
+        "z": 0.0501750800283266
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Spoiler 5 (ATA 27)"
+    },
+    {
+      "zone_id": "Z077",
+      "name": "Left Inner Tank",
+      "ata": "28",
+      "type": "fuel",
+      "position": {
+        "x": -5.689837096653242,
+        "y": -0.22322767721882364,
+        "z": 2.2226754057867213
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Inner Tank (ATA 28)"
+    },
+    {
+      "zone_id": "Z078",
+      "name": "Left Outer Tank",
+      "ata": "28",
+      "type": "fuel",
+      "position": {
+        "x": -13.94373346039259,
+        "y": -0.3522574814481553,
+        "z": 2.3763759489797174
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Outer Tank (ATA 28)"
+    },
+    {
+      "zone_id": "Z079",
+      "name": "Right Inner Tank",
+      "ata": "28",
+      "type": "fuel",
+      "position": {
+        "x": 6.136688697833034,
+        "y": -0.1262225373431305,
+        "z": 2.4703350091407987
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Inner Tank (ATA 28)"
+    },
+    {
+      "zone_id": "Z080",
+      "name": "Right Outer Tank",
+      "ata": "28",
+      "type": "fuel",
+      "position": {
+        "x": 14.200127551775253,
+        "y": -0.48289307242279655,
+        "z": 2.3322338323774607
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Outer Tank (ATA 28)"
+    },
+    {
+      "zone_id": "Z081",
+      "name": "Center Tank",
+      "ata": "28",
+      "type": "fuel",
+      "position": {
+        "x": 0.07825652016059648,
+        "y": -0.3422548876187428,
+        "z": 2.3224936048055422
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Center Tank (ATA 28)"
+    },
+    {
+      "zone_id": "Z082",
+      "name": "Vent Surge Tank Left",
+      "ata": "28",
+      "type": "fuel",
+      "position": {
+        "x": -17.911087283781303,
+        "y": -0.3310169060454131,
+        "z": 2.4807432622499253
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Vent Surge Tank Left (ATA 28)"
+    },
+    {
+      "zone_id": "Z083",
+      "name": "Vent Surge Tank Right",
+      "ata": "28",
+      "type": "fuel",
+      "position": {
+        "x": 18.390531265952568,
+        "y": -0.3781563007049973,
+        "z": 2.2103728396218516
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Vent Surge Tank Right (ATA 28)"
+    },
+    {
+      "zone_id": "Z084",
+      "name": "Nose Gear Bay",
+      "ata": "32",
+      "type": "landing_gear",
+      "position": {
+        "x": 0.10033192637746069,
+        "y": -4.622587108556081,
+        "z": 12.301347279958229
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Nose Gear Bay (ATA 32)"
+    },
+    {
+      "zone_id": "Z085",
+      "name": "Nose Gear Door",
+      "ata": "32",
+      "type": "landing_gear",
+      "position": {
+        "x": 0.45160005900675415,
+        "y": -4.728405716250141,
+        "z": 12.041468588880038
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Nose Gear Door (ATA 32)"
+    },
+    {
+      "zone_id": "Z086",
+      "name": "Nose Gear Strut",
+      "ata": "32",
+      "type": "landing_gear",
+      "position": {
+        "x": 0.060125202171366965,
+        "y": -4.67391272330948,
+        "z": 12.363121390771093
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Nose Gear Strut (ATA 32)"
+    },
+    {
+      "zone_id": "Z087",
+      "name": "Nose Wheel Assembly",
+      "ata": "32",
+      "type": "landing_gear",
+      "position": {
+        "x": 0.11500544240523669,
+        "y": -4.691376381312374,
+        "z": 12.1727523795714
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Nose Wheel Assembly (ATA 32)"
+    },
+    {
+      "zone_id": "Z088",
+      "name": "Left Main Gear Bay",
+      "ata": "32",
+      "type": "landing_gear",
+      "position": {
+        "x": -2.534553935693549,
+        "y": -4.514928143843463,
+        "z": -0.5722293972348198
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Main Gear Bay (ATA 32)"
+    },
+    {
+      "zone_id": "Z089",
+      "name": "Left Main Gear Door",
+      "ata": "32",
+      "type": "landing_gear",
+      "position": {
+        "x": -2.832030507415878,
+        "y": -4.956745767236915,
+        "z": -0.876934796768903
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Main Gear Door (ATA 32)"
+    },
+    {
+      "zone_id": "Z090",
+      "name": "Left Main Gear Strut",
+      "ata": "32",
+      "type": "landing_gear",
+      "position": {
+        "x": -2.7058944851852185,
+        "y": -4.6962119820265436,
+        "z": -0.6330033114717294
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Main Gear Strut (ATA 32)"
+    },
+    {
+      "zone_id": "Z091",
+      "name": "Left Main Gear Bogie",
+      "ata": "32",
+      "type": "landing_gear",
+      "position": {
+        "x": -2.630692326120815,
+        "y": -4.70575585581156,
+        "z": -0.6321609858644067
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Main Gear Bogie (ATA 32)"
+    },
+    {
+      "zone_id": "Z092",
+      "name": "Left Brake Assembly",
+      "ata": "32",
+      "type": "landing_gear",
+      "position": {
+        "x": -2.72798397352021,
+        "y": -4.7290525590858055,
+        "z": -0.9374834894445435
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Brake Assembly (ATA 32)"
+    },
+    {
+      "zone_id": "Z093",
+      "name": "Left Tire Inner",
+      "ata": "32",
+      "type": "landing_gear",
+      "position": {
+        "x": -2.5853952522893175,
+        "y": -4.5307149281694565,
+        "z": -0.8090402917547607
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Tire Inner (ATA 32)"
+    },
+    {
+      "zone_id": "Z094",
+      "name": "Left Tire Outer",
+      "ata": "32",
+      "type": "landing_gear",
+      "position": {
+        "x": -2.9163240950251637,
+        "y": -4.9442465101370034,
+        "z": -0.9091811719954537
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Left Tire Outer (ATA 32)"
+    },
+    {
+      "zone_id": "Z095",
+      "name": "Right Main Gear Bay",
+      "ata": "32",
+      "type": "landing_gear",
+      "position": {
+        "x": 3.4798557030406214,
+        "y": -4.70770553907678,
+        "z": -0.8802993676495791
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Main Gear Bay (ATA 32)"
+    },
+    {
+      "zone_id": "Z096",
+      "name": "Right Main Gear Door",
+      "ata": "32",
+      "type": "landing_gear",
+      "position": {
+        "x": 3.308846546060118,
+        "y": -4.794467819312932,
+        "z": -0.8519980467715873
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Main Gear Door (ATA 32)"
+    },
+    {
+      "zone_id": "Z097",
+      "name": "Right Main Gear Strut",
+      "ata": "32",
+      "type": "landing_gear",
+      "position": {
+        "x": 3.3679553043565162,
+        "y": -4.692246412345577,
+        "z": -0.600529317407361
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Main Gear Strut (ATA 32)"
+    },
+    {
+      "zone_id": "Z098",
+      "name": "Right Main Gear Bogie",
+      "ata": "32",
+      "type": "landing_gear",
+      "position": {
+        "x": 3.0819343013917306,
+        "y": -4.8825622291000235,
+        "z": -0.9397351120055373
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Main Gear Bogie (ATA 32)"
+    },
+    {
+      "zone_id": "Z099",
+      "name": "Right Brake Assembly",
+      "ata": "32",
+      "type": "landing_gear",
+      "position": {
+        "x": 3.494969181621227,
+        "y": -4.740181600979637,
+        "z": -0.8390537402467431
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Brake Assembly (ATA 32)"
+    },
+    {
+      "zone_id": "Z100",
+      "name": "Right Tire Inner",
+      "ata": "32",
+      "type": "landing_gear",
+      "position": {
+        "x": 3.4866788495100614,
+        "y": -4.645118348539492,
+        "z": -0.740578306769544
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Tire Inner (ATA 32)"
+    },
+    {
+      "zone_id": "Z101",
+      "name": "Right Tire Outer",
+      "ata": "32",
+      "type": "landing_gear",
+      "position": {
+        "x": 3.3065774844929137,
+        "y": -4.60067243400957,
+        "z": -0.8988400466550805
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Right Tire Outer (ATA 32)"
+    },
+    {
+      "zone_id": "Z102",
+      "name": "Radome",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.1314683400416774,
+        "y": 2.4559701443506543,
+        "z": 15.312243831785064
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Radome (ATA 53)"
+    },
+    {
+      "zone_id": "Z103",
+      "name": "Nose Section",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.04917546723229882,
+        "y": 2.3047395411317524,
+        "z": 13.50414738226805
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Nose Section (ATA 53)"
+    },
+    {
+      "zone_id": "Z104",
+      "name": "Forward Fuselage Upper",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.2842182553395395,
+        "y": 2.3649656272665234,
+        "z": 12.041131153316178
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Forward Fuselage Upper (ATA 53)"
+    },
+    {
+      "zone_id": "Z105",
+      "name": "Forward Fuselage Lower",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.4112683230218551,
+        "y": 2.3331712738253487,
+        "z": 10.971711250371929
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Forward Fuselage Lower (ATA 53)"
+    },
+    {
+      "zone_id": "Z106",
+      "name": "Center Fuselage Upper",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.3481588906875134,
+        "y": 2.240605784803213,
+        "z": 9.199267905081209
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Center Fuselage Upper (ATA 53)"
+    },
+    {
+      "zone_id": "Z107",
+      "name": "Center Fuselage Lower",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.47151100178525396,
+        "y": 0.2646870056440461,
+        "z": 7.849693105998252
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Center Fuselage Lower (ATA 53)"
+    },
+    {
+      "zone_id": "Z108",
+      "name": "Aft Fuselage Upper",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.21410544800241182,
+        "y": 0.18951539686306185,
+        "z": 6.368073623834054
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Aft Fuselage Upper (ATA 53)"
+    },
+    {
+      "zone_id": "Z109",
+      "name": "Aft Fuselage Lower",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.3800482824243072,
+        "y": 0.2989652696854386,
+        "z": 4.978926639699904
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Aft Fuselage Lower (ATA 53)"
+    },
+    {
+      "zone_id": "Z110",
+      "name": "Tail Cone",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.10082950436843419,
+        "y": 0.2775727679730414,
+        "z": 3.090342913696858
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Tail Cone (ATA 53)"
+    },
+    {
+      "zone_id": "Z111",
+      "name": "Vertical Stabilizer",
+      "ata": "27",
+      "type": "fuselage",
+      "position": {
+        "x": 0.01535604324046902,
+        "y": 0.45199887802449445,
+        "z": 1.746730304995955
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Vertical Stabilizer (ATA 27)"
+    },
+    {
+      "zone_id": "Z112",
+      "name": "Horizontal Stabilizer Left",
+      "ata": "27",
+      "type": "fuselage",
+      "position": {
+        "x": 0.06814782224956883,
+        "y": 0.13036573632442172,
+        "z": 0.22473544331637396
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Horizontal Stabilizer Left (ATA 27)"
+    },
+    {
+      "zone_id": "Z113",
+      "name": "Horizontal Stabilizer Right",
+      "ata": "27",
+      "type": "fuselage",
+      "position": {
+        "x": 0.35335734609232305,
+        "y": 0.22343538459766266,
+        "z": -1.0054142336090122
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Horizontal Stabilizer Right (ATA 27)"
+    },
+    {
+      "zone_id": "Z114",
+      "name": "Elevator Left",
+      "ata": "27",
+      "type": "fuselage",
+      "position": {
+        "x": 0.139772565971644,
+        "y": 0.15734698976688766,
+        "z": -2.905739000214922
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Elevator Left (ATA 27)"
+    },
+    {
+      "zone_id": "Z115",
+      "name": "Elevator Right",
+      "ata": "27",
+      "type": "fuselage",
+      "position": {
+        "x": 0.34808068419318994,
+        "y": 0.4425282107896046,
+        "z": -4.340693890768232
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Elevator Right (ATA 27)"
+    },
+    {
+      "zone_id": "Z116",
+      "name": "Rudder",
+      "ata": "27",
+      "type": "fuselage",
+      "position": {
+        "x": 0.19628154288218613,
+        "y": 0.0574619864384085,
+        "z": -5.5377570638087965
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Rudder (ATA 27)"
+    },
+    {
+      "zone_id": "Z117",
+      "name": "Forward Cargo Bay",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.03427266336520196,
+        "y": 0.32663895797527254,
+        "z": -7.087349033456403
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Forward Cargo Bay (ATA 53)"
+    },
+    {
+      "zone_id": "Z118",
+      "name": "Aft Cargo Bay",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.18359560763542548,
+        "y": 0.22008687209176192,
+        "z": -8.666527180914372
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Aft Cargo Bay (ATA 53)"
+    },
+    {
+      "zone_id": "Z119",
+      "name": "Bulk Cargo Bay",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.02646123422887736,
+        "y": 0.14475541868666708,
+        "z": -10.413830255260672
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Bulk Cargo Bay (ATA 53)"
+    },
+    {
+      "zone_id": "Z120",
+      "name": "Forward Galley Area",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.18336768352445332,
+        "y": 0.006994810516305905,
+        "z": -11.566057830966171
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Forward Galley Area (ATA 53)"
+    },
+    {
+      "zone_id": "Z121",
+      "name": "Aft Galley Area",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.008489063447750023,
+        "y": 0.4173101819731271,
+        "z": -13.434375945384025
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Aft Galley Area (ATA 53)"
+    },
+    {
+      "zone_id": "Z122",
+      "name": "Forward Lavatory Area",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.4955820463476498,
+        "y": 0.3277378966820207,
+        "z": -14.823492646174891
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Forward Lavatory Area (ATA 53)"
+    },
+    {
+      "zone_id": "Z123",
+      "name": "Aft Lavatory Area",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.1366494131261552,
+        "y": 0.07242531951955566,
+        "z": -16.358010044247866
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Aft Lavatory Area (ATA 53)"
+    },
+    {
+      "zone_id": "Z124",
+      "name": "Cabin Zone A (Rows 1-10)",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.4719328647544211,
+        "y": 0.24514798926936376,
+        "z": -17.967489146510943
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Cabin Zone A (Rows 1-10) (ATA 53)"
+    },
+    {
+      "zone_id": "Z125",
+      "name": "Cabin Zone B (Rows 11-20)",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.09963931844919427,
+        "y": 0.03295249945367196,
+        "z": -19.21454061894167
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Cabin Zone B (Rows 11-20) (ATA 53)"
+    },
+    {
+      "zone_id": "Z126",
+      "name": "Cabin Zone C (Rows 21-30)",
+      "ata": "53",
+      "type": "fuselage",
+      "position": {
+        "x": 0.2849808975750835,
+        "y": 0.39202331273734026,
+        "z": -20.63581902459963
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Cabin Zone C (Rows 21-30) (ATA 53)"
+    },
+    {
+      "zone_id": "Z127",
+      "name": "Cockpit Overhead Panel",
+      "ata": "31",
+      "type": "avionics",
+      "position": {
+        "x": 0.09924943746796655,
+        "y": 3.3002406398558124,
+        "z": 18.109232581341494
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Cockpit Overhead Panel (ATA 31)"
+    },
+    {
+      "zone_id": "Z128",
+      "name": "Cockpit Glareshield",
+      "ata": "31",
+      "type": "avionics",
+      "position": {
+        "x": 0.4404252355846432,
+        "y": 3.2590958667518724,
+        "z": 17.51613220143652
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Cockpit Glareshield (ATA 31)"
+    },
+    {
+      "zone_id": "Z129",
+      "name": "Cockpit Center Pedestal",
+      "ata": "31",
+      "type": "avionics",
+      "position": {
+        "x": 0.001880201536988091,
+        "y": 3.2133887051507175,
+        "z": 17.080870584774694
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Cockpit Center Pedestal (ATA 31)"
+    },
+    {
+      "zone_id": "Z130",
+      "name": "Cockpit Side Console Left",
+      "ata": "31",
+      "type": "avionics",
+      "position": {
+        "x": 0.27384232172674594,
+        "y": 3.383025549651788,
+        "z": 16.955880739093075
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Cockpit Side Console Left (ATA 31)"
+    },
+    {
+      "zone_id": "Z131",
+      "name": "Cockpit Side Console Right",
+      "ata": "31",
+      "type": "avionics",
+      "position": {
+        "x": 0.15471997164944806,
+        "y": 3.046742361432315,
+        "z": 16.36125236008941
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Cockpit Side Console Right (ATA 31)"
+    },
+    {
+      "zone_id": "Z132",
+      "name": "Main Instrument Panel Left",
+      "ata": "31",
+      "type": "avionics",
+      "position": {
+        "x": 0.4804288360484168,
+        "y": 3.467817880803638,
+        "z": 15.68102367380945
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Main Instrument Panel Left (ATA 31)"
+    },
+    {
+      "zone_id": "Z133",
+      "name": "Main Instrument Panel Right",
+      "ata": "31",
+      "type": "avionics",
+      "position": {
+        "x": 0.3093835816954924,
+        "y": 3.377988994891906,
+        "z": 15.365054064670582
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Main Instrument Panel Right (ATA 31)"
+    },
+    {
+      "zone_id": "Z134",
+      "name": "Avionics Bay (E/E Bay)",
+      "ata": "24",
+      "type": "avionics",
+      "position": {
+        "x": 0.4137595092687967,
+        "y": 3.3705537814031232,
+        "z": 14.86746167071638
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Avionics Bay (E/E Bay) (ATA 24)"
+    },
+    {
+      "zone_id": "Z135",
+      "name": "Avionics Rack 1",
+      "ata": "24",
+      "type": "avionics",
+      "position": {
+        "x": 0.30549911361660453,
+        "y": 3.476798303330221,
+        "z": 14.365051262147214
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Avionics Rack 1 (ATA 24)"
+    },
+    {
+      "zone_id": "Z136",
+      "name": "Avionics Rack 2",
+      "ata": "24",
+      "type": "avionics",
+      "position": {
+        "x": 0.1769217300282424,
+        "y": 3.166128498847885,
+        "z": 13.857656343029745
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Avionics Rack 2 (ATA 24)"
+    },
+    {
+      "zone_id": "Z137",
+      "name": "Avionics Rack 3",
+      "ata": "24",
+      "type": "avionics",
+      "position": {
+        "x": 0.34350140714324917,
+        "y": 3.2325055859502267,
+        "z": 13.140208340974471
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Avionics Rack 3 (ATA 24)"
+    },
+    {
+      "zone_id": "Z138",
+      "name": "Circuit Breaker Panel Left",
+      "ata": "24",
+      "type": "avionics",
+      "position": {
+        "x": 0.37885820521677416,
+        "y": 3.222667393319988,
+        "z": 12.728354381181143
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Circuit Breaker Panel Left (ATA 24)"
+    },
+    {
+      "zone_id": "Z139",
+      "name": "Circuit Breaker Panel Right",
+      "ata": "24",
+      "type": "avionics",
+      "position": {
+        "x": 0.34399483883656634,
+        "y": 3.3621864015538785,
+        "z": 12.20112457491053
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Circuit Breaker Panel Right (ATA 24)"
+    },
+    {
+      "zone_id": "Z140",
+      "name": "Hydraulic Bay Green",
+      "ata": "29",
+      "type": "systems",
+      "position": {
+        "x": -0.9703717938075999,
+        "y": 2.0639614037764638,
+        "z": -3.9841760900900285
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Hydraulic Bay Green (ATA 29)"
+    },
+    {
+      "zone_id": "Z141",
+      "name": "Hydraulic Bay Yellow",
+      "ata": "29",
+      "type": "systems",
+      "position": {
+        "x": 0.10568494320056021,
+        "y": 0.2431084668486888,
+        "z": 5.4104425665584674
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Hydraulic Bay Yellow (ATA 29)"
+    },
+    {
+      "zone_id": "Z142",
+      "name": "Hydraulic Bay Blue",
+      "ata": "29",
+      "type": "systems",
+      "position": {
+        "x": -0.5371221744833713,
+        "y": 0.13177534882903819,
+        "z": -0.8980364436987621
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Hydraulic Bay Blue (ATA 29)"
+    },
+    {
+      "zone_id": "Z143",
+      "name": "Bleed Air Duct Left",
+      "ata": "36",
+      "type": "systems",
+      "position": {
+        "x": -0.5131668713742475,
+        "y": 2.3476993142279605,
+        "z": -13.961361626032296
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Bleed Air Duct Left (ATA 36)"
+    },
+    {
+      "zone_id": "Z144",
+      "name": "Bleed Air Duct Right",
+      "ata": "36",
+      "type": "systems",
+      "position": {
+        "x": -1.7449817575139943,
+        "y": -0.5990981245168898,
+        "z": -6.7661251294370315
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Bleed Air Duct Right (ATA 36)"
+    },
+    {
+      "zone_id": "Z145",
+      "name": "Bleed Air Manifold",
+      "ata": "36",
+      "type": "systems",
+      "position": {
+        "x": 1.471362966035774,
+        "y": -0.8366589645655651,
+        "z": -9.631860487501816
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Bleed Air Manifold (ATA 36)"
+    },
+    {
+      "zone_id": "Z146",
+      "name": "Pneumatic Distribution Left",
+      "ata": "36",
+      "type": "systems",
+      "position": {
+        "x": -0.6327613396903013,
+        "y": 0.16143532536612126,
+        "z": 7.272031748178831
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Pneumatic Distribution Left (ATA 36)"
+    },
+    {
+      "zone_id": "Z147",
+      "name": "Pneumatic Distribution Right",
+      "ata": "36",
+      "type": "systems",
+      "position": {
+        "x": 0.07979720487069153,
+        "y": 1.4360551528792345,
+        "z": -0.5879257234312879
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Pneumatic Distribution Right (ATA 36)"
+    },
+    {
+      "zone_id": "Z148",
+      "name": "Air Conditioning Bay Left",
+      "ata": "21",
+      "type": "systems",
+      "position": {
+        "x": 0.24364062795169417,
+        "y": 2.334987939749047,
+        "z": -6.500799527236598
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Air Conditioning Bay Left (ATA 21)"
+    },
+    {
+      "zone_id": "Z149",
+      "name": "Air Conditioning Bay Right",
+      "ata": "21",
+      "type": "systems",
+      "position": {
+        "x": -1.7475202182962883,
+        "y": 1.2140193030372635,
+        "z": 8.111054887073516
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Air Conditioning Bay Right (ATA 21)"
+    },
+    {
+      "zone_id": "Z150",
+      "name": "Pack Bay 1",
+      "ata": "21",
+      "type": "systems",
+      "position": {
+        "x": 2.3576444318340424,
+        "y": -1.7454147903247383,
+        "z": 2.2077819330512933
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Pack Bay 1 (ATA 21)"
+    },
+    {
+      "zone_id": "Z151",
+      "name": "Pack Bay 2",
+      "ata": "21",
+      "type": "systems",
+      "position": {
+        "x": 1.2740315432813047,
+        "y": -1.9890386528100432,
+        "z": 4.18521927833006
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Pack Bay 2 (ATA 21)"
+    },
+    {
+      "zone_id": "Z152",
+      "name": "Electrical Distribution Panel Forward",
+      "ata": "24",
+      "type": "systems",
+      "position": {
+        "x": -0.7953810571832075,
+        "y": 0.34216443289816534,
+        "z": -1.7036487869256471
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Electrical Distribution Panel Forward (ATA 24)"
+    },
+    {
+      "zone_id": "Z153",
+      "name": "Electrical Distribution Panel Aft",
+      "ata": "24",
+      "type": "systems",
+      "position": {
+        "x": 0.4959359628557837,
+        "y": 0.44731638192625356,
+        "z": 5.412481176635315
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Electrical Distribution Panel Aft (ATA 24)"
+    },
+    {
+      "zone_id": "Z154",
+      "name": "APU Compartment",
+      "ata": "49",
+      "type": "systems",
+      "position": {
+        "x": 0.3453455881455222,
+        "y": -1.5912019790445693,
+        "z": 15.337703871885818
+      },
+      "radius": 2,
+      "description": "Aircraft zone: APU Compartment (ATA 49)"
+    },
+    {
+      "zone_id": "Z155",
+      "name": "APU Exhaust Area",
+      "ata": "49",
+      "type": "systems",
+      "position": {
+        "x": 1.2652038918773199,
+        "y": 1.2093320637966918,
+        "z": 13.280846499647133
+      },
+      "radius": 2,
+      "description": "Aircraft zone: APU Exhaust Area (ATA 49)"
+    },
+    {
+      "zone_id": "Z156",
+      "name": "APU Intake",
+      "ata": "49",
+      "type": "systems",
+      "position": {
+        "x": -0.6404237530690698,
+        "y": 1.2347692437204327,
+        "z": 0.12533656748287492
+      },
+      "radius": 2,
+      "description": "Aircraft zone: APU Intake (ATA 49)"
+    },
+    {
+      "zone_id": "Z157",
+      "name": "Fire Bottle Bay Engine 1",
+      "ata": "26",
+      "type": "systems",
+      "position": {
+        "x": 1.1571637802035732,
+        "y": 2.3513991617812993,
+        "z": 8.403074513599604
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Fire Bottle Bay Engine 1 (ATA 26)"
+    },
+    {
+      "zone_id": "Z158",
+      "name": "Fire Bottle Bay Engine 2",
+      "ata": "26",
+      "type": "systems",
+      "position": {
+        "x": -0.5922982289820004,
+        "y": -0.6911500392597132,
+        "z": 2.028472617279525
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Fire Bottle Bay Engine 2 (ATA 26)"
+    },
+    {
+      "zone_id": "Z159",
+      "name": "APU Fire Bottle Bay",
+      "ata": "26",
+      "type": "systems",
+      "position": {
+        "x": 0.02246824540167902,
+        "y": 2.3828183266048297,
+        "z": 9.409126408159258
+      },
+      "radius": 2,
+      "description": "Aircraft zone: APU Fire Bottle Bay (ATA 26)"
+    },
+    {
+      "zone_id": "Z160",
+      "name": "Cargo Fire Suppression Bay",
+      "ata": "26",
+      "type": "systems",
+      "position": {
+        "x": 2.381835689308199,
+        "y": -0.7429617900375209,
+        "z": 6.121837168586481
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Cargo Fire Suppression Bay (ATA 26)"
+    },
+    {
+      "zone_id": "Z161",
+      "name": "Oxygen Bottle Compartment",
+      "ata": "35",
+      "type": "systems",
+      "position": {
+        "x": 1.240847276214455,
+        "y": 0.2017091592928597,
+        "z": -3.589013111200159
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Oxygen Bottle Compartment (ATA 35)"
+    },
+    {
+      "zone_id": "Z162",
+      "name": "Crew Oxygen Station",
+      "ata": "35",
+      "type": "systems",
+      "position": {
+        "x": 0.1020388307702208,
+        "y": 2.256529295123121,
+        "z": -3.779240621618876
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Crew Oxygen Station (ATA 35)"
+    },
+    {
+      "zone_id": "Z163",
+      "name": "Potable Water Service Panel",
+      "ata": "38",
+      "type": "systems",
+      "position": {
+        "x": 0.12412046218776107,
+        "y": 2.0808750632893247,
+        "z": 12.488267238974807
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Potable Water Service Panel (ATA 38)"
+    },
+    {
+      "zone_id": "Z164",
+      "name": "Waste Water Service Panel",
+      "ata": "38",
+      "type": "systems",
+      "position": {
+        "x": 0.18290862748110637,
+        "y": 0.40469428417815634,
+        "z": -5.8608981469494985
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Waste Water Service Panel (ATA 38)"
+    },
+    {
+      "zone_id": "Z165",
+      "name": "Door L1",
+      "ata": "52",
+      "type": "doors",
+      "position": {
+        "x": -1.8334965190843178,
+        "y": 0.299439045447514,
+        "z": 15.204855957197104
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Door L1 (ATA 52)"
+    },
+    {
+      "zone_id": "Z166",
+      "name": "Door R1",
+      "ata": "52",
+      "type": "doors",
+      "position": {
+        "x": 2.376830231716152,
+        "y": 0.1323862624753388,
+        "z": 13.18603002189124
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Door R1 (ATA 52)"
+    },
+    {
+      "zone_id": "Z167",
+      "name": "Door L2",
+      "ata": "52",
+      "type": "doors",
+      "position": {
+        "x": -1.5048336457829885,
+        "y": 0.10335258169272588,
+        "z": 11.343396508772566
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Door L2 (ATA 52)"
+    },
+    {
+      "zone_id": "Z168",
+      "name": "Door R2",
+      "ata": "52",
+      "type": "doors",
+      "position": {
+        "x": 2.3662961201484194,
+        "y": 0.1394481256713368,
+        "z": 9.249200017069425
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Door R2 (ATA 52)"
+    },
+    {
+      "zone_id": "Z169",
+      "name": "Door L3",
+      "ata": "52",
+      "type": "doors",
+      "position": {
+        "x": -1.6998068910903097,
+        "y": 0.16321275888651632,
+        "z": 7.1991120986204695
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Door L3 (ATA 52)"
+    },
+    {
+      "zone_id": "Z170",
+      "name": "Door R3",
+      "ata": "52",
+      "type": "doors",
+      "position": {
+        "x": 2.1389880444148233,
+        "y": 0.31891527808668396,
+        "z": 5.45162159282625
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Door R3 (ATA 52)"
+    },
+    {
+      "zone_id": "Z171",
+      "name": "Door L4",
+      "ata": "52",
+      "type": "doors",
+      "position": {
+        "x": -1.8374116962542817,
+        "y": 0.23651026493798222,
+        "z": 3.0088358630156864
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Door L4 (ATA 52)"
+    },
+    {
+      "zone_id": "Z172",
+      "name": "Door R4",
+      "ata": "52",
+      "type": "doors",
+      "position": {
+        "x": 2.335625519574793,
+        "y": 0.24799083584529247,
+        "z": 1.321879949859651
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Door R4 (ATA 52)"
+    },
+    {
+      "zone_id": "Z173",
+      "name": "Emergency Exit L1 Overwing",
+      "ata": "52",
+      "type": "doors",
+      "position": {
+        "x": -1.7641246535484953,
+        "y": 0.13702950489914845,
+        "z": -0.94379001060265
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Emergency Exit L1 Overwing (ATA 52)"
+    },
+    {
+      "zone_id": "Z174",
+      "name": "Emergency Exit R1 Overwing",
+      "ata": "52",
+      "type": "doors",
+      "position": {
+        "x": 2.1379062003586435,
+        "y": 0.21512467890791653,
+        "z": -2.980651251659345
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Emergency Exit R1 Overwing (ATA 52)"
+    },
+    {
+      "zone_id": "Z175",
+      "name": "Emergency Exit L2 Overwing",
+      "ata": "52",
+      "type": "doors",
+      "position": {
+        "x": -1.6532046892063392,
+        "y": 0.06217632621973024,
+        "z": -4.881072606252079
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Emergency Exit L2 Overwing (ATA 52)"
+    },
+    {
+      "zone_id": "Z176",
+      "name": "Emergency Exit R2 Overwing",
+      "ata": "52",
+      "type": "doors",
+      "position": {
+        "x": 2.3009024693732716,
+        "y": 0.3313980734153542,
+        "z": -6.781666316925487
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Emergency Exit R2 Overwing (ATA 52)"
+    },
+    {
+      "zone_id": "Z177",
+      "name": "Forward Cargo Door",
+      "ata": "52",
+      "type": "doors",
+      "position": {
+        "x": 0.2601864494673941,
+        "y": 0.13520811120524534,
+        "z": -8.658812973940574
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Forward Cargo Door (ATA 52)"
+    },
+    {
+      "zone_id": "Z178",
+      "name": "Aft Cargo Door",
+      "ata": "52",
+      "type": "doors",
+      "position": {
+        "x": 0.34152279824814635,
+        "y": 0.18051011188197175,
+        "z": -10.540990346645314
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Aft Cargo Door (ATA 52)"
+    },
+    {
+      "zone_id": "Z179",
+      "name": "Bulk Cargo Door",
+      "ata": "52",
+      "type": "doors",
+      "position": {
+        "x": 0.28217489436964516,
+        "y": 0.0725556235668895,
+        "z": -12.846832216903396
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Bulk Cargo Door (ATA 52)"
+    },
+    {
+      "zone_id": "Z180",
+      "name": "Nose Gear Service Door",
+      "ata": "52",
+      "type": "doors",
+      "position": {
+        "x": 0.49341008623927185,
+        "y": 0.33887798322853413,
+        "z": -14.868553216935185
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Nose Gear Service Door (ATA 52)"
+    },
+    {
+      "zone_id": "Z181",
+      "name": "Avionics Access Door",
+      "ata": "52",
+      "type": "doors",
+      "position": {
+        "x": 0.09179238979644888,
+        "y": 0.0738952328449396,
+        "z": -16.582640894082136
+      },
+      "radius": 2,
+      "description": "Aircraft zone: Avionics Access Door (ATA 52)"
+    }
+  ]
+}

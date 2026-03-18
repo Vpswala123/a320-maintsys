@@ -1,0 +1,25 @@
+{
+  "airlines": [
+    {
+      "airline_id": "AL001",
+      "name": "Student Demo Airline",
+      "country": "India",
+      "icao": "SDA",
+      "iata": "SD"
+    },
+    {
+      "airline_id": "AL002",
+      "name": "Sky Express (Simulated)",
+      "country": "India",
+      "icao": "SKE",
+      "iata": "SE"
+    },
+    {
+      "airline_id": "AL003",
+      "name": "Global Wings (Simulated)",
+      "country": "UAE",
+      "icao": "GWG",
+      "iata": "GW"
+    }
+  ]
+}

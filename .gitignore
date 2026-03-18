@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+.env.local
+*.log
+.DS_Store
+# Keep the GLB models — needed for deployment
+# airbus_a320_latam_very_detailed.glb is copied to public/aircraft.glb
+airbus_a320_latam_very_detailed.glb

@@ -1,0 +1,33 @@
+{
+  "aircraft": "A320-200",
+  "registration": "VT-DEM",
+  "components": [
+    {
+      "name": "Engine 1",
+      "ata": "71",
+      "health": 97,
+      "temperature": 445,
+      "cycle_hours": 12450,
+      "maintenance_due": "500 FH",
+      "status": "Normal"
+    },
+    {
+      "name": "Landing Gear",
+      "ata": "32",
+      "health": 100,
+      "temperature": 25,
+      "cycle_hours": 8200,
+      "maintenance_due": "1000 cycles",
+      "status": "Normal"
+    },
+    {
+      "name": "Hydraulic Pump",
+      "ata": "29",
+      "health": 92,
+      "temperature": 60,
+      "cycle_hours": 6400,
+      "maintenance_due": "750 FH",
+      "status": "Inspection Recommended"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "date": "2026-03-10",
+  "aircraft": "VT-DEM",
+  "flight_hours": 12540,
+  "cycles": 8205,
+  "defect": "Hydraulic pressure fluctuation",
+  "action": "Filter replaced",
+  "engineer": "Aman Rai"
+}

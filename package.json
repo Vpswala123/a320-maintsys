@@ -1,0 +1,35 @@
+{
+  "name": "a320-maintsys",
+  "private": true,
+  "version": "4.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview --host",
+    "tunnel": "npx localtunnel --port 5173 --print-requests",
+    "start": "concurrently \"npm run dev\" \"npm run tunnel\"",
+    "deploy": "vite build && gh-pages -d dist"
+  },
+  "dependencies": {
+    "@google/model-viewer": "^4.0.0",
+    "@supabase/supabase-js": "^2.49.0",
+    "date-fns": "^4.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.4.0",
+    "react-markdown": "^10.1.0",
+    "react-router-dom": "^7.4.0",
+    "three": "^0.173.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.4.0",
+    "concurrently": "^9.1.0",
+    "gh-pages": "^6.3.0",
+    "tailwindcss": "^4.1.0",
+    "vite": "^6.3.0"
+  }
+}

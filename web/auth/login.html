@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — A320 Maintenance System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    :root {
+      --bg-primary: #0a0e1a;
+      --bg-secondary: #111827;
+      --bg-card: rgba(17, 24, 39, 0.85);
+      --bg-glass: rgba(17, 24, 39, 0.6);
+      --border-color: rgba(56, 189, 248, 0.15);
+      --border-glow: rgba(56, 189, 248, 0.3);
+      --text-primary: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-cyan: #38bdf8;
+      --accent-blue: #3b82f6;
+      --accent-green: #22c55e;
+      --accent-red: #ef4444;
+      --radius: 12px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(56,189,248,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(59,130,246,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(168,85,247,0.04) 0%, transparent 50%);
+      pointer-events: none; z-index: 0;
+    }
+    /* Animated grid */
+    .grid-bg {
+      position: fixed; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(56,189,248,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridMove 20s linear infinite;
+    }
+    @keyframes gridMove { to { background-position: 60px 60px; } }
+
+    .login-container {
+      position: relative; z-index: 1;
+      background: var(--bg-card);
+      backdrop-filter: blur(24px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 48px 40px 40px;
+      width: 100%; max-width: 440px;
+      box-shadow: 0 0 60px rgba(56,189,248,0.08), 0 25px 50px rgba(0,0,0,0.5);
+    }
+    .logo { text-align: center; margin-bottom: 32px; }
+    .logo-icon {
+      width: 56px; height: 56px; margin: 0 auto 16px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      border-radius: 14px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; box-shadow: 0 0 30px rgba(56,189,248,0.3);
+    }
+    .logo h1 {
+      font-family: 'Roboto Mono', monospace; font-size: 1.4rem; font-weight: 700;
+      color: var(--accent-cyan); letter-spacing: -0.5px;
+    }
+    .logo p { color: var(--text-muted); font-size: 0.78rem; margin-top: 4px; }
+
+    .form-group { margin-bottom: 20px; }
+    label {
+      display: block; margin-bottom: 6px; font-size: 0.75rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary);
+    }
+    input[type="email"], input[type="password"] {
+      width: 100%; padding: 12px 16px; background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border-color); border-radius: 8px;
+      color: var(--text-primary); font-size: 0.9rem; font-family: inherit;
+      transition: all 0.3s; outline: none;
+    }
+    input:focus {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 0 3px rgba(56,189,248,0.1);
+    }
+    input::placeholder { color: var(--text-muted); }
+
+    .btn-login {
+      width: 100%; padding: 14px; border: none; border-radius: 10px;
+      font-size: 0.9rem; font-weight: 600; font-family: inherit; cursor: pointer;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      color: #fff; transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(56,189,248,0.3);
+    }
+    .btn-login:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .msg { padding: 10px 14px; border-radius: 8px; margin-bottom: 16px; font-size: 0.8rem; display: none; }
+    .msg-error { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: var(--accent-red); }
+    .msg-success { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); color: var(--accent-green); }
+
+    .links { text-align: center; margin-top: 24px; font-size: 0.8rem; color: var(--text-muted); }
+    .links a { color: var(--accent-cyan); text-decoration: none; font-weight: 500; }
+    .links a:hover { text-decoration: underline; }
+    .forgot { text-align: right; margin-bottom: 20px; }
+    .forgot a { color: var(--text-muted); font-size: 0.72rem; text-decoration: none; }
+    .forgot a:hover { color: var(--accent-cyan); }
+
+    .loader {
+      display: none; width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+      border-radius: 50%; animation: spin 0.8s linear infinite;
+      vertical-align: middle; margin-right: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .demo-notice {
+      margin-top: 20px; padding: 12px; border-radius: 8px;
+      background: rgba(56,189,248,0.06); border: 1px solid rgba(56,189,248,0.12);
+      font-size: 0.72rem; color: var(--text-muted); text-align: center; line-height: 1.5;
+    }
+    .demo-notice strong { color: var(--accent-cyan); }
+    .disclaimer {
+      position: fixed; bottom: 0; left: 0; right: 0; padding: 8px 16px;
+      background: rgba(234,179,8,0.08); border-top: 1px solid rgba(234,179,8,0.15);
+      font-size: 0.65rem; color: #eab308; text-align: center; z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+
+  <div class="login-container">
+    <div class="logo">
+      <div class="logo-icon">✈</div>
+      <h1>A320 MaintSys</h1>
+      <p>Aircraft Maintenance & Records System</p>
+    </div>
+
+    <div class="msg msg-error" id="errorMsg"></div>
+    <div class="msg msg-success" id="successMsg"></div>
+
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="your.email@airline.com" required autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required autocomplete="current-password">
+      </div>
+      <div class="forgot"><a href="#" onclick="showForgotPassword(event)">Forgot password?</a></div>
+      <button type="submit" class="btn-login" id="loginBtn">
+        <span class="loader" id="loader"></span>Login
+      </button>
+    </form>
+
+    <div class="links">
+      Don't have an account? <a href="signup.html">Create one</a>
+    </div>
+
+    <div class="demo-notice" style="text-align: center;">
+      <strong>Explore Demo Roles:</strong>
+      <div style="display: flex; gap: 8px; justify-content: center; margin-top: 12px;">
+        <button type="button" class="viewer-btn" onclick="quickLogin('admin@demo.com')" style="flex: 1;">Admin</button>
+        <button type="button" class="viewer-btn" onclick="quickLogin('pilot@demo.com')" style="flex: 1;">Pilot</button>
+        <button type="button" class="viewer-btn" onclick="quickLogin('ame@demo.com')" style="flex: 1;">AME</button>
+      </div>
+      <div style="margin-top: 12px; font-size: 0.75rem; color: var(--text-muted);">
+        Or enter any email/password. For full features, configure Supabase credentials.
+      </div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    ⚠️ This platform uses simulated data for educational purposes. Not official Airbus documentation.
+  </div>
+
+  <script>
+    const SUPABASE_URL = localStorage.getItem('supabase_url') || '';
+    const SUPABASE_KEY = localStorage.getItem('supabase_key') || '';
+    const isDemoMode = !SUPABASE_URL || SUPABASE_URL.includes('YOUR_');
+
+    function quickLogin(email) {
+      document.getElementById('email').value = email;
+      document.getElementById('password').value = 'demo123';
+      document.getElementById('loginBtn').click();
+    }
+
+    let supabaseClient = null;
+    if (!isDemoMode) {
+      try { supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch(e) { console.warn(e); }
+    }
+
+    // Check existing session
+    window.addEventListener('load', async () => {
+      if (supabaseClient) {
+        const { data } = await supabaseClient.auth.getSession();
+        if (data?.session) { window.location.href = '../index.html'; return; }
+      }
+      // Check demo session
+      if (isDemoMode && localStorage.getItem('user_role')) {
+        window.location.href = '../index.html';
+      }
+    });
+
+    async function handleLogin(event) {
+      event.preventDefault();
+      clearMessages();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const loginBtn = document.getElementById('loginBtn');
+      const loader = document.getElementById('loader');
+
+      if (!email || !password) { showError('Please fill in all fields'); return; }
+
+      loginBtn.disabled = true;
+      loader.style.display = 'inline-block';
+
+      try {
+        if (isDemoMode) {
+          // DEMO MODE — simulate login
+          const demoRoles = { 'admin@demo.com': 'admin', 'pilot@demo.com': 'pilot', 'ame@demo.com': 'ame', 'inspector@demo.com': 'inspector' };
+          const role = demoRoles[email.toLowerCase()] || 'viewer';
+          localStorage.setItem('user_id', 'demo-' + Date.now());
+          localStorage.setItem('user_email', email);
+          localStorage.setItem('user_role', role);
+          localStorage.setItem('user_name', email.split('@')[0]);
+          localStorage.setItem('user_airline', 'Student Demo Airline');
+          showSuccess('Login successful! Redirecting...');
+          setTimeout(() => { window.location.href = '../index.html'; }, 600);
+          return;
+        }
+
+        // SUPABASE MODE
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) {
+          showError(error.message.includes('Invalid') ? 'Invalid email or password' : error.message);
+          return;
+        }
+        if (data?.user) {
+          const { data: profile } = await supabaseClient.from('profiles').select('*').eq('id', data.user.id).single();
+          if (!profile) { showError('Profile not found. Contact admin.'); return; }
+          localStorage.setItem('user_id', data.user.id);
+          localStorage.setItem('user_email', data.user.email);
+          localStorage.setItem('user_role', profile.role);
+          localStorage.setItem('user_name', profile.name);
+          localStorage.setItem('user_airline', profile.company || '');
+          showSuccess('Login successful!');
+          setTimeout(() => { window.location.href = '../index.html'; }, 600);
+        }
+      } catch(e) {
+        showError('Unexpected error. Please try again.');
+        console.error(e);
+      } finally {
+        loginBtn.disabled = false;
+        loader.style.display = 'none';
+      }
+    }
+
+    function showError(msg) { const el = document.getElementById('errorMsg'); el.textContent = '✕ ' + msg; el.style.display = 'block'; }
+    function showSuccess(msg) { const el = document.getElementById('successMsg'); el.textContent = '✓ ' + msg; el.style.display = 'block'; }
+    function clearMessages() { document.getElementById('errorMsg').style.display = 'none'; document.getElementById('successMsg').style.display = 'none'; }
+    function showForgotPassword(e) { e.preventDefault(); alert('Password reset is available when Supabase is configured.'); }
+  </script>
+</body>
+</html>
