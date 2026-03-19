@@ -18,12 +18,17 @@ function generateEmployeeId(role) {
 
 function RoleBadge({ role }) {
   const styles = {
-    admin: { bg: 'rgba(168,85,247,0.12)', color: '#a855f7' },
-    pilot: { bg: 'rgba(47,128,237,0.12)', color: '#2f80ed' },
-    ame: { bg: 'rgba(39,174,96,0.12)', color: '#27ae60' },
+    admin: { bg: 'rgba(168,85,247,0.1)', color: '#b983ff', label: 'ADMIN' },
+    pilot: { bg: 'rgba(47,128,237,0.1)', color: 'var(--accent-blue)', label: 'PILOT' },
+    ame: { bg: 'rgba(39,174,96,0.1)', color: 'var(--success)', label: 'AME' },
   };
   const s = styles[role] || styles.ame;
-  return <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full" style={{ background: s.bg, color: s.color }}>{role}</span>;
+  return (
+    <span className="text-[9px] font-bold px-2 py-0.5 rounded border border-transparent font-mono tracking-wider" 
+      style={{ background: s.bg, color: s.color, borderColor: `${s.color}33` }}>
+      {s.label}
+    </span>
+  );
 }
 
 export default function UserManagementPage() {
@@ -118,191 +123,225 @@ export default function UserManagementPage() {
   };
 
   return (
-    <div className="h-full overflow-y-auto p-4">
-      <div className="max-w-5xl mx-auto">
+    <div className="h-full overflow-y-auto p-6 bg-[var(--bg-primary)] custom-scrollbar">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="flex items-center justify-between mb-5">
+        <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-lg font-bold" style={{ color: 'var(--color-text-primary)' }}>User Management</h2>
-            <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
-              Create and manage user accounts • {users.length} users registered
+            <h1 className="text-xl font-bold tracking-tight text-[var(--text-primary)]">User Management</h1>
+            <p className="text-[11px] font-mono text-[var(--text-muted)] tracking-wider mt-1 uppercase">
+              Personnel Directory • {users.length} Registered Accounts
             </p>
           </div>
-          <div className="flex gap-2">
-            <button onClick={loadUsers} className="p-2 rounded-lg border transition-all hover:border-[var(--color-accent)]"
-              style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)' }}>
-              <FiRefreshCw className="w-4 h-4" style={{ color: 'var(--color-text-secondary)' }} />
+          <div className="flex gap-3">
+            <button onClick={loadUsers} className="p-2.5 rounded border border-[var(--border)] bg-[var(--bg-panel-2)] transition-colors hover:border-[var(--accent-blue)]" title="Refresh List">
+              <FiRefreshCw className={`w-4 h-4 text-[var(--text-secondary)] ${loading ? 'animate-spin' : ''}`} />
             </button>
-            <button onClick={openNewUserModal}
-              className="px-4 py-2 rounded-lg text-xs font-semibold text-white flex items-center gap-1.5 transition-all hover:brightness-110"
-              style={{ background: 'var(--color-accent)' }}>
-              <FiPlus className="w-4 h-4" /> Create User
+            <button onClick={openNewUserModal} className="btn-primary flex items-center gap-2 px-5 h-10">
+              <FiPlus className="w-4 h-4" /> Create User Account
             </button>
           </div>
         </div>
 
         {/* Users Table */}
-        <div className="overflow-x-auto rounded-lg border" style={{ borderColor: 'var(--color-border)' }}>
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Employee ID</th>
-                <th>Name</th>
-                <th>Role</th>
-                <th>License No.</th>
-                <th>Status</th>
-                <th>Created</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <tr><td colSpan="7" className="text-center py-8">
-                  <div className="w-6 h-6 border-2 border-[var(--color-border)] border-t-[var(--color-accent)] rounded-full animate-spin mx-auto"></div>
-                </td></tr>
-              ) : users.length === 0 ? (
-                <tr><td colSpan="7" className="text-center py-8" style={{ color: 'var(--color-text-muted)' }}>
-                  No users yet. Click "Create User" to add the first account.
-                </td></tr>
-              ) : (
-                users.map(u => (
-                  <tr key={u.id}>
-                    <td><span className="font-mono font-bold" style={{ color: 'var(--color-accent)' }}>{u.employee_id || '—'}</span></td>
-                    <td className="font-semibold">{u.name || '—'}</td>
-                    <td><RoleBadge role={u.role} /></td>
-                    <td className="font-mono">{u.license_number || '—'}</td>
-                    <td>
-                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
-                        style={{
-                          background: u.is_active !== false ? 'rgba(39,174,96,0.12)' : 'rgba(235,87,87,0.12)',
-                          color: u.is_active !== false ? 'var(--color-accent-green)' : 'var(--color-accent-red)',
-                        }}>
-                        {u.is_active !== false ? 'Active' : 'Disabled'}
-                      </span>
-                    </td>
-                    <td className="font-mono text-[10px]">{u.created_at ? new Date(u.created_at).toLocaleDateString() : '—'}</td>
-                    <td>
-                      <button onClick={() => handleToggleActive(u.id, u.is_active !== false)}
-                        className="p-1.5 rounded transition-colors hover:bg-[var(--color-bg-card)]" title={u.is_active !== false ? 'Disable' : 'Enable'}>
-                        {u.is_active !== false ?
-                          <FiToggleRight className="w-4 h-4" style={{ color: 'var(--color-accent-green)' }} /> :
-                          <FiToggleLeft className="w-4 h-4" style={{ color: 'var(--color-accent-red)' }} />}
-                      </button>
+        <div className="panel overflow-hidden mb-8">
+          <div className="overflow-x-auto">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th className="w-32">Employee ID</th>
+                  <th>Full Name</th>
+                  <th className="w-24 text-center">Role</th>
+                  <th>License / ID</th>
+                  <th className="w-24 text-center">Status</th>
+                  <th>Onboarded</th>
+                  <th className="w-16 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {loading ? (
+                  <tr>
+                    <td colSpan="7" className="text-center py-16">
+                      <div className="flex flex-col items-center gap-3">
+                        <div className="w-10 h-10 border-2 border-[var(--border)] border-t-[var(--accent-blue)] rounded-full animate-spin" />
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] tracking-widest">QUERYING USER DATABASE...</span>
+                      </div>
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ) : users.length === 0 ? (
+                  <tr>
+                    <td colSpan="7" className="text-center py-16">
+                      <p className="text-xs text-[var(--text-muted)] tracking-widest font-bold">NO USERS REGISTERED IN SYSTEM</p>
+                    </td>
+                  </tr>
+                ) : (
+                  users.map(u => (
+                    <tr key={u.id} className="hover:bg-[var(--bg-panel-2)]/30 transition-colors">
+                      <td><span className="font-mono font-bold text-[var(--accent-blue)] tracking-tighter">{u.employee_id || '—'}</span></td>
+                      <td className="font-semibold text-[var(--text-primary)]">{u.name || '—'}</td>
+                      <td className="text-center"><RoleBadge role={u.role} /></td>
+                      <td><span className="font-mono text-[10px] text-[var(--text-secondary)]">{u.license_number || 'GLOBAL-ID'}</span></td>
+                      <td className="text-center">
+                        <span className="text-[9px] font-bold px-2 py-0.5 rounded border font-mono tracking-wider"
+                          style={{
+                            background: u.is_active !== false ? 'rgba(39,174,96,0.1)' : 'rgba(235,87,87,0.1)',
+                            color: u.is_active !== false ? 'var(--success)' : 'var(--error)',
+                            borderColor: u.is_active !== false ? 'rgba(39,174,96,0.2)' : 'rgba(235,87,87,0.2)',
+                          }}>
+                          {u.is_active !== false ? 'ACTIVE' : 'DISABLED'}
+                        </span>
+                      </td>
+                      <td><span className="font-mono text-[10px] text-[var(--text-muted)]">{u.created_at ? new Date(u.created_at).toLocaleDateString() : '—'}</span></td>
+                      <td className="text-right">
+                        <button onClick={() => handleToggleActive(u.id, u.is_active !== false)}
+                          className={`p-2 rounded transition-colors hover:bg-[var(--bg-panel-2)] ${u.is_active !== false ? 'text-[var(--success)]' : 'text-[var(--error)]'}`} 
+                          title={u.is_active !== false ? 'Deactivate Account' : 'Activate Account'}>
+                          {u.is_active !== false ? <FiToggleRight className="w-5 h-5" /> : <FiToggleLeft className="w-5 h-5" />}
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        {/* Info Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
-          <div className="p-4 rounded-lg border" style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)' }}>
-            <h4 className="text-[10px] font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--color-text-muted)' }}>How It Works</h4>
-            <ol className="text-[11px] space-y-1.5 list-decimal list-inside" style={{ color: 'var(--color-text-secondary)' }}>
-              <li>Click <strong>"Create User"</strong></li>
-              <li>Set the role, name, and Employee ID</li>
-              <li>A password is auto-generated</li>
-              <li>Copy credentials and share with user</li>
-              <li>User logs in with Employee ID + Password</li>
-            </ol>
+        {/* Reference Sections */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="panel p-5 bg-[var(--bg-panel-2)]/50">
+            <h4 className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-[var(--accent-blue)]" /> Provisioning Protocol
+            </h4>
+            <ul className="text-[11px] space-y-2.5 text-[var(--text-secondary)] leading-relaxed">
+              <li className="flex gap-2">
+                <span className="text-[var(--accent-blue)] font-bold font-mono">01.</span>
+                <span>Select operational role to calibrate specific access level and permissions.</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-[var(--accent-blue)] font-bold font-mono">02.</span>
+                <span>Credentials are generated algorithmically. Password entropy is forced to high.</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-[var(--accent-blue)] font-bold font-mono">03.</span>
+                <span>Employee ID acts as the unique system identifier for all digital signatures.</span>
+              </li>
+            </ul>
           </div>
-          <div className="p-4 rounded-lg border" style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)' }}>
-            <h4 className="text-[10px] font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--color-text-muted)' }}>Employee ID Format</h4>
-            <div className="text-[11px] space-y-1" style={{ color: 'var(--color-text-secondary)' }}>
-              <p><span className="font-mono font-bold" style={{ color: '#a855f7' }}>ADM-XXXX</span> → Administrators</p>
-              <p><span className="font-mono font-bold" style={{ color: '#2f80ed' }}>PLT-XXXX</span> → Pilots</p>
-              <p><span className="font-mono font-bold" style={{ color: '#27ae60' }}>AME-XXXX</span> → Maintenance Engineers</p>
-              <p className="text-[10px] mt-1" style={{ color: 'var(--color-text-muted)' }}>You can customize the ID to any format</p>
+
+          <div className="panel p-5 bg-[var(--bg-panel-2)]/50">
+            <h4 className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-[var(--success)]" /> Identity Standards
+            </h4>
+            <div className="space-y-3">
+              {[
+                { r: 'ADMIN', code: 'ADM-XXXX', color: '#b983ff' },
+                { r: 'PILOT', code: 'PLT-XXXX', color: 'var(--accent-blue)' },
+                { r: 'ENGINEER', code: 'AME-XXXX', color: 'var(--success)' },
+              ].map((std, i) => (
+                <div key={i} className="flex justify-between items-center py-1 border-b border-[var(--border)] border-dashed last:border-0 pb-2">
+                  <span className="text-[11px] font-bold" style={{ color: std.color }}>{std.r}</span>
+                  <span className="text-[11px] font-mono text-[var(--text-primary)]">{std.code}</span>
+                </div>
+              ))}
             </div>
           </div>
-          <div className="p-4 rounded-lg border" style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)' }}>
-            <h4 className="text-[10px] font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--color-text-muted)' }}>Password Policy</h4>
-            <div className="text-[11px] space-y-1" style={{ color: 'var(--color-text-secondary)' }}>
-              <p>• Minimum 6 characters</p>
-              <p>• Auto-generated with mixed case + numbers</p>
-              <p>• Admin can regenerate anytime</p>
-              <p>• Credentials are shown once — copy them!</p>
+
+          <div className="panel p-5 bg-[var(--bg-panel-2)]/50">
+            <h4 className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest mb-3 flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-[var(--warning)]" /> Security Policy
+            </h4>
+            <div className="text-[11px] space-y-2 text-[var(--text-secondary)]">
+              <div className="p-2 rounded bg-[var(--bg-primary)]/50 border border-[var(--border)]">
+                <p className="font-mono text-[10px] leading-tight">
+                  SIGNATURE ENFORCEMENT: ALL LOGBOOK ENTRIES REQUIRE VALIDATED EMPLOYEE ID HASH.
+                </p>
+              </div>
+              <p>• Multi-factor authentication recommended for Admin.</p>
+              <p>• Temporary passwords valid for first login only.</p>
+              <p>• Licensed AME must provide valid Cert number.</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Create User Modal */}
+      {/* Account Creation Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => { if (!createdCreds) setShowModal(false); }}>
-          <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.7)' }} />
-          <div className="relative w-full max-w-lg rounded-xl border p-6 animate-slide-up"
-            style={{ background: 'var(--color-bg-panel)', borderColor: 'var(--color-border)' }}
+          <div className="absolute inset-0 bg-[var(--bg-primary)]/80 backdrop-blur-sm" />
+          <div className="relative w-full max-w-lg panel overflow-hidden animate-slide-up"
             onClick={e => e.stopPropagation()}>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-base font-bold" style={{ color: 'var(--color-text-primary)' }}>
-                {createdCreds ? '✅ User Created!' : 'Create New User'}
-              </h2>
-              <button onClick={() => setShowModal(false)} className="p-1 rounded hover:bg-[var(--color-bg-card)]">
-                <FiX className="w-5 h-5" style={{ color: 'var(--color-text-muted)' }} />
+            
+            <div className="flex items-center justify-between p-4 border-b border-[var(--border)] bg-[var(--bg-panel-2)]">
+              <div>
+                <h3 className="text-sm font-bold text-[var(--text-primary)] tracking-tight">
+                  {createdCreds ? 'REGISTRATION COMPLETE' : 'PROVISION NEW USER'}
+                </h3>
+                <p className="text-[10px] text-[var(--text-muted)] font-mono uppercase tracking-widest leading-none">
+                  {createdCreds ? 'Access Credentials Generated' : 'System Access Authorization'}
+                </p>
+              </div>
+              <button onClick={() => setShowModal(false)} className="p-1 rounded hover:bg-[var(--border)] transition-colors">
+                <FiX className="w-5 h-5 text-[var(--text-muted)]" />
               </button>
             </div>
 
             {createdCreds ? (
-              /* Credentials Display */
-              <div className="space-y-4">
-                <div className="p-4 rounded-lg border-2" style={{ background: 'rgba(39,174,96,0.05)', borderColor: 'var(--color-accent-green)' }}>
-                  <p className="text-xs font-semibold mb-3" style={{ color: 'var(--color-accent-green)' }}>
-                    Share these credentials with the user. They won't be shown again.
+              /* Credentials display window - Premium style */
+              <div className="p-6 space-y-5">
+                <div className="p-5 rounded border border-[var(--success)]/30 bg-[var(--success)]/5 space-y-4">
+                  <div className="flex items-center gap-2 text-[var(--success)] mb-2">
+                    <FiCheck className="w-5 h-5" />
+                    <span className="text-xs font-bold uppercase tracking-widest">Security Credentials Generated Successfully</span>
+                  </div>
+                  
+                  <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed italic">
+                    "Transmit these credentials via secure channel. This sequence will be purged from display upon closing this window."
                   </p>
-                  <div className="space-y-2 font-mono text-sm">
-                    <div className="flex justify-between">
-                      <span style={{ color: 'var(--color-text-muted)' }}>Name:</span>
-                      <span style={{ color: 'var(--color-text-primary)' }}>{createdCreds.name}</span>
+
+                  <div className="grid grid-cols-1 gap-3 py-4 border-y border-[var(--success)]/20">
+                    <div className="flex justify-between items-center bg-[var(--bg-panel-2)]/50 p-2 rounded">
+                      <span className="text-[10px] font-bold text-[var(--text-muted)] uppercase">Target Name</span>
+                      <span className="text-sm font-bold text-[var(--text-primary)]">{createdCreds.name}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span style={{ color: 'var(--color-text-muted)' }}>Role:</span>
-                      <RoleBadge role={createdCreds.role} />
+                    <div className="flex justify-between items-center bg-[var(--bg-panel-2)]/50 p-2 rounded">
+                      <span className="text-[10px] font-bold text-[var(--text-muted)] uppercase">Access Code (ID)</span>
+                      <span className="text-sm font-mono font-bold text-[var(--accent-blue)]">{createdCreds.employeeId}</span>
                     </div>
-                    <hr style={{ borderColor: 'var(--color-border)' }} />
-                    <div className="flex justify-between">
-                      <span style={{ color: 'var(--color-text-muted)' }}>Employee ID:</span>
-                      <span className="font-bold" style={{ color: 'var(--color-accent)' }}>{createdCreds.employeeId}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span style={{ color: 'var(--color-text-muted)' }}>Password:</span>
-                      <span className="font-bold" style={{ color: 'var(--color-accent-green)' }}>{createdCreds.password}</span>
+                    <div className="flex justify-between items-center bg-[var(--bg-panel-2)]/50 p-2 rounded">
+                      <span className="text-[10px] font-bold text-[var(--text-muted)] uppercase">Encryption Key</span>
+                      <span className="text-sm font-mono font-bold text-[var(--success)] tracking-widest">{createdCreds.password}</span>
                     </div>
                   </div>
                 </div>
 
-                <button onClick={copyCredentials}
-                  className="w-full py-2.5 rounded-lg border text-xs font-semibold flex items-center justify-center gap-2 transition-all hover:border-[var(--color-accent)]"
-                  style={{ borderColor: 'var(--color-border)', color: copied ? 'var(--color-accent-green)' : 'var(--color-accent)', background: 'var(--color-bg-card)' }}>
-                  {copied ? <><FiCheck className="w-4 h-4" /> Copied!</> : <><FiCopy className="w-4 h-4" /> Copy Credentials</>}
-                </button>
-
-                <button onClick={() => setShowModal(false)}
-                  className="w-full py-2.5 rounded-lg font-semibold text-sm text-white transition-all hover:brightness-110"
-                  style={{ background: 'var(--color-accent)' }}>
-                  Done
-                </button>
+                <div className="flex gap-3">
+                  <button onClick={copyCredentials} className={`flex-1 btn-secondary h-11 flex items-center justify-center gap-2 font-bold tracking-widest transition-all ${copied ? 'border-[var(--success)] text-[var(--success)]' : ''}`}>
+                    {copied ? <><FiCheck className="w-4 h-4" /> COPIED TO CLIPBOARD</> : <><FiCopy className="w-4 h-4" /> COPY DATA STRIP</>}
+                  </button>
+                  <button onClick={() => setShowModal(false)} className="flex-1 btn-primary h-11 font-bold tracking-widest">
+                    INITIALIZE LOGIN
+                  </button>
+                </div>
               </div>
             ) : (
-              /* Create Form */
-              <div className="space-y-3">
-                {/* Role Select */}
+              /* Entry Form */
+              <div className="p-6 space-y-5">
+                {/* Role Toggles */}
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider font-semibold mb-1.5" style={{ color: 'var(--color-text-muted)' }}>Role</label>
-                  <div className="grid grid-cols-3 gap-2">
+                  <label className="label mb-2">ASSIGN OPERATIONAL ROLE</label>
+                  <div className="grid grid-cols-3 gap-3">
                     {[
-                      { id: 'pilot', label: 'Pilot', color: '#2f80ed' },
-                      { id: 'ame', label: 'AME', color: '#27ae60' },
-                      { id: 'admin', label: 'Admin', color: '#a855f7' },
+                      { id: 'pilot', label: 'PILOT', color: 'var(--accent-blue)' },
+                      { id: 'ame', label: 'AME', color: 'var(--success)' },
+                      { id: 'admin', label: 'ADMIN', color: '#b983ff' },
                     ].map(r => (
                       <button key={r.id} type="button" onClick={() => handleRoleChange(r.id)}
-                        className="py-2 rounded-lg border-2 text-xs font-semibold transition-all"
+                        className="py-2.5 rounded border-2 text-[10px] font-bold transition-all font-mono tracking-widest"
                         style={{
-                          background: newRole === r.id ? `${r.color}15` : 'var(--color-bg-card)',
-                          borderColor: newRole === r.id ? r.color : 'var(--color-border)',
-                          color: newRole === r.id ? r.color : 'var(--color-text-secondary)',
+                          background: newRole === r.id ? `${r.color}15` : 'var(--bg-panel-2)',
+                          borderColor: newRole === r.id ? r.color : 'var(--border)',
+                          color: newRole === r.id ? r.color : 'var(--text-secondary)',
                         }}>
                         {r.label}
                       </button>
@@ -310,58 +349,63 @@ export default function UserManagementPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-[10px] uppercase tracking-wider font-semibold mb-1" style={{ color: 'var(--color-text-muted)' }}>Full Name</label>
-                    <input type="text" value={newName} onChange={e => setNewName(e.target.value)} placeholder="e.g. Ravi Kumar"
-                      className="w-full px-3 py-2 rounded-lg border text-xs outline-none"
-                      style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' }} />
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="col-span-2">
+                    <label className="label">FULL PERSONNEL NAME</label>
+                    <input type="text" value={newName} onChange={e => setNewName(e.target.value)} placeholder="e.g. MARCUS AURELIUS"
+                      className="w-full p-2.5 bg-[var(--bg-panel-2)] border border-[var(--border)] rounded text-xs font-bold text-[var(--text-primary)] outline-none focus:border-[var(--accent-blue)]" />
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase tracking-wider font-semibold mb-1" style={{ color: 'var(--color-text-muted)' }}>Employee ID</label>
+                    <label className="label">EMPLOYEE ID (SYSTEM ID)</label>
                     <input type="text" value={newEmployeeId} onChange={e => setNewEmployeeId(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg border text-xs outline-none font-mono"
-                      style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)', color: 'var(--color-accent)' }} />
+                      className="w-full p-2.5 bg-[var(--bg-panel-2)] border border-[var(--border)] rounded text-xs font-mono font-bold text-[var(--accent-blue)] outline-none" />
+                  </div>
+                  <div>
+                    <label className="label">LICENSE / CERTIFICATE</label>
+                    <input type="text" value={newLicense} onChange={e => setNewLicense(e.target.value)} placeholder="AME-CERT-XXXX"
+                      className="w-full p-2.5 bg-[var(--bg-panel-2)] border border-[var(--border)] rounded text-xs font-mono text-[var(--text-primary)] outline-none" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[10px] uppercase tracking-wider font-semibold mb-1" style={{ color: 'var(--color-text-muted)' }}>License / Certificate No. (optional)</label>
-                  <input type="text" value={newLicense} onChange={e => setNewLicense(e.target.value)} placeholder="e.g. DGCA-AME-12345"
-                    className="w-full px-3 py-2 rounded-lg border text-xs outline-none font-mono"
-                    style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' }} />
-                </div>
-
-                <div>
-                  <label className="block text-[10px] uppercase tracking-wider font-semibold mb-1" style={{ color: 'var(--color-text-muted)' }}>Generated Password</label>
+                  <label className="label">SECURITY ENCRYPTION KEY (PASSWORD)</label>
                   <div className="flex gap-2">
                     <div className="relative flex-1">
                       <input type={showPassword ? 'text' : 'password'} value={newPassword} onChange={e => setNewPassword(e.target.value)}
-                        className="w-full px-3 py-2 rounded-lg border text-xs outline-none font-mono pr-8"
-                        style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' }} />
-                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-2 top-1/2 -translate-y-1/2">
-                        {showPassword ? <FiEyeOff className="w-3.5 h-3.5" style={{ color: 'var(--color-text-muted)' }} /> :
-                          <FiEye className="w-3.5 h-3.5" style={{ color: 'var(--color-text-muted)' }} />}
+                        className="w-full p-2.5 bg-[var(--bg-panel-2)] border border-[var(--border)] rounded text-xs font-mono font-bold text-[var(--text-primary)] pr-10 outline-none" />
+                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-[var(--text-muted)] hover:text-[var(--text-primary)]">
+                        {showPassword ? <FiEyeOff className="w-4 h-4" /> : <FiEye className="w-4 h-4" />}
                       </button>
                     </div>
                     <button type="button" onClick={() => setNewPassword(generatePassword())}
-                      className="px-3 py-2 rounded-lg border text-xs font-semibold transition-all hover:border-[var(--color-accent)]"
-                      style={{ borderColor: 'var(--color-border)', color: 'var(--color-accent)', background: 'var(--color-bg-card)' }}>
-                      <FiRefreshCw className="w-3.5 h-3.5" />
+                      className="w-11 h-11 flex items-center justify-center rounded border border-[var(--border)] bg-[var(--bg-panel-2)] hover:border-[var(--accent-blue)] transition-colors text-[var(--accent-blue)]"
+                      title="Regenerate Key">
+                      <FiRefreshCw className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
 
-                {error && <p className="text-xs px-3 py-2 rounded-lg" style={{ background: 'rgba(235,87,87,0.1)', color: 'var(--color-accent-red)' }}>{error}</p>}
-                {success && <p className="text-xs px-3 py-2 rounded-lg" style={{ background: 'rgba(39,174,96,0.1)', color: 'var(--color-accent-green)' }}>{success}</p>}
+                {error && (
+                  <div className="p-3 bg-[var(--error)]/10 border border-[var(--error)]/20 rounded flex items-center gap-2 text-[var(--error)] animate-shake">
+                    <FiAlertCircle className="w-4 h-4 shrink-0" />
+                    <p className="text-[10px] font-bold uppercase tracking-wider">{error}</p>
+                  </div>
+                )}
 
                 <button onClick={handleCreate} disabled={creating}
-                  className="w-full py-3 rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2 transition-all hover:brightness-110 disabled:opacity-50"
-                  style={{ background: 'linear-gradient(135deg, var(--color-accent), var(--color-accent-cyan))' }}>
-                  {creating ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> :
-                    <><FiPlus className="w-4 h-4" /> Create Account</>}
+                  className="w-full h-12 btn-primary flex items-center justify-center gap-2 font-bold tracking-[0.2em]">
+                  {creating ? <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" /> :
+                    <><FiPlus className="w-5 h-5" /> AUTHORIZE PERSONNEL</>}
                 </button>
               </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+      </div>
             )}
           </div>
         </div>

@@ -1,0 +1,95 @@
+/* globals.css — paste into src/styles/globals.css */
+:root {
+  --bg-primary: #0b1320;
+  --bg-panel: #111a2e;
+  --bg-panel-2: #0f1729;
+  --border: #1f2a3a;
+  --border-light: #2a3a50;
+  --accent-blue: #2f80ed;
+  --accent-cyan: #00d4ff;
+  --text-primary: #dce6f2;
+  --text-secondary: #9ba4b4;
+  --text-muted: #5a6478;
+  --success: #27ae60;
+  --warning: #f2c94c;
+  --error: #eb5757;
+  --font-ui: 'Inter', sans-serif;
+  --font-mono: 'Roboto Mono', monospace;
+
+  /* Backward compatibility bridge for older components */
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-panel: var(--bg-panel);
+  --color-bg-panel-2: var(--bg-panel-2);
+  --color-bg-card: var(--bg-panel);
+  --color-border: var(--border);
+  --color-border-light: var(--border-light);
+  --color-accent: var(--accent-blue);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-accent-green: var(--success);
+  --color-accent-yellow: var(--warning);
+  --color-accent-red: var(--error);
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+}
+
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.panel-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.health-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border);
+}
+
+.health-fill-good    { background: var(--success); }
+.health-fill-warning { background: var(--warning); }
+.health-fill-critical { background: var(--error); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-primary:hover { opacity: 0.9; }
+
+.data-value {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent-cyan);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}

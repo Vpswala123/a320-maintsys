@@ -146,8 +146,8 @@ export default function AircraftViewer({ onComponentSelect }) {
 
     // Scene
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0a0e1a);
-    scene.fog = new THREE.Fog(0x0a0e1a, 80, 200);
+    scene.background = new THREE.Color(0x0b1320); // --bg-primary
+    scene.fog = new THREE.Fog(0x0b1320, 80, 200);
     sceneRef.current = scene;
 
     // Camera
@@ -162,7 +162,7 @@ export default function AircraftViewer({ onComponentSelect }) {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
+    renderer.toneMappingExposure = 1.0;
     container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
@@ -177,25 +177,25 @@ export default function AircraftViewer({ onComponentSelect }) {
     controlsRef.current = controls;
 
     // Lights
-    const ambient = new THREE.AmbientLight(0xffffff, 0.5);
+    const ambient = new THREE.AmbientLight(0xffffff, 0.4);
     scene.add(ambient);
 
-    const hemi = new THREE.HemisphereLight(0x87ceeb, 0x444444, 0.6);
+    const hemi = new THREE.HemisphereLight(0x87ceeb, 0x0b1320, 0.6);
     scene.add(hemi);
 
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1.4);
     dirLight.position.set(30, 40, 20);
     dirLight.castShadow = true;
     dirLight.shadow.mapSize.width = 2048;
     dirLight.shadow.mapSize.height = 2048;
     scene.add(dirLight);
 
-    const fillLight = new THREE.DirectionalLight(0x4488ff, 0.3);
+    const fillLight = new THREE.DirectionalLight(0x2f80ed, 0.4);
     fillLight.position.set(-20, 10, -10);
     scene.add(fillLight);
 
-    // Ground grid
-    const grid = new THREE.GridHelper(100, 50, 0x1a2744, 0x0d1529);
+    // Ground grid - Matching design system
+    const grid = new THREE.GridHelper(100, 50, 0x1f2a3a, 0x0f1729);
     grid.position.y = -0.5;
     scene.add(grid);
 
@@ -210,10 +210,10 @@ export default function AircraftViewer({ onComponentSelect }) {
         const center = box.getCenter(new THREE.Vector3());
         const size = box.getSize(new THREE.Vector3());
         const maxDim = Math.max(size.x, size.y, size.z);
-        const scale = 20 / maxDim;
+        const scale = 22 / maxDim;
         model.scale.setScalar(scale);
         model.position.sub(center.multiplyScalar(scale));
-        model.position.y += 2;
+        model.position.y += 2.5;
 
         model.traverse((child) => {
           if (child.isMesh) {
@@ -227,7 +227,7 @@ export default function AircraftViewer({ onComponentSelect }) {
         modelRef.current = model;
         // Store the scaled bounding box for position-based zone detection
         modelBBoxRef.current = new THREE.Box3().setFromObject(model);
-        controls.target.set(0, 2, 0);
+        controls.target.set(0, 2.5, 0);
         controls.update();
         setLoaded(true);
       },
@@ -304,10 +304,10 @@ export default function AircraftViewer({ onComponentSelect }) {
       // Highlight clicked part
       hit.material = hit.material.clone();
       hit.material.emissive = new THREE.Color(
-        data.status === 'warning' ? 0xff4444 :
-        data.status === 'caution' ? 0xffaa00 : 0x00aaff
+        data.status === 'warning' ? 0xeb5757 : // --error
+        data.status === 'caution' ? 0xf2c94c : 0x2f80ed // --warning : --accent-blue
       );
-      hit.material.emissiveIntensity = 0.4;
+      hit.material.emissiveIntensity = 0.5;
       highlightRef.current = hit;
 
       onComponentSelect?.({
@@ -327,11 +327,14 @@ export default function AircraftViewer({ onComponentSelect }) {
         if (mode === 'wireframe') {
           child.material = child.userData.originalMaterial.clone();
           child.material.wireframe = true;
+          child.material.transparent = true;
+          child.material.opacity = 0.4;
         } else if (mode === 'xray') {
           child.material = child.userData.originalMaterial.clone();
           child.material.transparent = true;
-          child.material.opacity = 0.35;
+          child.material.opacity = 0.25;
           child.material.depthWrite = false;
+          child.material.side = THREE.DoubleSide;
         } else {
           child.material = child.userData.originalMaterial.clone();
         }
@@ -343,54 +346,84 @@ export default function AircraftViewer({ onComponentSelect }) {
   const resetCamera = useCallback(() => {
     if (!cameraRef.current || !controlsRef.current) return;
     cameraRef.current.position.set(25, 12, 30);
-    controlsRef.current.target.set(0, 2, 0);
+    controlsRef.current.target.set(0, 2.5, 0);
     controlsRef.current.update();
   }, []);
 
   return (
-    <div className="relative w-full h-full" style={{ minHeight: '300px' }}>
+    <div className="relative w-full h-full bg-[var(--bg-primary)]" style={{ minHeight: '340px' }}>
       <div ref={mountRef} className="w-full h-full cursor-crosshair" onClick={handleClick} />
 
-      {/* Loading overlay */}
+      {/* Loading overlay - Premium Engineering Style */}
       {!loaded && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center z-10"
-          style={{ background: 'rgba(10,14,26,0.9)' }}>
-          <div className="w-16 h-16 border-4 border-[var(--color-border)] border-t-[var(--color-accent)] rounded-full animate-spin mb-4" />
-          <p className="text-sm font-mono mb-2" style={{ color: 'var(--color-accent)' }}>Loading 3D Model</p>
-          <div className="w-48 h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--color-bg-card)' }}>
-            <div className="h-full rounded-full transition-all duration-300"
-              style={{ width: `${loadProgress}%`, background: 'linear-gradient(90deg, var(--color-accent), var(--color-accent-cyan))' }} />
+        <div className="absolute inset-0 flex flex-col items-center justify-center z-50 bg-[var(--bg-primary)]/95 backdrop-blur-md">
+          <div className="relative mb-8">
+            <div className="w-20 h-20 border-2 border-[var(--border)] rounded-full" />
+            <div className="absolute top-0 left-0 w-20 h-20 border-2 border-transparent border-t-[var(--accent-blue)] rounded-full animate-spin" />
+            <div className="absolute inset-0 flex items-center justify-center text-[10px] font-mono text-[var(--accent-blue)] font-bold">
+              {loadProgress}%
+            </div>
           </div>
-          <p className="text-[10px] mt-1.5 font-mono" style={{ color: 'var(--color-text-muted)' }}>{loadProgress}%</p>
-        </div>
-      )}
+          
+          <div className="text-center space-y-2">
+            <h3 className="text-[11px] font-bold tracking-[0.3em] text-[var(--text-primary)] uppercase">Initializing 3D Environment</h3>
+            <p className="text-[9px] font-mono text-[var(--text-muted)] uppercase tracking-wider">Synchronizing Aircraft Structural Data...</p>
+          </div>
 
-      {/* Toolbar */}
-      {loaded && (
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 px-3 py-1.5 rounded-lg z-20"
-          style={{ background: 'rgba(10,14,26,0.85)', border: '1px solid var(--color-border)', backdropFilter: 'blur(8px)' }}>
-          <button onClick={resetCamera} className="px-2.5 py-1 rounded text-[10px] font-semibold transition-colors hover:text-[var(--color-accent)]"
-            style={{ color: 'var(--color-text-secondary)' }}>↻ Reset</button>
-          {['normal', 'wireframe', 'xray'].map(m => (
-            <button key={m} onClick={() => toggleViewMode(m)}
-              className={`px-2.5 py-1 rounded text-[10px] font-semibold transition-colors ${viewMode === m ? 'text-white' : ''}`}
-              style={{
-                color: viewMode === m ? 'var(--color-accent)' : 'var(--color-text-secondary)',
-                background: viewMode === m ? 'rgba(47,128,237,0.15)' : 'transparent',
-              }}>
-              {m === 'normal' ? '◼ Solid' : m === 'wireframe' ? '◇ Wire' : '◻ X-Ray'}
-            </button>
-          ))}
+          <div className="mt-8 w-64 h-1 bg-[var(--bg-panel-2)] border border-[var(--border)] rounded-full overflow-hidden">
+            <div className="h-full bg-[var(--accent-blue)] transition-all duration-300" 
+              style={{ width: `${loadProgress}%`, boxShadow: '0 0 10px var(--accent-blue)' }} />
+          </div>
         </div>
       )}
 
       {/* Click instruction */}
       {loaded && (
-        <div className="absolute top-3 left-3 text-[10px] font-mono px-2 py-1 rounded z-20"
-          style={{ background: 'rgba(10,14,26,0.7)', color: 'var(--color-text-muted)', border: '1px solid var(--color-border)' }}>
-          Click any part to inspect
+        <div className="absolute top-4 left-4 z-20 flex items-center gap-3">
+          <div className="px-3 py-1.5 bg-[var(--bg-panel)]/80 backdrop-blur border border-[var(--border)] rounded text-[10px] font-mono text-[var(--text-secondary)] shadow-lg uppercase tracking-wider flex items-center gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse" />
+            Interactive Visualization Active
+          </div>
+          <div className="hidden sm:block text-[9px] font-mono text-[var(--text-muted)] uppercase tracking-tight">
+            Select component to view telemetry
+          </div>
+        </div>
+      )}
+
+      {/* Toolbar - Floating Center Bottom */}
+      {loaded && (
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1 p-1 bg-[var(--bg-panel)]/90 backdrop-blur-xl border border-[var(--border-light)] rounded-lg shadow-2xl z-30">
+          <button onClick={resetCamera} 
+            className="h-8 px-3 rounded text-[10px] font-bold text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-panel-2)] transition-all flex items-center gap-1.5 uppercase tracking-tighter">
+            <FiRefreshCw className="w-3.5 h-3.5" /> Reset
+          </button>
+          
+          <div className="w-[1px] h-4 bg-[var(--border)] mx-1" />
+
+          {[
+            { id: 'normal', label: 'SOLID', icon: '◼' },
+            { id: 'wireframe', label: 'WIRE', icon: '◇' },
+            { id: 'xray', label: 'X-RAY', icon: '◻' }
+          ].map(m => (
+            <button key={m.id} onClick={() => toggleViewMode(m.id)}
+              className={`h-8 px-4 rounded text-[10px] font-bold transition-all flex items-center gap-2 tracking-widest
+                ${viewMode === m.id ? 'bg-[var(--accent-blue)] text-white shadow-lg' : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)] hover:bg-[var(--bg-panel-2)]'}`}>
+              <span className="text-xs leading-none">{m.icon}</span> {m.label}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Axis Helper - Subtle */}
+      {loaded && (
+        <div className="absolute bottom-4 right-4 text-[9px] font-mono text-[var(--text-muted)] space-y-0.5 opacity-50 select-none">
+          <div className="flex justify-end gap-1"><span className="text-[var(--error)]">X</span> LATERAL</div>
+          <div className="flex justify-end gap-1"><span className="text-[var(--success)]">Y</span> VERTICAL</div>
+          <div className="flex justify-end gap-1"><span className="text-[var(--accent-blue)]">Z</span> LONGITUDINAL</div>
         </div>
       )}
     </div>
+  );
+}
   );
 }

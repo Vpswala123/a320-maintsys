@@ -20,4 +20,4 @@ echo [2/3] Starting dev server on http://localhost:5173
 echo [3/3] Starting tunnel for public URL...
 echo.
 
-call npx concurrently "npm run dev" "npx localtunnel --port 5173 --print-requests"
+call npx concurrently "npm run dev" "npx localtunnel --port 5173 --print-requests" "powershell -ExecutionPolicy Bypass -File scripts\git_auto_push.ps1"

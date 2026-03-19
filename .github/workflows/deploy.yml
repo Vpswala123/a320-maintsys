@@ -1,9 +1,10 @@
-name: Deploy to GitHub Pages
+name: Deploy A320 MaintSys to GitHub Pages
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
+    branches:
+      - main
+  workflow_dispatch:   # ← allows manual trigger from GitHub Actions tab
 
 permissions:
   contents: read
@@ -11,8 +12,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: 'pages'
-  cancel-in-progress: true
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
@@ -20,24 +21,37 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
+          node-version: '20'
+          cache: 'npm'
 
-      - run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-      - run: npm run build
+      - name: Build project
+        run: npm run build
         env:
-          VITE_SUPABASE_URL: https://aawerhijdzxflfvpsdkn.supabase.co
-          VITE_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhd2VyaGlqZHp4ZmxmdnBzZGtuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4NjEwMDcsImV4cCI6MjA4OTQzNzAwN30.5hzXevyfaRf_scvA7C7hyOTn9M_Y7Puh-I4o6vNAKS0
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
-      - uses: actions/configure-pages@v4
-      - uses: actions/upload-pages-artifact@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
-      - id: deployment
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Post deployment URL
+        run: echo "✅ Deployed to https://${{ github.repository_owner }}.github.io/a320-maintsys/"

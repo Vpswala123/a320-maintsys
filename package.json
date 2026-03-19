@@ -9,7 +9,8 @@
     "preview": "vite preview --host",
     "tunnel": "npx localtunnel --port 5173 --print-requests",
     "start": "concurrently \"npm run dev\" \"npm run tunnel\"",
-    "deploy": "vite build && gh-pages -d dist"
+    "deploy": "vite build && gh-pages -d dist",
+    "git:push": "git add . && git commit -m \"auto: $(date)\" && git push origin main"
   },
   "dependencies": {
     "@google/model-viewer": "^4.0.0",

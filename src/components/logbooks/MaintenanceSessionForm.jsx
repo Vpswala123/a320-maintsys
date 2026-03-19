@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/hooks/useAuth';
+import { requireRole } from '@/utils/rbac';
+import { signMaintenanceSession } from '@/utils/signatureService';
 import { FiX, FiCheck, FiPlus, FiAlertCircle } from 'react-icons/fi';
 
 const CHECK_TYPES = [
-  { value: 'A1', label: 'A1 Check (500 FH)' },
-  { value: 'A2', label: 'A2 Check (1000 FH)' },
-  { value: 'A3', label: 'A3 Check (1500 FH)' },
-  { value: 'B', label: 'B Check (6 months)' },
-  { value: 'C', label: 'C Check (6000 FH / 20-24 mo)' },
-  { value: 'D', label: 'D Check (6-10 years / heavy)' },
+  { type: 'A1', interval: '500 FH',    desc: 'Transit/Line check' },
+  { type: 'A2', interval: '1000 FH',   desc: 'Extended A-check' },
+  { type: 'A3', interval: '1500 FH',   desc: 'A-check package' },
+  { type: 'B',  interval: '6 months',  desc: 'B-check' },
+  { type: 'C',  interval: '6000 FH',   desc: 'C-check' },
+  { type: 'D',  interval: '~72 months',desc: 'D-check / Heavy' },
 ];
 
 const UNSCHEDULED_REASONS = [
@@ -17,337 +19,325 @@ const UNSCHEDULED_REASONS = [
   'Sensor Alert', 'Bird Strike', 'Hard Landing', 'Other',
 ];
 
-const AIRWORTHINESS_OPTIONS = [
-  { value: 'serviceable', label: 'Aircraft serviceable for flight' },
-  { value: 'unserviceable', label: 'Aircraft not serviceable — defect open' },
-  { value: 'deferred', label: 'Deferred defect raised (MEL)' },
-];
+
+
+import { logAudit } from '@/utils/auditLogger';
 
 export default function MaintenanceSessionForm({ onClose, onSaved, prefillCheck }) {
   const { user, profile } = useAuth();
-  const [aircraft, setAircraft] = useState([]);
-  const [saving, setSaving] = useState(false);
+  const [fleet, setFleet] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const [header, setHeader] = useState({
-    aircraft_id: '',
-    session_date: new Date().toISOString().split('T')[0],
-    place: '',
-    maintenance_type: prefillCheck ? 'scheduled' : 'scheduled',
-    check_type: prefillCheck || 'A1',
-    reason: '',
-    airworthiness: 'serviceable',
-    mel_reference: '',
-    notes: '',
-    signature: '',
-  });
-
-  const [taskRows, setTaskRows] = useState([
-    { ata: '', task: '', time: '', result: 'Serviceable', signature: '' }
-  ]);
+  // Part A — Session Header
+  const [aircraftId, setAircraftId] = useState('');
+  const [sessionDate, setSessionDate] = useState(new Date().toISOString().split('T')[0]);
+  const [notes, setNotes] = useState('');
+  const [airworthinessStatus, setAirworthinessStatus] = useState('serviceable');
+  
+  const [maintenanceType, setMaintenanceType] = useState(prefillCheck ? 'scheduled' : 'scheduled');
+  const [checkType, setCheckType] = useState(prefillCheck || null);
+  const [unscheduledReason, setUnscheduledReason] = useState('');
+  const [tasks, setTasks] = useState([{ id: 1, ata: '', description: '', time: '', result: 'Serviceable', signature: '' }]);
 
   useEffect(() => {
-    supabase.from('aircraft').select('id, tail_number, aircraft_type').order('tail_number')
-      .then(({ data }) => setAircraft(data || []));
+    supabase.from('aircraft').select('*').eq('status', 'active')
+      .then(({ data }) => setFleet(data || []));
   }, []);
 
-  const updateHeader = (field, value) => setHeader(prev => ({ ...prev, [field]: value }));
+  function addTask() {
+    setTasks(prev => [...prev, {
+      id: Date.now(),
+      ata: '',
+      description: '',
+      time: '',
+      result: 'Serviceable',
+      signature: ''
+    }]);
+  }
 
-  const addTaskRow = () => {
-    setTaskRows(prev => [...prev, { ata: '', task: '', time: '', result: 'Serviceable', signature: '' }]);
-  };
+  function updateTask(id, field, value) {
+    setTasks(prev => prev.map(t => t.id === id ? { ...t, [field]: value } : t));
+  }
 
-  const removeTaskRow = (index) => {
-    if (taskRows.length > 1) setTaskRows(prev => prev.filter((_, i) => i !== index));
-  };
-
-  const updateTaskRow = (index, field, value) => {
-    setTaskRows(prev => prev.map((row, i) => i === index ? { ...row, [field]: value } : row));
-  };
-
-  // Generate SHA-256 digital signature
-  const generateDigitalSignature = async (data) => {
-    const encoder = new TextEncoder();
-    const encoded = encoder.encode(JSON.stringify(data));
-    const hash = await crypto.subtle.digest('SHA-256', encoded);
-    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
-  };
-
-  const handleSubmit = async () => {
-    if (!header.aircraft_id || !header.signature) {
-      setError('Please select an aircraft and sign the session.');
-      return;
+  function removeTask(id) {
+    if (tasks.length > 1) {
+      setTasks(prev => prev.filter(t => t.id !== id));
     }
-    if (taskRows.every(r => !r.task.trim())) {
-      setError('Please add at least one task entry.');
-      return;
-    }
+  }
 
-    setSaving(true);
-    setError('');
+  async function handleSubmit() {
     try {
-      // Generate digital signature hash
-      const sigHash = await generateDigitalSignature({
-        engineer: profile?.name,
-        date: header.session_date,
-        tasks: taskRows.filter(r => r.task.trim()),
-        timestamp: new Date().toISOString(),
-      });
+      requireRole(profile, ['ame', 'admin']);
+    } catch (err) {
+      setError(err.message);
+      return;
+    }
 
-      // Insert session
+    if (!aircraftId) {
+      setError('Please select an aircraft.');
+      return;
+    }
+
+    if (maintenanceType === 'scheduled' && !checkType) {
+      setError('Please select a check type.');
+      return;
+    }
+
+    if (maintenanceType === 'unscheduled' && !unscheduledReason) {
+      setError('Please select an unscheduled reason.');
+      return;
+    }
+
+    const uncompletedTasks = tasks.filter(t => !t.description || !t.signature);
+    if (uncompletedTasks.length > 0 && tasks.length > 0 && tasks[0].description) {
+      setError('Please complete description and signature for all added tasks.');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+      const selectedAircraft = fleet.find(a => a.id === aircraftId);
+      
       const { data: session, error: sessionErr } = await supabase.from('maintenance_sessions').insert({
-        aircraft_id: header.aircraft_id,
+        aircraft_id: aircraftId,
         engineer_id: user.id,
-        session_date: header.session_date,
-        place: header.place || null,
-        maintenance_type: header.maintenance_type,
-        check_type: header.maintenance_type === 'scheduled' ? header.check_type : null,
-        reason_if_unscheduled: header.maintenance_type === 'unscheduled' ? header.reason : null,
+        session_date: sessionDate,
+        maintenance_type: maintenanceType,
+        check_type: maintenanceType === 'scheduled' ? checkType : null,
+        reason_if_unscheduled: maintenanceType === 'unscheduled' ? unscheduledReason : null,
+        detailed_notes: notes,
+        airworthiness_status: airworthinessStatus,
         status: 'open',
       }).select().single();
 
       if (sessionErr) throw sessionErr;
 
-      // Insert task entries
-      const validTasks = taskRows.filter(r => r.task.trim());
+      const validTasks = tasks.filter(task => task.description.trim());
+      let entries = [];
       if (validTasks.length > 0) {
-        const entries = validTasks.map((row, i) => ({
+        entries = validTasks.map((row) => ({
           session_id: session.id,
           ata_chapter: row.ata || null,
-          task_description: row.task,
-          time_taken: row.time ? parseFloat(row.time) : null,
+          task_description: row.description,
+          time_taken_hours: row.time ? parseFloat(row.time) : null,
           result: row.result || null,
-          signature: row.signature || header.signature,
+          engineer_signature: row.signature || profile?.name,
         }));
 
         const { error: entriesErr } = await supabase.from('maintenance_entries').insert(entries);
         if (entriesErr) throw entriesErr;
       }
+      
+      const sigHash = await signMaintenanceSession(session, entries);
+      const { error: updateSigErr } = await supabase.from('maintenance_sessions')
+        .update({ digital_signature_hash: sigHash, status: 'submitted' })
+        .eq('id', session.id);
+      if (updateSigErr) throw updateSigErr;
 
-      // Log to audit trail
-      await supabase.from('audit_trail').insert({
-        user_id: user.id,
-        action: 'CREATE_MAINTENANCE_SESSION',
-        module: 'logbooks',
-        record_id: session.id,
-        details: { maintenance_type: header.maintenance_type, check_type: header.check_type, task_count: validTasks.length, digital_signature: sigHash },
-      });
-
+      await logAudit('CREATE', 'maintenance_session', session.id, { maintenance_type: maintenanceType, check_type: checkType, task_count: validTasks.length, digital_signature: sigHash });
+      
+      alert('Session submitted for approval');
       onSaved?.();
       onClose();
     } catch (err) {
       setError(err.message);
+      console.error(err);
     } finally {
-      setSaving(false);
+      setLoading(false);
     }
-  };
+  }
 
-  const inputStyle = { background: 'var(--color-bg-card)', borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' };
+  if (!requireRole(profile, ['ame', 'admin'])) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center p-4 bg-black/60 z-[100]" onClick={onClose}>
+        <div className="bg-[var(--bg-panel)] border border-[var(--error)] rounded-xl p-6 text-center max-w-sm" onClick={e => e.stopPropagation()}>
+          <FiAlertCircle className="w-12 h-12 text-[var(--error)] mx-auto mb-4" />
+          <h2 className="text-lg font-bold text-[var(--text-primary)] mb-2">Access Denied</h2>
+          <p className="text-[var(--text-secondary)] mb-6 text-xs font-mono">This form is ONLY accessible to role = 'ame' or 'admin'.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
-      <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.7)' }} />
-      <div className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-xl border p-6 animate-slide-up"
-        style={{ background: 'var(--color-bg-panel)', borderColor: 'var(--color-border)' }}
-        onClick={e => e.stopPropagation()}>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm" onClick={onClose}>
+      <div className="relative w-full max-w-5xl max-h-[90vh] flex flex-col bg-[var(--bg-panel)] border shadow-2xl overflow-hidden" 
+           style={{ borderColor: 'var(--border)', borderRadius: '12px' }} onClick={e => e.stopPropagation()}>
         
         {/* Header */}
-        <div className="flex items-center justify-between mb-5">
-          <div>
-            <h2 className="text-base font-bold" style={{ color: 'var(--color-text-primary)' }}>Start Maintenance Session</h2>
-            <p className="text-[10px] mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
-              Engineer: {profile?.name} • License: {profile?.license_number || '—'}
-            </p>
-          </div>
-          <button onClick={onClose} className="p-1 rounded hover:bg-[var(--color-bg-card)]">
-            <FiX className="w-5 h-5" style={{ color: 'var(--color-text-muted)' }} />
+        <div className="px-6 py-4 border-b flex items-center justify-between shrink-0 bg-[#0f1729]" style={{ borderColor: 'var(--border)' }}>
+          <h2 className="text-base font-mono font-bold tracking-widest text-[var(--accent-blue)] flex items-center gap-2 uppercase">
+            <span className="text-xl">🔧</span> MAINTENANCE SESSION FORM
+          </h2>
+          <button onClick={onClose} className="p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-panel-2)] transition-colors rounded">
+            <FiX className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Session Header Fields */}
-        <div className="grid grid-cols-3 gap-3 mb-4">
-          <div>
-            <label className="block text-[10px] uppercase tracking-wider font-semibold mb-1" style={{ color: 'var(--color-text-muted)' }}>Aircraft *</label>
-            <select value={header.aircraft_id} onChange={e => updateHeader('aircraft_id', e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border text-xs outline-none" style={inputStyle}>
-              <option value="">Select...</option>
-              {aircraft.map(a => <option key={a.id} value={a.id}>{a.tail_number} ({a.aircraft_type})</option>)}
-            </select>
-          </div>
-          <div>
-            <label className="block text-[10px] uppercase tracking-wider font-semibold mb-1" style={{ color: 'var(--color-text-muted)' }}>Date</label>
-            <input type="date" value={header.session_date} onChange={e => updateHeader('session_date', e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border text-xs outline-none font-mono" style={inputStyle} />
-          </div>
-          <div>
-            <label className="block text-[10px] uppercase tracking-wider font-semibold mb-1" style={{ color: 'var(--color-text-muted)' }}>Location</label>
-            <input value={header.place} onChange={e => updateHeader('place', e.target.value)} placeholder="e.g. DEL Hangar 3"
-              className="w-full px-3 py-2 rounded-lg border text-xs outline-none" style={inputStyle} />
-          </div>
-        </div>
-
-        {/* Maintenance Type Toggle */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <div>
-            <label className="block text-[10px] uppercase tracking-wider font-semibold mb-1" style={{ color: 'var(--color-text-muted)' }}>Maintenance Type</label>
-            <div className="flex gap-2">
-              {['scheduled', 'unscheduled'].map(t => (
-                <button key={t} onClick={() => updateHeader('maintenance_type', t)}
-                  className={`flex-1 py-2 rounded-lg border text-xs font-semibold transition-all ${header.maintenance_type === t ? '' : 'opacity-50'}`}
-                  style={{
-                    background: header.maintenance_type === t ? (t === 'scheduled' ? 'rgba(39,174,96,0.1)' : 'rgba(242,201,76,0.1)') : 'var(--color-bg-card)',
-                    borderColor: header.maintenance_type === t ? (t === 'scheduled' ? 'var(--color-accent-green)' : 'var(--color-accent-yellow)') : 'var(--color-border)',
-                    color: header.maintenance_type === t ? (t === 'scheduled' ? 'var(--color-accent-green)' : 'var(--color-accent-yellow)') : 'var(--color-text-secondary)',
-                  }}>
-                  {t === 'scheduled' ? '✓ Scheduled' : '⚠ Unscheduled'}
-                </button>
-              ))}
+        {/* Scrollable Form Body */}
+        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+          
+          {/* Part A: Session Header */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="label block mb-2">AIRCRAFT TAIL NUMBER *</label>
+              <select value={aircraftId} onChange={e => setAircraftId(e.target.value)} 
+                className="w-full bg-[var(--bg-panel-2)] border text-[var(--text-primary)] font-mono text-sm px-4 py-2.5 outline-none transition-colors focus:border-[var(--accent-blue)]"
+                style={{ borderColor: 'var(--border)' }}>
+                <option value="">Select Aircraft...</option>
+                {fleet.map(a => <option key={a.id} value={a.id}>{a.tail_number} ({a.aircraft_type})</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="label block mb-2">SESSION DATE</label>
+              <input type="date" value={sessionDate} onChange={e => setSessionDate(e.target.value)} 
+                className="w-full bg-[var(--bg-panel-2)] border text-[var(--text-primary)] font-mono text-sm px-4 py-2.5 outline-none transition-colors focus:border-[var(--accent-blue)]"
+                style={{ borderColor: 'var(--border)' }} />
             </div>
           </div>
-          <div>
-            {header.maintenance_type === 'scheduled' ? (
-              <>
-                <label className="block text-[10px] uppercase tracking-wider font-semibold mb-1" style={{ color: 'var(--color-text-muted)' }}>Check Type</label>
-                <div className="flex flex-wrap gap-1.5">
+
+          <hr className="border-[var(--border)] my-6" />
+
+          {/* Part B & C: Maintenance Type & Check/Reason */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <label className="label block mb-3">MAINTENANCE TYPE</label>
+              <div className="grid grid-cols-2 gap-3 h-[42px]">
+                <button onClick={() => setMaintenanceType('scheduled')}
+                  className={`font-bold font-mono text-xs uppercase tracking-wider rounded border transition-colors flex items-center justify-center gap-2
+                  ${maintenanceType === 'scheduled' ? 'bg-[#27ae6015] border-[var(--success)] text-[var(--success)]' : 'bg-[var(--bg-panel-2)] border-[var(--border)] text-[var(--text-muted)] hover:border-[var(--border-light)]'}`}>
+                  ● Scheduled
+                </button>
+                <button onClick={() => setMaintenanceType('unscheduled')}
+                  className={`font-bold font-mono text-xs uppercase tracking-wider rounded border transition-colors flex items-center justify-center gap-2
+                  ${maintenanceType === 'unscheduled' ? 'bg-[#f2c94c15] border-[var(--warning)] text-[var(--warning)]' : 'bg-[var(--bg-panel-2)] border-[var(--border)] text-[var(--text-muted)] hover:border-[var(--border-light)]'}`}>
+                  ○ Unscheduled
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label className="label block mb-3">
+                {maintenanceType === 'scheduled' ? 'SELECT CHECK PACKAGE' : 'UNSCHEDULED REASON'}
+              </label>
+              {maintenanceType === 'scheduled' ? (
+                <div className="grid grid-cols-6 gap-2 h-[42px]">
                   {CHECK_TYPES.map(ct => (
-                    <button key={ct.value} onClick={() => updateHeader('check_type', ct.value)}
-                      className={`px-2.5 py-1.5 rounded border text-[10px] font-semibold transition-all ${header.check_type === ct.value ? '' : 'opacity-50'}`}
-                      style={{
-                        background: header.check_type === ct.value ? 'rgba(47,128,237,0.1)' : 'var(--color-bg-card)',
-                        borderColor: header.check_type === ct.value ? 'var(--color-accent)' : 'var(--color-border)',
-                        color: header.check_type === ct.value ? 'var(--color-accent)' : 'var(--color-text-secondary)',
-                      }}>
-                      {ct.value}
+                    <button key={ct.type} onClick={() => setCheckType(ct.type)} title={ct.desc}
+                      className={`font-bold font-mono text-xs rounded border transition-all flex items-center justify-center
+                      ${checkType === ct.type ? 'bg-[var(--accent-blue)] border-[var(--accent-blue)] text-white' : 'bg-[var(--bg-panel-2)] border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-light)]'}`}>
+                      {ct.type}
                     </button>
                   ))}
                 </div>
-              </>
-            ) : (
-              <>
-                <label className="block text-[10px] uppercase tracking-wider font-semibold mb-1" style={{ color: 'var(--color-text-muted)' }}>Reason</label>
-                <select value={header.reason} onChange={e => updateHeader('reason', e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg border text-xs outline-none" style={inputStyle}>
+              ) : (
+                <select value={unscheduledReason} onChange={e => setUnscheduledReason(e.target.value)} 
+                  className="w-full h-[42px] bg-[var(--bg-panel-2)] border text-[var(--text-primary)] font-mono text-sm px-4 outline-none transition-colors focus:border-[var(--accent-blue)]"
+                  style={{ borderColor: 'var(--border)' }}>
                   <option value="">Select reason...</option>
                   {UNSCHEDULED_REASONS.map(r => <option key={r} value={r}>{r}</option>)}
                 </select>
-              </>
-            )}
+              )}
+            </div>
           </div>
-        </div>
 
-        <hr className="my-4" style={{ borderColor: 'var(--color-border)' }} />
+          <hr className="border-[var(--border)] my-6" />
 
-        {/* Task Entries */}
-        <div className="flex items-center justify-between mb-3">
-          <h4 className="text-xs font-semibold" style={{ color: 'var(--color-text-secondary)' }}>Task Entries</h4>
-          <button onClick={addTaskRow}
-            className="px-3 py-1 rounded border text-[10px] font-semibold flex items-center gap-1 transition-all hover:border-[var(--color-accent)]"
-            style={{ borderColor: 'var(--color-border)', color: 'var(--color-accent)' }}>
-            <FiPlus className="w-3 h-3" /> Add Task
-          </button>
-        </div>
-
-        <div className="space-y-2 mb-4 max-h-[30vh] overflow-y-auto pr-1">
-          {taskRows.map((row, i) => (
-            <div key={i} className="grid grid-cols-[70px_1fr_70px_110px_110px_28px] gap-2 items-center p-2 rounded-lg border"
-              style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)' }}>
-              <input value={row.ata} onChange={e => updateTaskRow(i, 'ata', e.target.value)}
-                placeholder="ATA" className="px-2 py-1.5 rounded border text-xs outline-none font-mono"
-                style={{ background: 'var(--color-bg-primary)', borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' }} />
-              <input value={row.task} onChange={e => updateTaskRow(i, 'task', e.target.value)}
-                placeholder="Task description" className="px-2 py-1.5 rounded border text-xs outline-none"
-                style={{ background: 'var(--color-bg-primary)', borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' }} />
-              <input value={row.time} onChange={e => updateTaskRow(i, 'time', e.target.value)}
-                placeholder="Hrs" className="px-2 py-1.5 rounded border text-xs outline-none font-mono"
-                style={{ background: 'var(--color-bg-primary)', borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' }} />
-              <select value={row.result} onChange={e => updateTaskRow(i, 'result', e.target.value)}
-                className="px-2 py-1.5 rounded border text-xs outline-none"
-                style={{ background: 'var(--color-bg-primary)', borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' }}>
-                <option>Serviceable</option>
-                <option>Unserviceable</option>
-                <option>Deferred</option>
-              </select>
-              <input value={row.signature} onChange={e => updateTaskRow(i, 'signature', e.target.value)}
-                placeholder="Signature" className="px-2 py-1.5 rounded border text-xs outline-none"
-                style={{ background: 'var(--color-bg-primary)', borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' }} />
-              <button onClick={() => removeTaskRow(i)} className="p-1 rounded hover:bg-[var(--color-bg-primary)]"
-                style={{ visibility: taskRows.length > 1 ? 'visible' : 'hidden' }}>
-                <FiX className="w-3.5 h-3.5" style={{ color: 'var(--color-text-muted)' }} />
+          {/* Part D: Task Rows */}
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <label className="label block">TASK ENTRIES</label>
+              <button onClick={addTask} className="text-[10px] font-mono font-bold flex items-center gap-1 text-[var(--accent-blue)] hover:text-[var(--accent-cyan)] transition-colors px-2 py-1 rounded hover:bg-[#2f80ed15]">
+                <FiPlus className="w-3 h-3" /> ADD TASK
               </button>
             </div>
-          ))}
-        </div>
-
-        <button onClick={addTaskRow}
-          className="w-full py-2 rounded-lg border-2 border-dashed text-xs font-semibold transition-all hover:border-[var(--color-accent)]"
-          style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-muted)' }}>
-          + Add Task Row
-        </button>
-
-        <hr className="my-4" style={{ borderColor: 'var(--color-border)' }} />
-
-        {/* Notes & Airworthiness */}
-        <div className="mb-4">
-          <label className="block text-[10px] uppercase tracking-wider font-semibold mb-1" style={{ color: 'var(--color-text-muted)' }}>Detailed Notes</label>
-          <textarea value={header.notes} onChange={e => updateHeader('notes', e.target.value)} rows={3}
-            placeholder="Additional remarks, observations, findings..."
-            className="w-full px-3 py-2 rounded-lg border text-xs outline-none resize-none" style={inputStyle} />
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-[10px] uppercase tracking-wider font-semibold mb-1" style={{ color: 'var(--color-text-muted)' }}>Airworthiness Status</label>
-          <div className="space-y-1.5">
-            {AIRWORTHINESS_OPTIONS.map(opt => (
-              <label key={opt.value} className="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="airworthiness" value={opt.value}
-                  checked={header.airworthiness === opt.value}
-                  onChange={e => updateHeader('airworthiness', e.target.value)}
-                  className="accent-[var(--color-accent)]" />
-                <span className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>{opt.label}</span>
-              </label>
-            ))}
+            
+            <div className="border rounded bg-[var(--bg-panel-2)] overflow-x-auto" style={{ borderColor: 'var(--border)' }}>
+              <table className="w-full text-left" style={{ borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr className="border-b" style={{ borderColor: 'var(--border)' }}>
+                    <th className="p-2 text-[10px] font-mono text-[var(--text-muted)] tracking-wider w-16 uppercase">ATA</th>
+                    <th className="p-2 text-[10px] font-mono text-[var(--text-muted)] tracking-wider uppercase">Action Performed</th>
+                    <th className="p-2 text-[10px] font-mono text-[var(--text-muted)] tracking-wider w-20 uppercase">Time(H)</th>
+                    <th className="p-2 text-[10px] font-mono text-[var(--text-muted)] tracking-wider w-36 uppercase">Result</th>
+                    <th className="p-2 text-[10px] font-mono text-[var(--text-muted)] tracking-wider w-40 uppercase">Sign-off</th>
+                    <th className="p-2 w-10"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tasks.map((task) => (
+                    <tr key={task.id} className="border-b last:border-0 hover:bg-[var(--bg-primary)] transition-colors" style={{ borderColor: 'var(--border)' }}>
+                      <td className="p-1.5"><input value={task.ata} onChange={e => updateTask(task.id, 'ata', e.target.value)} placeholder="xx" className="w-full bg-[var(--bg-panel)] border text-[var(--text-primary)] rounded px-2 py-1.5 text-xs font-mono outline-none" style={{ borderColor: 'var(--border)' }} /></td>
+                      <td className="p-1.5"><input value={task.description} onChange={e => updateTask(task.id, 'description', e.target.value)} placeholder="Detailed description..." className="w-full bg-[var(--bg-panel)] border text-[var(--text-primary)] rounded px-2 py-1.5 text-xs outline-none" style={{ borderColor: 'var(--border)' }} /></td>
+                      <td className="p-1.5"><input value={task.time} onChange={e => updateTask(task.id, 'time', e.target.value)} placeholder="0.0" className="w-full bg-[var(--bg-panel)] border text-[var(--text-primary)] rounded px-2 py-1.5 text-xs font-mono outline-none" style={{ borderColor: 'var(--border)' }} /></td>
+                      <td className="p-1.5">
+                        <select value={task.result} onChange={e => updateTask(task.id, 'result', e.target.value)} className="w-full bg-[var(--bg-panel)] border text-[var(--text-primary)] rounded px-2 py-1.5 text-xs outline-none" style={{ borderColor: 'var(--border)' }}>
+                          <option value="Serviceable">Serviceable</option>
+                          <option value="Unserviceable">Unserviceable</option>
+                          <option value="Deferred">Deferred</option>
+                        </select>
+                      </td>
+                      <td className="p-1.5"><input value={task.signature} onChange={e => updateTask(task.id, 'signature', e.target.value)} placeholder="Initials" className="w-full bg-[var(--bg-panel)] border text-[var(--success)] rounded px-2 py-1.5 text-xs font-serif italic font-bold outline-none" style={{ borderColor: 'var(--border)' }} /></td>
+                      <td className="p-1.5 text-center">
+                        <button onClick={() => removeTask(task.id)} disabled={tasks.length === 1} className="w-6 h-6 flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--error)] hover:bg-[#eb575715] rounded disabled:opacity-30 transition-colors mx-auto">
+                          <FiX className="w-3 h-3" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-          {header.airworthiness === 'deferred' && (
-            <input value={header.mel_reference} onChange={e => updateHeader('mel_reference', e.target.value)}
-              placeholder="MEL Reference Number" className="mt-2 w-full px-3 py-2 rounded-lg border text-xs outline-none font-mono" style={inputStyle} />
+
+          {/* Part E: Notes & Airworthiness */}
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_250px] gap-6">
+            <div>
+              <label className="label block mb-2">DETAILED NOTES</label>
+              <textarea value={notes} onChange={e => setNotes(e.target.value)} rows="3" placeholder="Enter findings, limitations, or general comments..."
+                className="w-full bg-[var(--bg-panel-2)] border text-[var(--text-primary)] text-sm rounded px-4 py-3 outline-none resize-none focus:border-[var(--accent-blue)] transition-colors"
+                style={{ borderColor: 'var(--border)' }}></textarea>
+            </div>
+            <div>
+              <label className="label block mb-2">AIRWORTHINESS RELEASE</label>
+              <div className="space-y-2 p-3 bg-[var(--bg-panel-2)] border rounded" style={{ borderColor: 'var(--border)' }}>
+                <label className="flex items-center gap-3 cursor-pointer select-none">
+                  <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${airworthinessStatus === 'serviceable' ? 'border-[var(--success)]' : 'border-[var(--text-muted)]'}`}>
+                    {airworthinessStatus === 'serviceable' && <div className="w-2 h-2 bg-[var(--success)] rounded-full"></div>}
+                  </div>
+                  <input type="radio" className="hidden" checked={airworthinessStatus === 'serviceable'} onChange={() => setAirworthinessStatus('serviceable')} />
+                  <span className="text-[11px] font-bold tracking-wider uppercase text-[var(--success)]">Serviceable</span>
+                </label>
+                <div className="h-px bg-[var(--border)] my-2"></div>
+                <label className="flex items-center gap-3 cursor-pointer select-none">
+                  <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${airworthinessStatus === 'unserviceable' ? 'border-[var(--error)]' : 'border-[var(--text-muted)]'}`}>
+                    {airworthinessStatus === 'unserviceable' && <div className="w-2 h-2 bg-[var(--error)] rounded-full"></div>}
+                  </div>
+                  <input type="radio" className="hidden" checked={airworthinessStatus === 'unserviceable'} onChange={() => setAirworthinessStatus('unserviceable')} />
+                  <span className="text-[11px] font-bold tracking-wider uppercase text-[var(--error)]">AOG / Unserviceable</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          {error && (
+            <div className="p-3 bg-[#eb575715] border rounded flex items-center gap-3" style={{ borderColor: 'var(--error)' }}>
+              <FiAlertCircle className="shrink-0 w-4 h-4 text-[var(--error)]" />
+              <p className="text-xs font-bold text-[var(--error)]">{error}</p>
+            </div>
           )}
         </div>
 
-        {/* Signature */}
-        <div className="mb-4">
-          <label className="block text-[10px] uppercase tracking-wider font-semibold mb-1" style={{ color: 'var(--color-text-muted)' }}>
-            Engineer Digital Signature *
-          </label>
-          <input value={header.signature} onChange={e => updateHeader('signature', e.target.value)}
-            placeholder="Type your name to sign this session"
-            className="w-full px-3 py-2 rounded-lg border text-xs outline-none" style={inputStyle} />
-        </div>
-
-        {error && (
-          <div className="mb-4 px-3 py-2 rounded-lg flex items-center gap-2" style={{ background: 'rgba(235,87,87,0.1)', border: '1px solid rgba(235,87,87,0.2)' }}>
-            <FiAlertCircle className="w-4 h-4 shrink-0" style={{ color: 'var(--color-accent-red)' }} />
-            <p className="text-xs" style={{ color: 'var(--color-accent-red)' }}>{error}</p>
-          </div>
-        )}
-
-        <div className="grid grid-cols-2 gap-3">
-          <button onClick={handleSubmit} disabled={saving}
-            className="py-3 rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2 transition-all hover:brightness-110 disabled:opacity-50"
-            style={{ background: 'var(--color-accent)' }}>
-            {saving ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> :
-              <><FiCheck className="w-4 h-4" /> Save Session</>}
-          </button>
-          <button onClick={handleSubmit} disabled={saving}
-            className="py-3 rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2 transition-all hover:brightness-110 disabled:opacity-50"
-            style={{ background: 'linear-gradient(135deg, var(--color-accent), var(--color-accent-cyan))' }}>
-            {saving ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> :
-              <><FiCheck className="w-4 h-4" /> Sign & Submit</>}
+        {/* Footer */}
+        <div className="p-6 border-t bg-[var(--bg-panel-2)] flex justify-end shrink-0" style={{ borderColor: 'var(--border)' }}>
+          <button onClick={handleSubmit} disabled={loading} className="btn-primary shadow-lg flex items-center gap-2 tracking-wider px-8">
+            {loading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <><FiCheck /> SUBMIT APPROVAL</>}
           </button>
         </div>
 
-        <p className="text-center mt-3 text-[9px]" style={{ color: 'var(--color-text-muted)' }}>
-          ⚠️ Simulated data for educational purposes only
-        </p>
       </div>
     </div>
   );

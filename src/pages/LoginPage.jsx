@@ -1,155 +1,125 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/hooks/useAuth';
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '@/hooks/useAuth'
 
-const DEMO_ACCOUNTS = [
-  { id: 'ADM-0001', role: 'admin', label: 'Admin', icon: '🛡️', desc: 'Fleet management, user control, approvals' },
-  { id: 'PLT-1001', role: 'pilot', label: 'Pilot', icon: '🛫', desc: 'Flight logs, defect reporting, 3D view' },
-  { id: 'AME-2001', role: 'ame', label: 'AME', icon: '🔧', desc: 'Maintenance sessions, task entries, inspections' },
-];
+const ROLES = [
+  { id: 'pilot', label: 'Pilot', icon: '✈', subtitle: 'Aircraft Pilot' },
+  { id: 'ame', label: 'AME', icon: '🔧', subtitle: 'Maintenance Engineer' },
+  { id: 'admin', label: 'Admin', icon: '🏢', subtitle: 'Company / Airline' }
+]
 
 export default function LoginPage() {
-  const { signIn } = useAuth();
-  const navigate = useNavigate();
-  const [selectedRole, setSelectedRole] = useState(null);
-  const [employeeId, setEmployeeId] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [selectedRole, setSelectedRole] = useState(null)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const { signIn } = useAuth()
+  const navigate = useNavigate()
 
-  const handleDemoLogin = async (account) => {
-    setLoading(true);
-    setError('');
+  async function handleLogin(e) {
+    e.preventDefault()
+    if (!selectedRole) { setError('Please select your role first'); return }
+    setLoading(true)
+    setError('')
     try {
-      await signIn(account.id.toLowerCase(), 'Demo@1234');
-      navigate('/dashboard');
+      await signIn(email, password)
+      navigate('/dashboard')
     } catch (err) {
-      setError(err.message || 'Login failed');
+      setError(err.message || 'Login failed. Check credentials.')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!employeeId.trim() || !password.trim()) {
-      setError('Please enter Employee ID and Password');
-      return;
-    }
-    setLoading(true);
-    setError('');
-    try {
-      await signIn(employeeId, password);
-      navigate('/dashboard');
-    } catch (err) {
-      setError(err.message || 'Invalid credentials');
-    } finally {
-      setLoading(false);
-    }
-  };
+  }
 
   return (
-    <div className="login-bg min-h-screen flex items-center justify-center p-4">
-      <div className="glass-panel w-full max-w-md p-8 rounded-2xl animate-slide-up">
-        {/* Logo & Title */}
-        <div className="text-center mb-6">
-          <div className="w-14 h-14 mx-auto mb-3 rounded-2xl flex items-center justify-center text-2xl"
-            style={{ background: 'linear-gradient(135deg, var(--color-accent), var(--color-accent-cyan))' }}>
-            ✈
+    <div className="min-h-screen bg-[#0b1320] flex flex-col items-center justify-center relative overflow-hidden">
+      {/* Hangar background - use CSS gradient to simulate */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0b1320] via-[#0d1628] to-[#071020] opacity-90" />
+
+      {/* Top bar */}
+      <div className="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
+        <span className="text-green-400 font-mono text-xs flex items-center gap-1">
+          <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse inline-block" />
+          SYSTEM ONLINE
+        </span>
+        <span className="text-[#9ba4b4] font-mono text-xs">A320-200</span>
+      </div>
+
+      {/* Login panel */}
+      <div className="relative z-10 w-full max-w-md mx-4">
+        <div className="bg-[#111a2e]/90 backdrop-blur border border-[#2f80ed]/30 rounded-xl p-8 shadow-2xl">
+
+          {/* Title */}
+          <div className="text-center mb-8">
+            <h1 className="text-[#2f80ed] font-semibold text-2xl tracking-widest font-mono">A320 MaintSys</h1>
+            <p className="text-[#9ba4b4] text-xs mt-1 tracking-wider">AIRCRAFT MAINTENANCE PLATFORM</p>
           </div>
-          <h1 className="text-xl font-bold tracking-tight" style={{ color: 'var(--color-text-primary)' }}>
-            A320 MaintSys
-          </h1>
-          <p className="text-[10px] mt-1 font-mono tracking-wider" style={{ color: 'var(--color-text-muted)' }}>
-            VIRTUAL MAINTENANCE & DIGITAL LOGBOOK
-          </p>
-        </div>
 
-        {/* System Status */}
-        <div className="flex items-center justify-center gap-2 mb-5 py-2 rounded-lg" style={{ background: 'rgba(39,174,96,0.06)' }}>
-          <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--color-accent-green)' }} />
-          <span className="text-[10px] font-semibold" style={{ color: 'var(--color-accent-green)' }}>SYSTEM ONLINE</span>
-        </div>
-
-        {/* Demo Account Quick Login */}
-        <div className="mb-5">
-          <p className="text-[10px] uppercase tracking-wider font-semibold mb-2" style={{ color: 'var(--color-text-muted)' }}>
-            Quick Demo Login
-          </p>
-          <div className="grid grid-cols-3 gap-2">
-            {DEMO_ACCOUNTS.map(acc => (
-              <button key={acc.id} onClick={() => handleDemoLogin(acc)} disabled={loading}
-                className="p-3 rounded-xl border text-center transition-all hover:border-[var(--color-accent)] hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 group"
-                style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)' }}>
-                <div className="text-xl mb-1">{acc.icon}</div>
-                <div className="text-xs font-bold" style={{ color: 'var(--color-text-primary)' }}>{acc.label}</div>
-                <div className="text-[8px] mt-0.5 leading-snug" style={{ color: 'var(--color-text-muted)' }}>{acc.id}</div>
+          {/* Role Selection */}
+          <p className="text-[#9ba4b4] text-xs mb-3 font-mono uppercase tracking-wider">Select Your Role</p>
+          <div className="grid grid-cols-3 gap-3 mb-6">
+            {ROLES.map(role => (
+              <button
+                key={role.id}
+                onClick={() => setSelectedRole(role.id)}
+                className={`flex flex-col items-center gap-1 p-3 rounded-lg border transition-all
+                  ${selectedRole === role.id
+                    ? 'border-[#2f80ed] bg-[#2f80ed]/20 text-white'
+                    : 'border-[#1f2a3a] bg-[#0b1320]/50 text-[#9ba4b4] hover:border-[#2f80ed]/50'
+                  }`}
+              >
+                <span className="text-2xl">{role.icon}</span>
+                <span className="text-xs font-mono font-semibold">{role.label}</span>
+                <span className="text-[10px] text-center leading-tight">{role.subtitle}</span>
               </button>
             ))}
           </div>
-        </div>
 
-        <div className="flex items-center gap-3 my-4">
-          <div className="flex-1 h-px" style={{ background: 'var(--color-border)' }} />
-          <span className="text-[10px] font-semibold" style={{ color: 'var(--color-text-muted)' }}>OR SIGN IN MANUALLY</span>
-          <div className="flex-1 h-px" style={{ background: 'var(--color-border)' }} />
-        </div>
-
-        {/* Role Selector */}
-        <div className="grid grid-cols-3 gap-2 mb-4">
-          {DEMO_ACCOUNTS.map(acc => (
-            <button key={acc.role} onClick={() => { setSelectedRole(acc.role); setEmployeeId(acc.id); }}
-              className={`py-2 rounded-lg border text-xs font-semibold transition-all ${selectedRole === acc.role ? '' : 'opacity-50'}`}
-              style={{
-                background: selectedRole === acc.role ? 'rgba(47,128,237,0.1)' : 'var(--color-bg-card)',
-                borderColor: selectedRole === acc.role ? 'var(--color-accent)' : 'var(--color-border)',
-                color: selectedRole === acc.role ? 'var(--color-accent)' : 'var(--color-text-secondary)',
-              }}>
-              {acc.icon} {acc.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Manual Login Form */}
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <div>
-            <label className="block text-[10px] uppercase tracking-wider font-semibold mb-1" style={{ color: 'var(--color-text-muted)' }}>
-              Employee ID
-            </label>
-            <input value={employeeId} onChange={e => setEmployeeId(e.target.value)}
-              placeholder="ADM-0001" className="w-full px-3 py-2.5 rounded-lg border text-xs outline-none font-mono"
-              style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' }} />
-          </div>
-          <div>
-            <label className="block text-[10px] uppercase tracking-wider font-semibold mb-1" style={{ color: 'var(--color-text-muted)' }}>
-              Password
-            </label>
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)}
-              placeholder="••••••••" className="w-full px-3 py-2.5 rounded-lg border text-xs outline-none"
-              style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)', color: 'var(--color-text-primary)' }} />
-          </div>
-
-          {error && (
-            <div className="px-3 py-2 rounded-lg" style={{ background: 'rgba(235,87,87,0.08)', border: '1px solid rgba(235,87,87,0.2)' }}>
-              <p className="text-xs" style={{ color: 'var(--color-accent-red)' }}>⚠ {error}</p>
-            </div>
+          {/* Login Form — shows after role selected */}
+          {selectedRole && (
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <label className="text-[#9ba4b4] text-xs font-mono uppercase tracking-wider block mb-1">Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder={`${selectedRole}@airline.com`}
+                  required
+                  className="w-full bg-[#0b1320] border border-[#1f2a3a] rounded-lg px-4 py-3 text-[#dce6f2] font-mono text-sm focus:border-[#2f80ed] focus:outline-none transition-colors"
+                />
+              </div>
+              <div>
+                <label className="text-[#9ba4b4] text-xs font-mono uppercase tracking-wider block mb-1">Password</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  required
+                  className="w-full bg-[#0b1320] border border-[#1f2a3a] rounded-lg px-4 py-3 text-[#dce6f2] font-mono text-sm focus:border-[#2f80ed] focus:outline-none transition-colors"
+                />
+              </div>
+              {error && <p className="text-[#eb5757] text-xs font-mono">{error}</p>}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-3 rounded-lg font-mono font-semibold text-sm transition-all bg-gradient-to-r from-[#2f80ed] to-[#00d4ff] text-white hover:opacity-90 disabled:opacity-50"
+              >
+                {loading ? 'AUTHENTICATING...' : 'LOGIN →'}
+              </button>
+            </form>
           )}
-
-          <button type="submit" disabled={loading}
-            className="w-full py-3 rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2 transition-all hover:brightness-110 disabled:opacity-50"
-            style={{ background: 'linear-gradient(135deg, var(--color-accent), var(--color-accent-cyan))' }}>
-            {loading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : 'Sign In'}
-          </button>
-        </form>
-
-        {/* Disclaimer */}
-        <div className="mt-6 pt-4 border-t text-center" style={{ borderColor: 'var(--color-border)' }}>
-          <p className="text-[9px] leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
-            ⚠️ This system uses simulated data for educational purposes only.<br />
-            Not official Airbus documentation.
-          </p>
         </div>
       </div>
+
+      {/* Footer */}
+      <div className="absolute bottom-4 text-center z-10">
+        <p className="text-[#9ba4b4] text-[10px] font-mono">
+          Student Demonstration Version — Simulated data for educational purposes only
+        </p>
+      </div>
     </div>
-  );
+  )
 }

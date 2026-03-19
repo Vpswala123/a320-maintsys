@@ -1,0 +1,182 @@
+[
+  {
+    "chapter": "05",
+    "title": "Time Limits / Maintenance Checks",
+    "description": "Scheduled maintenance check intervals and time limits for the A320 aircraft.",
+    "subtopics": ["A Check (600 FH)", "C Check (6000 FH)", "D Check (12 years)", "Engine Overhaul"]
+  },
+  {
+    "chapter": "12",
+    "title": "Servicing — Routine Maintenance",
+    "description": "Routine servicing procedures including fluid replenishment, tire inspection, and cleaning.",
+    "subtopics": ["Fluid Levels", "Tire Pressure", "Exterior Wash", "Lubrication Points"]
+  },
+  {
+    "chapter": "21",
+    "title": "Air Conditioning & Pressurization",
+    "description": "Environmental control system including pack valves, bleed air, cabin temperature, and pressurization.",
+    "subtopics": ["Pack Valves", "Bleed Air System", "Cabin Temperature Control", "Outflow Valve", "Safety Valve"]
+  },
+  {
+    "chapter": "22",
+    "title": "Auto Flight",
+    "description": "Autopilot, autothrust, and flight management systems.",
+    "subtopics": ["Autopilot (AP1/AP2)", "Flight Director", "Autothrust", "FMS / MCDU"]
+  },
+  {
+    "chapter": "24",
+    "title": "Electrical Power",
+    "description": "Aircraft electrical power generation and distribution systems.",
+    "subtopics": ["Generators (IDG)", "Battery System", "AC/DC Distribution", "Emergency Power", "RAT"]
+  },
+  {
+    "chapter": "25",
+    "title": "Equipment / Furnishings",
+    "description": "Cabin configuration, seats, galleys, lavatories, and emergency equipment.",
+    "subtopics": ["Passenger Seats", "Galleys", "Lavatories", "Emergency Equipment", "Cargo Compartment"]
+  },
+  {
+    "chapter": "27",
+    "title": "Flight Controls",
+    "description": "Primary and secondary flight control surfaces and actuation systems.",
+    "subtopics": ["Ailerons", "Elevators", "Rudder", "Spoilers/Speed Brakes", "Flaps/Slats", "Fly-by-Wire"]
+  },
+  {
+    "chapter": "28",
+    "title": "Fuel System",
+    "description": "Fuel storage, distribution, and quantity indication systems.",
+    "subtopics": ["Wing Tanks", "Center Tank", "Fuel Pumps", "Crossfeed", "Fuel Quantity Indication"]
+  },
+  {
+    "chapter": "29",
+    "title": "Hydraulic Power",
+    "description": "Hydraulic system including pumps, reservoirs, and distribution for the Green, Blue, and Yellow systems.",
+    "subtopics": ["Green System", "Blue System", "Yellow System", "PTU", "RAT Pump", "Accumulators"]
+  },
+  {
+    "chapter": "30",
+    "title": "Ice & Rain Protection",
+    "description": "Anti-icing and de-icing systems for wings, engines, and windshield.",
+    "subtopics": ["Wing Anti-Ice", "Engine Anti-Ice", "Windshield Heat", "Probe Heat", "Rain Repellent"]
+  },
+  {
+    "chapter": "31",
+    "title": "Indicating / Recording Systems",
+    "description": "ECAM, FWC, DFDR, CVR, and other indicating/recording systems.",
+    "subtopics": ["ECAM System", "FWC", "Flight Data Recorder", "Cockpit Voice Recorder", "ACMS"]
+  },
+  {
+    "chapter": "32",
+    "title": "Landing Gear",
+    "description": "Main and nose landing gear, wheels, brakes, steering, and extension/retraction systems.",
+    "subtopics": ["Main Gear", "Nose Gear", "Wheels & Tires", "Brakes", "Nose Wheel Steering", "LGCIU"]
+  },
+  {
+    "chapter": "33",
+    "title": "Lights",
+    "description": "External and internal aircraft lighting systems.",
+    "subtopics": ["Landing Lights", "Navigation Lights", "Strobe Lights", "Taxi Lights", "Cabin Lights"]
+  },
+  {
+    "chapter": "34",
+    "title": "Navigation",
+    "description": "Navigation systems including IRS, VOR, DME, ILS, GPS, and EGPWS.",
+    "subtopics": ["IRS / ADIRU", "VOR / DME", "ILS", "GPS / MMR", "EGPWS / TAWS", "ATC Transponder"]
+  },
+  {
+    "chapter": "36",
+    "title": "Pneumatic",
+    "description": "Bleed air system from engines and APU for air conditioning, pressurization, and anti-ice.",
+    "subtopics": ["Engine Bleed", "APU Bleed", "Bleed Monitoring", "Crossbleed Valve", "Precooler"]
+  },
+  {
+    "chapter": "49",
+    "title": "Airborne Auxiliary Power (APU)",
+    "description": "GTCP 131-9A APU for ground power and bleed air supply.",
+    "subtopics": ["APU Start/Stop", "APU Generator", "APU Bleed", "Fire Protection", "Oil System"]
+  },
+  {
+    "chapter": "52",
+    "title": "Doors",
+    "description": "Passenger, cargo, and emergency exit door systems.",
+    "subtopics": ["Passenger Doors", "Cargo Doors", "Emergency Exits", "Door Warning System", "Slides"]
+  },
+  {
+    "chapter": "53",
+    "title": "Fuselage",
+    "description": "Fuselage structure including skin panels, frames, stringers, and pressure bulkheads.",
+    "subtopics": ["Skin Panels", "Frames", "Stringers", "Pressure Bulkheads", "Radome"]
+  },
+  {
+    "chapter": "55",
+    "title": "Stabilizers",
+    "description": "Horizontal and vertical stabilizer structures and trimmable horizontal stabilizer.",
+    "subtopics": ["Horizontal Stabilizer", "Vertical Stabilizer", "THS Actuator", "Trim System"]
+  },
+  {
+    "chapter": "56",
+    "title": "Windows",
+    "description": "Cockpit and cabin window systems including windshields and passenger windows.",
+    "subtopics": ["Windshields", "Side Windows", "Passenger Windows", "Window Heat"]
+  },
+  {
+    "chapter": "57",
+    "title": "Wings",
+    "description": "Wing structure including spars, ribs, skin panels, and wing-to-fuselage attachments.",
+    "subtopics": ["Wing Box", "Leading Edge", "Trailing Edge", "Wing Tips", "Pylons"]
+  },
+  {
+    "chapter": "71",
+    "title": "Powerplant — Engine",
+    "description": "CFM56-5B / PW6000 / LEAP-1A engine systems.",
+    "subtopics": ["Fan Section", "Compressor", "Combustion Chamber", "Turbine", "Accessory Gearbox"]
+  },
+  {
+    "chapter": "72",
+    "title": "Engine — Turbine/Turboprop",
+    "description": "Engine core components including HP/LP turbines and related systems.",
+    "subtopics": ["HP Turbine", "LP Turbine", "Turbine Blades", "Nozzle Guide Vanes", "Cooling System"]
+  },
+  {
+    "chapter": "73",
+    "title": "Engine Fuel & Control",
+    "description": "Engine fuel control and metering systems including FADEC.",
+    "subtopics": ["FADEC", "Fuel Metering Unit", "Fuel Pump (HMU)", "Fuel Nozzles", "Fuel Filter"]
+  },
+  {
+    "chapter": "74",
+    "title": "Ignition",
+    "description": "Engine ignition system including igniters and exciter units.",
+    "subtopics": ["Igniter Plugs", "Exciter Units", "Ignition Control", "Continuous Ignition"]
+  },
+  {
+    "chapter": "75",
+    "title": "Engine — Bleed Air",
+    "description": "Engine bleed air extraction and regulation systems.",
+    "subtopics": ["HP Bleed Valve", "IP Bleed Valve", "Bleed Monitoring Computer", "Precooler"]
+  },
+  {
+    "chapter": "76",
+    "title": "Engine Controls",
+    "description": "Thrust levers, reverse thrust, and engine control interfaces.",
+    "subtopics": ["Thrust Levers", "Reverse Thrust", "Engine Start", "EEC/FADEC Interface"]
+  },
+  {
+    "chapter": "78",
+    "title": "Exhaust",
+    "description": "Engine exhaust including tail cone, nozzle, and thrust reverser systems.",
+    "subtopics": ["Exhaust Nozzle", "Thrust Reverser", "Tail Cone", "EGT Sensing"]
+  },
+  {
+    "chapter": "79",
+    "title": "Oil",
+    "description": "Engine lubrication system including oil tank, pumps, filters, and cooling.",
+    "subtopics": ["Oil Tank", "Oil Pumps", "Oil Filter", "Oil Cooler", "Chip Detector"]
+  },
+  {
+    "chapter": "80",
+    "title": "Starting",
+    "description": "Engine starting system including air turbine starter and start sequence.",
+    "subtopics": ["Air Turbine Starter", "Start Valve", "Start Sequence", "Cross-Start"]
+  }
+]
