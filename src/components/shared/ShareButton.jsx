@@ -35,47 +35,57 @@ export default function ShareButton({ component, aircraft }) {
   return (
     <>
       <button onClick={() => setShowPanel(true)}
-        className="px-3 py-2 rounded-lg border text-xs font-semibold flex items-center gap-1.5 transition-all hover:border-[var(--color-accent-cyan)] hover:scale-105 active:scale-95"
-        style={{ borderColor: 'var(--color-border)', color: 'var(--color-accent-cyan)', background: 'rgba(0,200,255,0.06)' }}>
-        <FiShare2 className="w-4 h-4" /> Share
+        className="h-9 px-4 rounded border text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 transition-all hover:border-[var(--accent-cyan)] hover:bg-[var(--accent-cyan)]/5 active:scale-95 shadow-lg shadow-[var(--accent-cyan)]/5"
+        style={{ borderColor: 'var(--border)', color: 'var(--accent-cyan)', background: 'var(--bg-panel)' }}>
+        <FiShare2 className="w-4 h-4" /> Share Hub
       </button>
 
       {showPanel && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setShowPanel(false)}>
-          <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.7)' }} />
-          <div className="relative w-full max-w-sm rounded-xl border p-5 animate-slide-up"
-            style={{ background: 'var(--color-bg-panel)', borderColor: 'var(--color-border)' }}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm" onClick={() => setShowPanel(false)}>
+          <div className="absolute inset-0 bg-[var(--bg-primary)]/60" />
+          <div className="relative w-full max-w-sm panel p-6 animate-slide-up shadow-2xl border-[var(--border-light)] bg-[var(--bg-panel)]/90 backdrop-blur-2xl"
             onClick={e => e.stopPropagation()}>
             
-            <h3 className="text-sm font-bold mb-2" style={{ color: 'var(--color-text-primary)' }}>
-              <FiShare2 className="inline w-4 h-4 mr-1.5" style={{ color: 'var(--color-accent-cyan)' }} />
-              Share Component View
-            </h3>
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--text-primary)] flex items-center gap-2">
+                <FiShare2 className="w-4 h-4 text-[var(--accent-cyan)]" />
+                Data Provisioning
+              </h3>
+              <button onClick={() => setShowPanel(false)} className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors">✕</button>
+            </div>
 
             {component && (
-              <div className="p-2 rounded-lg border mb-3" style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)' }}>
-                <span className="text-xs font-bold" style={{ color: 'var(--color-accent)' }}>{component.label || component.zone}</span>
-                <span className="text-[10px] ml-2 font-mono" style={{ color: 'var(--color-text-muted)' }}>ATA {component.ata}</span>
+              <div className="p-4 rounded border mb-5 bg-[var(--bg-panel-2)] border-[var(--border)] group">
+                <div className="flex justify-between items-start mb-1">
+                  <span className="text-[10px] font-bold text-[var(--accent-blue)] uppercase tracking-wider">{component.label || component.zone}</span>
+                  <span className="text-[9px] font-mono text-[var(--text-muted)]">ATA {component.ata}</span>
+                </div>
+                <p className="text-[10px] text-[var(--text-secondary)] leading-snug">
+                  Holographic context sync ready for external transmission.
+                </p>
               </div>
             )}
 
-            <div className="flex gap-2 mb-3">
-              <input readOnly value={generateShareUrl()} className="flex-1 px-3 py-2 rounded-lg border text-[10px] font-mono outline-none"
-                style={{ background: 'var(--color-bg-card)', borderColor: 'var(--color-border)', color: 'var(--color-text-secondary)' }} />
-              <button onClick={handleCopy}
-                className="px-3 py-2 rounded-lg border text-xs font-semibold flex items-center gap-1 transition-all"
-                style={{
-                  background: copied ? 'rgba(39,174,96,0.1)' : 'rgba(47,128,237,0.1)',
-                  borderColor: copied ? 'var(--color-accent-green)' : 'var(--color-accent)',
-                  color: copied ? 'var(--color-accent-green)' : 'var(--color-accent)',
-                }}>
-                {copied ? <><FiCheck className="w-3.5 h-3.5" /> Copied</> : <><FiCopy className="w-3.5 h-3.5" /> Copy</>}
-              </button>
-            </div>
+            <div className="space-y-4">
+              <div className="flex gap-2">
+                <div className="flex-1 relative">
+                  <input readOnly value={generateShareUrl()} 
+                    className="w-full px-3 py-2.5 rounded border text-[10px] font-mono outline-none bg-[var(--bg-panel-2)] border-[var(--border)] text-[var(--text-secondary)] focus:border-[var(--accent-blue)] transition-colors" />
+                </div>
+                <button onClick={handleCopy}
+                  className={`px-4 rounded border text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 transition-all shadow-md
+                    ${copied 
+                      ? 'bg-[var(--success)]/10 border-[var(--success)] text-[var(--success)]' 
+                      : 'bg-[var(--accent-blue)]/10 border-[var(--accent-blue)] text-[var(--accent-blue)] hover:bg-[var(--accent-blue)]/20'
+                    }`}>
+                  {copied ? <><FiCheck className="w-3.5 h-3.5" /> Copied</> : <><FiCopy className="w-3.5 h-3.5" /> Copy</>}
+                </button>
+              </div>
 
-            <p className="text-[9px]" style={{ color: 'var(--color-text-muted)' }}>
-              Anyone with this link can open the same 3D view with the selected component highlighted.
-            </p>
+              <p className="text-[9px] text-[var(--text-muted)] text-center font-mono uppercase tracking-wider leading-relaxed">
+                Persistent link generated. Remote node will inherit current visualization parameters.
+              </p>
+            </div>
           </div>
         </div>
       )}

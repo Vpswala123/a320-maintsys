@@ -19,21 +19,32 @@ export default function DashboardLayout() {
         <ComponentInfoPanel component={selectedComponent} />
 
         {/* CENTER: 3D VIEWER + Overlay controls */}
-        <div className="relative flex flex-col border-r bg-black/20" style={{ borderColor: 'var(--border)' }}>
-          {/* Overlay controls */}
-          <div className="absolute top-4 right-4 z-10 flex gap-2">
-            <ARButton componentName={selectedComponent?.label} />
-            <ShareButton component={selectedComponent} aircraft="VT-DEM" />
-          </div>
-          
-          <div className="absolute top-4 left-4 z-10 pointers-none">
-            <div className="bg-[var(--bg-panel)] border border-[var(--border)] px-3 py-1.5 rounded text-xs font-mono font-bold text-[var(--accent-blue)]">
-              A320 in hangar environment
+        <div className="relative flex flex-col bg-[var(--bg-panel-2)]/30 backdrop-blur-sm" style={{ borderRight: '1px solid var(--border)' }}>
+          {/* Status Label (Top Left) */}
+          <div className="absolute top-4 left-4 z-20 pointer-events-none">
+            <div className="bg-[var(--bg-panel)]/80 backdrop-blur border border-[var(--border)] px-4 py-2 rounded shadow-2xl">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-cyan)] animate-pulse" />
+                <span className="text-[10px] font-bold text-[var(--accent-cyan)] uppercase tracking-[0.2em]">Live Visualization</span>
+              </div>
+              <div className="text-[9px] font-mono text-[var(--text-muted)] uppercase tracking-wider">
+                Hangar Environment // Node_04
+              </div>
             </div>
           </div>
 
-          <div className="absolute bottom-4 left-4 z-10 pointers-none text-[10px] text-[var(--text-muted)] font-mono">
-            [Rotate / Zoom / Pan]
+          {/* AR/Share Actions (Bottom Right) */}
+          <div className="absolute bottom-4 right-4 z-20 flex gap-2">
+            <ARButton />
+            <ShareButton component={selectedComponent} aircraft="VT-DEM" />
+          </div>
+          
+          <div className="absolute top-4 right-4 z-10 pointers-none text-[9px] text-[var(--text-muted)] font-mono uppercase tracking-tighter opacity-50">
+            Precision: High // Latency: 12ms
+          </div>
+
+          <div className="absolute bottom-4 left-4 z-10 pointers-none text-[9px] text-[var(--text-muted)] font-mono uppercase tracking-[0.1em] opacity-40">
+            MMB: Rotate // RMB: Pan // Scroll: Zoom
           </div>
 
           <AircraftViewer onComponentSelect={setSelectedComponent} />

@@ -2,6 +2,7 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { FiRefreshCw } from 'react-icons/fi';
 
 // Zone info lookup
 const ZONE_INFO = {
@@ -423,7 +424,5 @@ export default function AircraftViewer({ onComponentSelect }) {
         </div>
       )}
     </div>
-  );
-}
   );
 }

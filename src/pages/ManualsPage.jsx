@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { FiSearch, FiChevronRight, FiChevronDown, FiBook, FiFileText, FiFolder } from 'react-icons/fi';
+import { FiSearch, FiChevronRight, FiChevronDown, FiBook, FiFileText, FiFolder, FiCpu, FiPrinter, FiShare2 } from 'react-icons/fi';
 import ReactMarkdown from 'react-markdown';
 
 /* ---------- ATA Chapters ---------- */
@@ -113,15 +113,9 @@ The A320 ${chapter?.title?.toLowerCase()} system is designed for reliability and
    - Flow rate: per AMM specification
 4. Record test results
 
-### 2.2 Unscheduled Maintenance
-
-For troubleshooting, refer to:
-- **FIM ${ata}** — Fault Isolation Manual
-- **TSM ${ata}** — Troubleshooting Manual
-
 ---
 
-## 3. Component Data
+## 3. Component Data Matrix
 
 | Parameter | Specification | Tolerance |
 |-----------|--------------|-----------|
@@ -133,27 +127,14 @@ For troubleshooting, refer to:
 
 ---
 
-## 4. Illustrated Parts List
+## 4. Engineering Schematic
 
-### Figure ${ata}-001 — System Schematic
-
-\`\`\`
-┌─────────────────────────────────┐
-│        ATA ${ata} SYSTEM         │
-│     ${chapter?.title}           │
-│                                 │
-│  ┌──────┐    ┌──────┐          │
-│  │ CTRL │───▶│ VALVE│──┐       │
-│  │ UNIT │    │      │  │       │
-│  └──────┘    └──────┘  ▼       │
-│      │                ┌──────┐ │
-│      │                │SENSOR│ │
-│      ▼                └──────┘ │
-│  ┌──────┐                      │
-│  │ECAM  │◀─── Monitoring       │
-│  │ DISP │                      │
-│  └──────┘                      │
-└─────────────────────────────────┘
+\`\`\`mermaid
+graph LR
+    A[CTRL UNIT] --> B[CONTROL VALVE]
+    B --> C[ACTUATOR]
+    C --> D[FEEDBACK SENSOR]
+    D --> A
 \`\`\`
 
 ---
@@ -180,91 +161,105 @@ export default function ManualsPage() {
 
   return (
     <div className="h-full flex flex-col overflow-hidden bg-[var(--bg-primary)]">
-      {/* Top Header */}
-      <div className="h-[56px] px-6 shrink-0 border-b flex items-center justify-between bg-[var(--bg-panel)]" style={{ borderColor: 'var(--border)' }}>
-        <h1 className="text-sm font-bold tracking-widest text-[var(--text-primary)] uppercase flex items-center gap-2">
-          <FiBook className="w-4 h-4 text-[var(--accent-blue)]" /> AIRCRAFT MANUALS — ATA CHAPTER LIBRARY
-        </h1>
-        <div className="relative">
-          <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-muted)]" />
-          <input type="text" value={search} onChange={e => setSearch(e.target.value)}
-            placeholder="Search ATA..."
-            className="w-48 focus:w-64 pl-9 pr-3 py-1.5 rounded text-xs font-mono border outline-none transition-all bg-[var(--bg-card)] text-[var(--text-primary)]"
-            style={{ borderColor: 'var(--border)' }} />
+      {/* Top Header - Technical Library Deck */}
+      <div className="h-[64px] px-8 shrink-0 border-b flex items-center justify-between bg-[var(--bg-panel)]/50 backdrop-blur-md" style={{ borderColor: 'var(--border)' }}>
+        <div className="flex flex-col">
+          <h1 className="text-xs font-bold tracking-[0.3em] text-[var(--text-primary)] uppercase flex items-center gap-3">
+            <FiBook className="w-4 h-4 text-[var(--accent-blue)]" /> Technical Document Library
+          </h1>
+          <span className="text-[9px] font-mono text-[var(--text-muted)] uppercase tracking-widest mt-1">Classified // Restricted Access // Airbus A320 Family</span>
+        </div>
+        
+        <div className="flex items-center gap-6">
+          <div className="relative">
+            <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-muted)]" />
+            <input type="text" value={search} onChange={e => setSearch(e.target.value)}
+              placeholder="Filter ATA Chapters..."
+              className="w-48 focus:w-64 pl-9 pr-4 h-9 rounded text-[11px] font-mono border outline-none transition-all bg-[var(--bg-panel-2)] text-[var(--text-primary)]"
+              style={{ borderColor: 'var(--border)' }} />
+          </div>
+          <div className="flex gap-2">
+            <button className="w-9 h-9 flex items-center justify-center rounded border border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:border-[var(--border-light)] transition-all"><FiPrinter className="w-4 h-4" /></button>
+            <button className="w-9 h-9 flex items-center justify-center rounded border border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:border-[var(--border-light)] transition-all"><FiShare2 className="w-4 h-4" /></button>
+          </div>
         </div>
       </div>
 
       <div className="flex-1 flex overflow-hidden">
-        {/* Sidebar: ATA Chapters */}
-        <aside className="w-[300px] shrink-0 border-r flex flex-col bg-[var(--bg-panel)]" style={{ borderColor: 'var(--border)' }}>
-          <div className="p-4 border-b panel-title" style={{ borderColor: 'var(--border)' }}>
-            ATA CHAPTERS
+        {/* Sidebar: ATA Chapters - Engineering Tree */}
+        <aside className="w-[320px] shrink-0 border-r flex flex-col bg-[var(--bg-panel)]" style={{ borderColor: 'var(--border)' }}>
+          <div className="px-6 h-10 border-b flex items-center bg-[var(--bg-panel-2)]/50" style={{ borderColor: 'var(--border)' }}>
+            <span className="text-[9px] font-bold text-[var(--text-muted)] uppercase tracking-widest">ATA Chapter Registry</span>
           </div>
-          <div className="flex-1 overflow-y-auto p-2">
+          <div className="flex-1 overflow-y-auto p-3 space-y-1">
             {filteredChapters.map(chapter => {
               const isActive = selectedAta === chapter.ch;
               return (
                 <button key={chapter.ch} onClick={() => setSelectedAta(chapter.ch)}
-                  className={`w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-left transition-all ${isActive ? 'bg-[#2f80ed15] border border-[var(--accent-blue)]' : 'border border-transparent hover:border-[var(--border)] hover:bg-[var(--bg-panel-2)]'}`}>
-                  {isActive ? <FiChevronDown className="w-3.5 h-3.5 shrink-0 text-[var(--accent-cyan)]" /> :
-                    <FiChevronRight className="w-3.5 h-3.5 shrink-0 text-[var(--text-muted)]" />}
-                  <div className="min-w-0 flex items-center gap-2">
-                    <span className={`font-mono font-bold text-xs ${isActive ? 'text-[var(--accent-cyan)]' : 'text-[var(--text-secondary)]'}`}>ATA {chapter.ch}</span>
-                    <span className={`text-xs truncate ${isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>— {chapter.title}</span>
-                  </div>
+                  className={`w-full group flex items-start gap-3 px-3 py-2.5 rounded transition-all
+                    ${isActive 
+                      ? 'bg-[var(--accent-blue)]/10 border border-[var(--accent-blue)]/30' 
+                      : 'border border-transparent hover:bg-[var(--bg-panel-2)]'}`}>
+                  <span className={`font-mono text-[10px] font-bold mt-0.5 tracking-tighter ${isActive ? 'text-[var(--accent-cyan)]' : 'text-[var(--text-muted)] group-hover:text-[var(--text-secondary)]'}`}>
+                    [{chapter.ch}]
+                  </span>
+                  <span className={`text-[11px] font-medium leading-tight ${isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]'}`}>
+                    {chapter.title}
+                  </span>
                 </button>
               );
             })}
           </div>
         </aside>
 
-        {/* Main: Manual Content */}
+        {/* Main: Manual Content - Document Viewer */}
         <main className="flex-1 overflow-hidden flex flex-col bg-[var(--bg-primary)]">
-          {/* Main Header / Manual Selection */}
-          <div className="shrink-0 p-6 border-b bg-[var(--bg-panel)]" style={{ borderColor: 'var(--border)' }}>
-            <h2 className="text-xl font-bold text-[var(--text-primary)] mb-4">ATA {selectedAta} — {currentChapter?.title?.toUpperCase()}</h2>
-            <hr className="mb-4" style={{ borderColor: 'var(--border)' }} />
+          {/* Document Controls */}
+          <div className="shrink-0 p-8 border-b bg-[var(--bg-panel)]/30" style={{ borderColor: 'var(--border)' }}>
+            <div className="flex justify-between items-end mb-6">
+              <div>
+                <span className="text-[10px] font-mono text-[var(--accent-blue)] font-bold uppercase tracking-[0.2em] block mb-2">Selected Chapter</span>
+                <h2 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight">ATA {selectedAta} — {currentChapter?.title}</h2>
+              </div>
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--success)]/10 border border-[var(--success)]/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--success)] animate-pulse" />
+                <span className="text-[9px] font-bold text-[var(--success)] uppercase tracking-widest">Current Revision Certified</span>
+              </div>
+            </div>
             
-            <div className="grid grid-cols-4 lg:grid-cols-8 gap-2">
+            <div className="flex flex-wrap gap-2">
               {MANUAL_TYPES.map(manual => {
                 const isActive = selectedManual.code === manual.code;
                 return (
-                  <button key={manual.code} onClick={() => setSelectedManual(manual)} title={manual.name}
-                    className={`flex items-center justify-center gap-1.5 px-3 py-2 rounded border font-mono text-xs font-bold transition-all ${isActive ? 'bg-[#00d4ff15] border-[var(--accent-cyan)] text-[var(--accent-cyan)]' : 'bg-[var(--bg-panel-2)] border-[var(--border-light)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--text-muted)]'}`}>
-                    📄 {manual.code}
+                  <button key={manual.code} onClick={() => setSelectedManual(manual)}
+                    className={`h-8 px-4 rounded border text-[10px] font-bold uppercase tracking-widest transition-all
+                      ${isActive 
+                        ? 'bg-[var(--accent-cyan)]/10 border-[var(--accent-cyan)]/50 text-[var(--accent-cyan)] shadow-[0_0_15px_rgba(0,212,255,0.1)]' 
+                        : 'bg-[var(--bg-panel-2)] border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text-secondary)] hover:border-[var(--border-light)]'}`}>
+                    {manual.code}
                   </button>
                 );
               })}
             </div>
-
-            <div className="mt-6 flex items-center justify-center relative">
-              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-[var(--border)]"></div></div>
-              <div className="relative px-4 bg-[var(--bg-panel)] text-xs font-mono font-bold tracking-wider text-[var(--text-muted)] uppercase">
-                {selectedManual.code} — {selectedManual.name}
-              </div>
-            </div>
           </div>
 
-          {/* Rendered Markdown Area */}
-          <div className="flex-1 overflow-y-auto p-6 md:px-12">
-            <article className="prose prose-invert prose-sm max-w-none
-              [&_h1]:text-xl [&_h1]:font-bold [&_h1]:text-[var(--text-primary)] [&_h1]:mb-4
-              [&_h2]:text-base [&_h2]:font-bold [&_h2]:text-[var(--text-primary)] [&_h2]:mt-6 [&_h2]:mb-3 [&_h2]:pb-2 [&_h2]:border-b [&_h2]:border-[var(--border)]
-              [&_h3]:text-sm [&_h3]:font-bold [&_h3]:text-[var(--text-primary)] [&_h3]:mt-4 [&_h3]:mb-2
-              [&_p]:text-[13px] [&_p]:text-[var(--text-secondary)] [&_p]:leading-relaxed [&_p]:mb-3
-              [&_ol]:text-[13px] [&_ol]:text-[var(--text-secondary)] [&_ol]:ml-4 [&_ol]:space-y-1.5
-              [&_ul]:text-[13px] [&_ul]:text-[var(--text-secondary)] [&_ul]:ml-4 [&_ul]:space-y-1.5
-              [&_li]:text-[13px]
-              [&_table]:w-full [&_table]:text-[13px] [&_table]:border-collapse [&_table]:mb-6
-              [&_th]:text-left [&_th]:p-2.5 [&_th]:bg-[var(--bg-panel)] [&_th]:border [&_th]:border-[var(--border)] [&_th]:text-[var(--text-muted)] [&_th]:font-semibold [&_th]:uppercase [&_th]:text-[10px] [&_th]:tracking-wider
-              [&_td]:p-2.5 [&_td]:border [&_td]:border-[var(--border)] [&_td]:text-[var(--text-secondary)]
-              [&_code]:text-[var(--accent-cyan)] [&_code]:bg-[var(--bg-panel-2)] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[12px] [&_code]:font-mono
-              [&_pre]:bg-[var(--bg-panel-2)] [&_pre]:border [&_pre]:border-[var(--border)] [&_pre]:rounded-lg [&_pre]:p-4 [&_pre]:overflow-x-auto [&_pre]:text-[12px] [&_pre]:shadow-inner
-              [&_blockquote]:border-l-2 [&_blockquote]:border-[var(--accent-blue)] [&_blockquote]:pl-4 [&_blockquote]:bg-[var(--bg-panel-2)] [&_blockquote]:py-2 [&_blockquote]:pr-4 [&_blockquote]:rounded-r-lg [&_blockquote]:text-[13px] [&_blockquote]:italic [&_blockquote]:text-[var(--text-muted)] [&_blockquote]:mb-6
-              [&_hr]:border-[var(--border)] [&_hr]:my-8
-              [&_strong]:text-[var(--text-primary)]">
-              <ReactMarkdown>{manualContent}</ReactMarkdown>
-            </article>
+          {/* Rendered Markdown Area - Premium Reading Experience */}
+          <div className="flex-1 overflow-y-auto bg-[var(--bg-primary)]">
+            <div className="max-w-4xl mx-auto py-12 px-8 lg:px-16">
+              <article className="prose prose-invert prose-sm max-w-none
+                [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-[var(--text-primary)] [&_h1]:mb-8 [&_h1]:tracking-tight
+                [&_h2]:text-lg [&_h2]:font-bold [&_h2]:text-[var(--text-primary)] [&_h2]:mt-12 [&_h2]:mb-4 [&_h2]:pb-2 [&_h2]:border-b [&_h2]:border-[var(--border)] [&_h2]:tracking-tight
+                [&_h3]:text-sm [&_h3]:font-bold [&_h3]:text-[var(--accent-blue)] [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:uppercase [&_h3]:tracking-widest
+                [&_p]:text-[14px] [&_p]:text-[var(--text-secondary)] [&_p]:leading-relaxed [&_p]:mb-4
+                [&_table]:w-full [&_table]:text-[13px] [&_table]:border-collapse [&_table]:my-8 [&_table]:bg-[var(--bg-panel)]/30
+                [&_th]:text-left [&_th]:p-3 [&_th]:bg-[var(--bg-panel-2)] [&_th]:border [&_th]:border-[var(--border)] [&_th]:text-[var(--text-muted)] [&_th]:font-bold [&_th]:uppercase [&_th]:text-[9px] [&_th]:tracking-widest
+                [&_td]:p-3 [&_td]:border [&_td]:border-[var(--border)] [&_td]:text-[var(--text-secondary)]
+                [&_blockquote]:border-l-4 [&_blockquote]:border-[var(--accent-blue)] [&_blockquote]:pl-6 [&_blockquote]:bg-[var(--bg-panel-2)] [&_blockquote]:py-4 [&_blockquote]:my-8 [&_blockquote]:rounded [&_blockquote]:text-[13px] [&_blockquote]:text-[var(--text-secondary)]
+                [&_hr]:border-[var(--border)] [&_hr]:my-12
+                [&_strong]:text-[var(--text-primary)] [&_strong]:font-bold">
+                <ReactMarkdown>{manualContent}</ReactMarkdown>
+              </article>
+            </div>
           </div>
         </main>
       </div>

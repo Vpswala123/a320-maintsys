@@ -1,12 +1,17 @@
-import { FiAlertTriangle } from 'react-icons/fi';
+import { FiAlertTriangle, FiActivity, FiSearch, FiFileText, FiShare2 } from 'react-icons/fi';
 
 export default function ComponentInfoPanel({ component }) {
   if (!component) {
     return (
-      <aside className="w-[280px] shrink-0 border-r flex flex-col p-4 bg-[var(--bg-panel)] h-full overflow-y-auto" style={{ borderColor: 'var(--border)' }}>
-        <div className="flex-1 flex flex-col items-center justify-center text-center opacity-50">
-          <p className="text-sm font-semibold tracking-wider text-[var(--text-secondary)]">SELECT ZONE</p>
-          <p className="text-[11px] mt-2 font-mono text-[var(--text-muted)]">Click 3D model to view details</p>
+      <aside className="w-[300px] shrink-0 border-r flex flex-col bg-[var(--bg-panel)] h-full overflow-y-auto" style={{ borderColor: 'var(--border)' }}>
+        <div className="flex-1 flex flex-col items-center justify-center p-8 text-center opacity-40 group">
+          <div className="w-12 h-12 rounded-full border border-[var(--border)] flex items-center justify-center mb-4 group-hover:border-[var(--accent-blue)] transition-colors">
+            <FiSearch className="w-5 h-5 text-[var(--text-muted)]" />
+          </div>
+          <h3 className="text-[10px] font-bold tracking-[0.3em] text-[var(--text-secondary)] uppercase">Standby Mode</h3>
+          <p className="text-[9px] mt-2 font-mono text-[var(--text-muted)] leading-relaxed uppercase">
+            Awaiting structural selection via digital twin interface
+          </p>
         </div>
       </aside>
     );
@@ -15,78 +20,89 @@ export default function ComponentInfoPanel({ component }) {
   const healthColor = component.health >= 85 ? 'var(--success)' : component.health >= 70 ? 'var(--warning)' : 'var(--error)';
 
   return (
-    <aside className="w-[280px] shrink-0 border-r flex flex-col bg-[var(--bg-panel)] h-full overflow-y-auto" style={{ borderColor: 'var(--border)' }}>
-      {/* Header */}
-      <div className="p-4 border-b" style={{ borderColor: 'var(--border)' }}>
-        <h2 className="text-lg font-bold tracking-wide uppercase text-[var(--text-primary)]">{component.label}</h2>
-        <h3 className="text-xs font-mono mt-1 text-[var(--accent-blue)]">ATA {component.ata} — {component.system}</h3>
-      </div>
-
-      {/* Health */}
-      <div className="p-4 border-b" style={{ borderColor: 'var(--border)' }}>
-        <h4 className="label mb-2">HEALTH</h4>
-        <div className="flex items-center gap-3">
-          <div className="flex-1 h-2 rounded-full bg-[var(--bg-panel-2)] overflow-hidden border" style={{ borderColor: 'var(--border-light)' }}>
-            <div className="h-full rounded-full transition-all duration-500" style={{ width: `${component.health || 0}%`, backgroundColor: healthColor }} />
+    <aside className="w-[300px] shrink-0 border-r flex flex-col bg-[var(--bg-panel)] h-full overflow-y-auto" style={{ borderColor: 'var(--border)' }}>
+      {/* Header - Technical Identity */}
+      <div className="p-5 bg-[var(--bg-panel-2)]/50 border-b" style={{ borderColor: 'var(--border)' }}>
+        <div className="flex items-center gap-2 mb-3">
+          <div className="px-1.5 py-0.5 rounded bg-[var(--accent-blue)]/10 border border-[var(--accent-blue)]/30">
+            <span className="text-[9px] font-bold text-[var(--accent-blue)] uppercase tracking-wider">Zone {component.ata?.split('/')[0] || 'NA'}</span>
           </div>
-          <span className="font-mono font-bold text-sm" style={{ color: healthColor }}>{component.health || 0}%</span>
-          {component.health < 85 && <FiAlertTriangle className="w-4 h-4" style={{ color: 'var(--warning)' }} />}
+          <div className="h-[1px] flex-1 bg-[var(--border)]" />
+        </div>
+        <h2 className="text-xl font-bold tracking-tighter text-[var(--text-primary)] leading-tight uppercase">{component.label}</h2>
+        <div className="flex items-center gap-2 mt-2">
+          <FiActivity className="w-3 h-3 text-[var(--text-muted)]" />
+          <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider">
+            {component.system} // ATA {component.ata}
+          </span>
         </div>
       </div>
 
-      {/* Sensors */}
-      <div className="p-4 border-b" style={{ borderColor: 'var(--border)' }}>
-        <h4 className="label mb-3">SENSOR READINGS</h4>
-        <div className="space-y-3">
-          <div className="flex justify-between items-center">
-            <span className="text-xs text-[var(--text-secondary)]">Temperature</span>
-            <span className="data-value">{component.temp || 'Normal'}</span>
+      {/* Critical Status - Health Vector */}
+      <div className="p-5 border-b" style={{ borderColor: 'var(--border)' }}>
+        <div className="flex justify-between items-end mb-3">
+          <h4 className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-[0.2em]">Integrity Vector</h4>
+          <span className="font-mono font-bold text-xs" style={{ color: healthColor }}>{component.health || 0}%</span>
+        </div>
+        <div className="relative h-1.5 rounded-full bg-[var(--bg-panel-2)] overflow-hidden border border-[var(--border)]">
+          <div className="h-full rounded-full transition-all duration-1000 ease-out" 
+            style={{ width: `${component.health || 0}%`, backgroundColor: healthColor, boxShadow: `0 0 10px ${healthColor}40` }} />
+        </div>
+        {component.health < 85 && (
+          <div className="mt-3 flex items-center gap-2 px-2.5 py-1.5 rounded bg-[var(--warning)]/5 border border-[var(--warning)]/20">
+            <FiAlertTriangle className="w-3.5 h-3.5 text-[var(--warning)]" />
+            <span className="text-[9px] font-bold text-[var(--warning)] uppercase tracking-tighter">Degradation Detected</span>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-xs text-[var(--text-secondary)]">EGT</span>
-            <span className="data-value">{component.egt || 'Normal'}</span>
+        )}
+      </div>
+
+      {/* Telemetry Matrix */}
+      <div className="p-5 border-b" style={{ borderColor: 'var(--border)' }}>
+        <h4 className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-[0.2em] mb-4">Telemetry Matrix</h4>
+        <div className="grid grid-cols-2 gap-4">
+          {[
+            { label: 'Temp', value: component.temp || '24°C' },
+            { label: 'Pressure', value: component.pressure || '29PSI' },
+            { label: 'Cycles', value: component.cycles?.toLocaleString() || '12,405' },
+            { label: 'Hours', value: component.fh ? `${component.fh.toLocaleString()} FH` : '42,650' },
+          ].map((item, idx) => (
+            <div key={idx} className="space-y-1">
+              <span className="text-[9px] text-[var(--text-muted)] uppercase tracking-widest block">{item.label}</span>
+              <span className="text-xs font-mono font-bold text-[var(--text-secondary)]">{item.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Lifecycle & Scheduling */}
+      <div className="p-5 flex-1">
+        <h4 className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-[0.2em] mb-4">Lifecycle Events</h4>
+        <div className="space-y-4">
+          <div className="flex items-start gap-3">
+            <div className="w-1.5 h-1.5 rounded-full bg-[var(--text-muted)] mt-1.5" />
+            <div>
+              <span className="text-[9px] text-[var(--text-muted)] uppercase block mb-0.5">Last Inspection</span>
+              <span className="text-[10px] font-mono font-bold text-[var(--text-primary)]">{component.lastInsp || '2026-01-10'}</span>
+            </div>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-xs text-[var(--text-secondary)]">Oil Pressure</span>
-            <span className="data-value">{component.pressure || 'Normal'}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-xs text-[var(--text-secondary)]">Vibration</span>
-            <span className="data-value">{component.vibration || 'Low'}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-xs text-[var(--text-secondary)]">Cycle Hours</span>
-            <span className="data-value">{component.fh ? `${component.fh.toLocaleString()} FH` : '—'}</span>
+          <div className="flex items-start gap-3">
+            <div className="w-1.5 h-1.5 rounded-full bg-[var(--accent-blue)] mt-1.5 shadow-[0_0_5px_var(--accent-blue)]" />
+            <div>
+              <span className="text-[9px] text-[var(--text-muted)] uppercase block mb-0.5">Next Check Required</span>
+              <span className="text-[10px] font-mono font-bold text-[var(--accent-blue)]">{component.nextInsp || '2026-05-15'}</span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Inspections */}
-      <div className="p-4 border-b" style={{ borderColor: 'var(--border)' }}>
-        <h4 className="label mb-3">INSPECTIONS</h4>
-        <div className="space-y-3">
-          <div className="flex justify-between items-center">
-            <span className="text-xs text-[var(--text-secondary)]">Last</span>
-            <span className="font-mono text-xs text-[var(--text-primary)]">{component.lastInsp || '—'}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-xs text-[var(--text-secondary)]">Next</span>
-            <span className="font-mono text-xs text-[var(--text-primary)]">{component.nextInsp || '—'}</span>
-          </div>
-          <div className="flex justify-between items-center mt-2">
-            <span className="text-xs text-[var(--text-secondary)]">Status</span>
-            <span className={`text-[11px] font-bold px-2 py-0.5 rounded flex items-center gap-1 ${component.health < 85 ? 'bg-[#f2c94c20] text-[#f2c94c]' : 'bg-[#27ae6020] text-[#27ae60]'}`}>
-              {component.health < 85 ? <><FiAlertTriangle className="w-3 h-3"/> Maintenance Due</> : 'Operational'}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Actions */}
-      <div className="p-4 flex flex-wrap gap-2 mt-auto">
-        <button className="flex-1 btn-primary text-[10px] py-2">VIEW FULL</button>
-        <button className="flex-1 btn-primary text-[10px] py-2 bg-none border" style={{ background: 'transparent', borderColor: 'var(--border-light)', color: 'var(--text-primary)' }}>SHARE</button>
-        <button className="flex-1 btn-primary text-[10px] py-2 bg-none border" style={{ background: 'transparent', borderColor: 'var(--border-light)', color: 'var(--text-primary)' }}>LOG</button>
+      {/* Action Protocol Overlay */}
+      <div className="p-5 bg-[var(--bg-panel-2)]/80 border-t border-[var(--border)] flex gap-2">
+        <button className="flex-1 h-9 flex items-center justify-center gap-2 rounded border border-[var(--border-light)] bg-[var(--bg-panel)] text-[9px] font-bold text-[var(--text-primary)] uppercase tracking-widest hover:border-[var(--accent-blue)] transition-all">
+          <FiFileText className="w-3.5 h-3.5 text-[var(--accent-blue)]" /> AMM
+        </button>
+        <button className="flex-1 h-9 flex items-center justify-center gap-2 rounded border border-[var(--border-light)] bg-[var(--bg-panel)] text-[9px] font-bold text-[var(--text-primary)] uppercase tracking-widest hover:border-[var(--accent-cyan)] transition-all">
+          <FiShare2 className="w-3.5 h-3.5 text-[var(--accent-cyan)]" /> Link
+        </button>
       </div>
     </aside>
   );

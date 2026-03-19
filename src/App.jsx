@@ -11,7 +11,7 @@ import ARSharePage from '@/pages/ARSharePage';
 import UserManagementPage from '@/pages/UserManagementPage';
 
 // Simplified Protected Route for nested layout
-function ProtectedRoute({ allowedRoles }) {
+function ProtectedRoute({ children, allowedRoles }) {
   const { user, profile, loading } = useAuth();
 
   if (loading) return (
@@ -29,7 +29,7 @@ function ProtectedRoute({ allowedRoles }) {
     return <Navigate to="/dashboard" replace />;
   }
 
-  return <AppShell />;
+  return children || <AppShell />;
 }
 
 export default function App() {

@@ -33,93 +33,141 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0b1320] flex flex-col items-center justify-center relative overflow-hidden">
-      {/* Hangar background - use CSS gradient to simulate */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0b1320] via-[#0d1628] to-[#071020] opacity-90" />
+    <div className="min-h-screen bg-[var(--bg-primary)] flex flex-col items-center justify-center relative overflow-hidden">
+      {/* Background Ambience */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-primary)] via-[var(--bg-panel-2)] to-[var(--bg-primary)] opacity-50" />
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[var(--accent-blue)]/5 blur-[120px] rounded-full" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[var(--accent-cyan)]/5 blur-[120px] rounded-full" />
 
-      {/* Top bar */}
-      <div className="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
-        <span className="text-green-400 font-mono text-xs flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse inline-block" />
-          SYSTEM ONLINE
-        </span>
-        <span className="text-[#9ba4b4] font-mono text-xs">A320-200</span>
+      {/* Top status bar style */}
+      <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-20">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-[var(--bg-panel-2)] border border-[var(--border)]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--success)] animate-pulse" />
+            <span className="text-[10px] font-mono text-[var(--success)] font-bold tracking-widest">SYSTEM ONLINE</span>
+          </div>
+          <span className="text-[10px] font-mono text-[var(--text-muted)] tracking-tighter">SECURE NODE: 127.0.0.1</span>
+        </div>
+        <div className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-widest">
+          A320 MaintSys <span className="text-[var(--text-secondary)]">v4.2.0</span>
+        </div>
       </div>
 
       {/* Login panel */}
-      <div className="relative z-10 w-full max-w-md mx-4">
-        <div className="bg-[#111a2e]/90 backdrop-blur border border-[#2f80ed]/30 rounded-xl p-8 shadow-2xl">
-
-          {/* Title */}
-          <div className="text-center mb-8">
-            <h1 className="text-[#2f80ed] font-semibold text-2xl tracking-widest font-mono">A320 MaintSys</h1>
-            <p className="text-[#9ba4b4] text-xs mt-1 tracking-wider">AIRCRAFT MAINTENANCE PLATFORM</p>
+      <div className="relative z-10 w-full max-w-[420px] mx-4 animate-slide-up">
+        <div className="panel p-10 bg-[var(--bg-panel)]/80 backdrop-blur-2xl border-[var(--border-light)] shadow-2xl relative">
+          
+          {/* Decorative Corner */}
+          <div className="absolute top-0 right-0 w-16 h-16 pointer-events-none opacity-20">
+            <div className="absolute top-4 right-4 w-8 h-[1px] bg-[var(--accent-blue)]" />
+            <div className="absolute top-4 right-4 w-[1px] h-8 bg-[var(--accent-blue)]" />
           </div>
 
-          {/* Role Selection */}
-          <p className="text-[#9ba4b4] text-xs mb-3 font-mono uppercase tracking-wider">Select Your Role</p>
-          <div className="grid grid-cols-3 gap-3 mb-6">
-            {ROLES.map(role => (
-              <button
-                key={role.id}
-                onClick={() => setSelectedRole(role.id)}
-                className={`flex flex-col items-center gap-1 p-3 rounded-lg border transition-all
-                  ${selectedRole === role.id
-                    ? 'border-[#2f80ed] bg-[#2f80ed]/20 text-white'
-                    : 'border-[#1f2a3a] bg-[#0b1320]/50 text-[#9ba4b4] hover:border-[#2f80ed]/50'
-                  }`}
-              >
-                <span className="text-2xl">{role.icon}</span>
-                <span className="text-xs font-mono font-semibold">{role.label}</span>
-                <span className="text-[10px] text-center leading-tight">{role.subtitle}</span>
-              </button>
-            ))}
+          {/* Brand Header */}
+          <div className="text-center mb-10">
+            <div className="inline-block px-3 py-1 mb-4 rounded border border-[var(--accent-blue)]/30 bg-[var(--accent-blue)]/10">
+              <span className="text-[10px] font-bold text-[var(--accent-blue)] tracking-[0.4em] uppercase">Engineering Desktop</span>
+            </div>
+            <h1 className="text-3xl font-bold tracking-tighter text-[var(--text-primary)]">
+              A320 <span className="text-[var(--accent-blue)]">MaintSys</span>
+            </h1>
+            <p className="text-[10px] text-[var(--text-muted)] mt-2 font-mono uppercase tracking-[0.2em] leading-relaxed">
+              Unified Maintenance & Engineering Interface
+            </p>
           </div>
 
-          {/* Login Form — shows after role selected */}
-          {selectedRole && (
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div>
-                <label className="text-[#9ba4b4] text-xs font-mono uppercase tracking-wider block mb-1">Email</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  placeholder={`${selectedRole}@airline.com`}
-                  required
-                  className="w-full bg-[#0b1320] border border-[#1f2a3a] rounded-lg px-4 py-3 text-[#dce6f2] font-mono text-sm focus:border-[#2f80ed] focus:outline-none transition-colors"
-                />
+          {/* Role Selection Grid */}
+          <div className="space-y-4 mb-8">
+            <label className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest block pl-1">
+              Authentication Context
+            </label>
+            <div className="grid grid-cols-3 gap-3">
+              {ROLES.map(role => (
+                <button
+                  key={role.id}
+                  onClick={() => setSelectedRole(role.id)}
+                  className={`flex flex-col items-center gap-2 p-4 rounded border transition-all duration-300 group
+                    ${selectedRole === role.id
+                      ? 'border-[var(--accent-blue)] bg-[var(--accent-blue)]/10'
+                      : 'border-[var(--border)] bg-[var(--bg-panel-2)]/50 text-[var(--text-muted)] hover:border-[var(--border-light)]'
+                    }`}
+                >
+                  <span className={`text-xl group-hover:scale-110 transition-transform ${selectedRole === role.id ? 'opacity-100' : 'opacity-60'}`}>
+                    {role.icon}
+                  </span>
+                  <div className="text-center">
+                    <span className={`text-[10px] font-bold block leading-none ${selectedRole === role.id ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
+                      {role.label.toUpperCase()}
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Entry Section */}
+          <div className={`overflow-hidden transition-all duration-500 ${selectedRole ? 'max-h-[300px] opacity-100' : 'max-h-0 opacity-0'}`}>
+            <form onSubmit={handleLogin} className="space-y-5 pt-2">
+              <div className="space-y-2">
+                <div className="relative">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    placeholder="Enter Employee ID / Email"
+                    required
+                    className="w-full bg-[var(--bg-panel-2)] border border-[var(--border)] rounded px-4 py-3 text-[var(--text-primary)] font-mono text-xs focus:border-[var(--accent-blue)] outline-none transition-all placeholder:text-[var(--text-muted)]"
+                  />
+                </div>
+                <div className="relative">
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    placeholder="Security Key"
+                    required
+                    className="w-full bg-[var(--bg-panel-2)] border border-[var(--border)] rounded px-4 py-3 text-[var(--text-primary)] font-mono text-xs focus:border-[var(--accent-blue)] outline-none transition-all placeholder:text-[var(--text-muted)]"
+                  />
+                </div>
               </div>
-              <div>
-                <label className="text-[#9ba4b4] text-xs font-mono uppercase tracking-wider block mb-1">Password</label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  required
-                  className="w-full bg-[#0b1320] border border-[#1f2a3a] rounded-lg px-4 py-3 text-[#dce6f2] font-mono text-sm focus:border-[#2f80ed] focus:outline-none transition-colors"
-                />
-              </div>
-              {error && <p className="text-[#eb5757] text-xs font-mono">{error}</p>}
+
+              {error && (
+                <div className="px-3 py-2 rounded bg-[var(--error)]/10 border border-[var(--error)]/20 text-[var(--error)] text-[10px] font-bold tracking-tight animate-shake flex items-center gap-2">
+                  <div className="w-1 h-1 rounded-full bg-[var(--error)]" />
+                  {error.toUpperCase()}
+                </div>
+              )}
+
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 rounded-lg font-mono font-semibold text-sm transition-all bg-gradient-to-r from-[#2f80ed] to-[#00d4ff] text-white hover:opacity-90 disabled:opacity-50"
+                className="w-full h-12 btn-primary font-bold tracking-[0.3em] text-[11px] uppercase shadow-lg shadow-[var(--accent-blue)]/10"
               >
-                {loading ? 'AUTHENTICATING...' : 'LOGIN →'}
+                {loading ? 'Authenticating...' : 'Access Terminal →'}
               </button>
             </form>
+          </div>
+
+          {!selectedRole && (
+            <div className="py-6 text-center">
+              <p className="text-[10px] font-mono text-[var(--text-muted)] animate-pulse">
+                WAITING FOR ROLE SELECTION...
+              </p>
+            </div>
           )}
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="absolute bottom-4 text-center z-10">
-        <p className="text-[#9ba4b4] text-[10px] font-mono">
-          Student Demonstration Version — Simulated data for educational purposes only
-        </p>
+      {/* Security Footer */}
+      <div className="absolute bottom-6 left-0 right-0 text-center z-10 px-6">
+        <div className="max-w-md mx-auto">
+          <p className="text-[var(--text-muted)] text-[9px] font-mono uppercase tracking-[0.1em] leading-relaxed opacity-60">
+            Unauthorized access prohibited. All terminal activity is recorded under aviation security protocols.
+            <br />
+            ISO 9001:2015 & EASA PART-145 COMPLIANT INTERFACE
+          </p>
+        </div>
       </div>
     </div>
-  )
+  );
 }
